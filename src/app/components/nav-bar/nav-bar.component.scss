@@ -1,5 +1,5 @@
 .sidenav {
-    width: 4rem;
+    width: 5vw;
     background-color: #583911;
     height: 100vh;
     display: flex;
@@ -9,15 +9,18 @@
     overflow: hidden;
     transition: width 0.3s;
     .text {
-        display: none;
-        opacity: 0;
-        transition: 1s;
+        display: none; /* Initially hide text */
+        opacity: 0; /* Initially set opacity to 0 */
+        transition: opacity 0.5s; /* Slower text appearance */
+        color: rgb(161, 138, 75);
+        text-decoration: none;
+        font-size: 2vw;
     }
     .icon {
         content: "";
         display: inline-block;
-        width: 3rem; /* Adjust the width of the image */
-        height: 3rem; /* Adjust the height of the image */
+        width: 4vw; /* Adjust the width of the image */
+        height: 9vh; /* Adjust the height of the image */
         background-repeat: no-repeat; /* Prevent the image from repeating */
         background-size: contain; /* Scale the image to fit within the dimensions */
         transition: 0.3s;
@@ -25,34 +28,49 @@
         align-items: center;
         cursor: pointer;
     }
+    #deerIcon {
+        content: "";
+        display: inline-block;
+        background-repeat: no-repeat; /* Prevent the image from repeating */
+        background-size: contain; /* Scale the image to fit within the dimensions */
+        display: flex;
+        align-items: center;
+        display: flex;
+        vertical-align: auto;
+        background-image: url('../../../images/deerIcon.png');
+        transition: 0.3s;
+        width: 90%; /* Adjust the width of the image */
+        height: 15vh; /* Adjust the height of the image */
+    }
 }
 
 .sidenav:hover {
-    width: 11rem; /* Expand on hover */
+    width: 15vw; /* Expand on hover */
     .text {
         display: block; /* Show text on hover */
         opacity: 1; /* Gradually increase opacity */
         transition: 0.3s;
     }
     .icon {
-        margin-right: 10px;
         transition: 0.3s;
-        width: 4rem; /* Adjust the width of the image */
-        height: 4rem; /* Adjust the height of the image */
+        padding-right: 2vw;
     }
     #deerIcon {
         transition: 0.3s;
-        width: 7rem; /* Adjust the width of the image */
-        height: 7rem; /* Adjust the height of the image */
+        width: 45%; /* Adjust the width of the image */
+        height: 20vh; /* Adjust the height of the image */
     }
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    padding: 10px;
     text-decoration: none;
     cursor: pointer;
+}
+
+.nav-item:hover .icon {
+    padding-right: 1vw;
 }
 
 #liveIcon {
@@ -61,19 +79,4 @@
 #archiveIcon {
     background-image: url('../../../images/archiveIcon.png');
 }
-#deerIcon {
-    background-image: url('../../../images/deerIcon.png');
-}
 
-.text {
-    display: none; /* Initially hide text */
-    opacity: 0; /* Initially set opacity to 0 */
-    transition: opacity 0.5s; /* Slower text appearance */
-    color: rgb(161, 138, 75);
-    text-decoration: none;
-    font-size: larger;
-}
-
-.nav-item:hover .icon {
-    margin-right: 0;
-}
