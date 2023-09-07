@@ -1,0 +1,20 @@
+#header {
+    left: 4rem;
+    width: calc(100% - 4rem);
+    transition: 0.3s;
+    position: absolute;
+    background-color: rgb(75, 57, 9);
+}
+#title {
+    width: fit-content;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: rgb(161, 138, 75);
+    font-size: xx-large;
+    margin-left: 35rem;
+}
+.mainShrink {
+    transition: 0.3s;
+    left: 11rem !important;
+    width: calc(100% - 11rem) !important;
+}
