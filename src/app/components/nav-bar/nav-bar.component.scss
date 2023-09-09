@@ -53,7 +53,7 @@
     }
     .icon {
         transition: 0.3s;
-        padding-right: 2vw;
+        padding-right: 0.7vw;
     }
     #deerIcon {
         transition: 0.3s;
@@ -63,14 +63,16 @@
 }
 
 .nav-item {
+    padding-bottom: 2.7vh;
     display: flex;
     align-items: center;
     text-decoration: none;
     cursor: pointer;
 }
 
-.nav-item:hover .icon {
-    padding-right: 1vw;
+.nav-item:hover {
+    transform: scale(1.15);
+    transition: 0.24s;
 }
 
 #liveIcon {

@@ -1,25 +1,22 @@
-/* Define some variables for spacing and corner radius */
-$container-spacing: 20px;
-$box-spacing: 10px;
-$border-radius: 10px;
-
-/* Create a container for the boxes */
-.container {
-    display: flex;
-    justify-content: space-between;
-    gap: $container-spacing;
+.mainShrink {
+    transition: 0.3s;
+    left: 16vw !important;
+    width: calc(100% - 16vw) !important;
 }
 
-/* Style the individual boxes */
-.box {
-    flex: 1;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border-radius: $border-radius;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-
-    &:hover {
-        transform: scale(1.05);
+.container {
+    transition: 0.3s;
+    width: calc(100% - 5vw);
+    height: auto;
+    left: 5vw;
+    top: 7.5vh;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    app-room {
+        padding: 5vh 2vw;
+        height: min-content;
     }
 }
+

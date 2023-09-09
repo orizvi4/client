@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-rooms-list',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./rooms-list.component.scss']
 })
 export class RoomsListComponent {
-
+  @Input() sideNavStatus:boolean = false;
+  rooms: string[] = ["tjfgvjf","fdfdfd", "fdsdfgred", "gfvgff", "GFgfrf", "fdffd"];
 }

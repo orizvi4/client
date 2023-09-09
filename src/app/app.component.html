@@ -1,5 +1,6 @@
 <body>
     <main>
+        <app-rooms-list [sideNavStatus]="sideNavStatus"></app-rooms-list>
         <app-header [sideNavStatus]="sideNavStatus"></app-header>
         <app-nav-bar (sideNavToggled)="sideNavStatus = $event;"></app-nav-bar>
     </main>
