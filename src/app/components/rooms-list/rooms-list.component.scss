@@ -1,20 +1,8 @@
-.mainShrink {
-    transition: 0.3s;
-    left: 16vw !important;
-    width: calc(100% - 16vw) !important;
-}
-
 .container {
-    transition: 0.3s;
-    width: calc(100% - 5vw);
-    height: auto;
-    left: 5vw;
-    top: 7.5vh;
-    position: absolute;
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
-    app-room {
+    app-room-box {
         padding: 5vh 2vw;
         height: min-content;
     }

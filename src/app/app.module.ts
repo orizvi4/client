@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { RoomComponent } from './components/room/room/room.component';
+import { RoomBoxComponent } from './components/rooms-list/room-box/room-box.component';
 import { RequestService } from '../common/services/request.service';
 import { Constants } from '../common/constants';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,11 +17,12 @@ import { Constants } from '../common/constants';
     RoomsListComponent,
     NavBarComponent,
     HeaderComponent,
-    RoomComponent
+    RoomBoxComponent
   ],
   imports: [
     CommonModule,
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [RequestService, Constants],
   bootstrap: [AppComponent]

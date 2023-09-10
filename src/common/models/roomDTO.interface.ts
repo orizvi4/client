@@ -1,5 +1,5 @@
 export interface RoomDTO {
-    _id?: string;
+    _id: string;
     name: string;
     channels: string[];
 }

@@ -1,3 +1,18 @@
 body {
     background-color: rgba(114, 80, 16, 0.842);
 }
+.main {
+    transition: 0.3s;
+    width: calc(100% - 5vw);
+    height: auto;
+    left: 5vw;
+    top: 7.5vh;
+    position: absolute;
+    display: flex;
+}
+
+.mainShrink {
+    transition: 0.3s;
+    left: 16vw !important;
+    width: calc(100% - 16vw) !important;
+}

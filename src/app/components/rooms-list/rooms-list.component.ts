@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 
@@ -8,14 +9,14 @@ import { RequestService } from 'src/common/services/request.service';
   styleUrls: ['./rooms-list.component.scss']
 })
 export class RoomsListComponent implements OnInit {
-  constructor(private requestService: RequestService) {}
+  constructor(private requestService: RequestService, private router: Router) {}
   @Input() sideNavStatus:boolean = false;
-  rooms: string[] = [];
+  rooms: RoomDTO[] = [];
   
   async ngOnInit() {
-    const roomsList: RoomDTO[] = await this.requestService.getAllRooms();
-    for (const room of roomsList) {
-      this.rooms.push(room.name);
-    }
+    this.rooms = await this.requestService.getAllRooms();
+  }
+  navigateToRoom(id: string) {
+    this.router.navigate(['/room'], { state: { roomId: id } });
   }
 }
