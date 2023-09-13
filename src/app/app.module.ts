@@ -10,6 +10,8 @@ import { RoomBoxComponent } from './components/rooms-list/room-box/room-box.comp
 import { RequestService } from '../common/services/request.service';
 import { Constants } from '../common/constants';
 import { AppRoutingModule } from './app-routing.module';
+import { RoomComponent } from './components/room/room.component';
+import { CameraComponent } from './components/room/camera/camera.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { AppRoutingModule } from './app-routing.module';
     RoomsListComponent,
     NavBarComponent,
     HeaderComponent,
-    RoomBoxComponent
+    RoomBoxComponent,
+    RoomComponent,
+    CameraComponent
   ],
   imports: [
     CommonModule,
