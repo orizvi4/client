@@ -16,5 +16,8 @@ export class RoomComponent implements OnInit {
   async ngOnInit() {
     this.cameras = (await this.requestService.getRoomById((history.state).roomId)).channels;
     this.room = (history.state).roomName;
+    for (const camera of this.cameras) {
+      this.requestService.connectChannel(camera._id);
+    }
   }
 }
