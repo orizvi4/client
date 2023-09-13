@@ -1,9 +1,15 @@
-.container {
-    width: 100vw;
-    height: 100vw;
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 10rem;
+    app-channel {
+        display: flex;
+        padding: 0.5rem;
+    }
 }
-app-camera {
-    width: 100vw;
-    height: 100vw;
-    // padding: 5rem;
+#title {
+    display: flex;
+    margin: 0 0 0 41vw;
+    font-size: 7vh;
+    color: rgb(59, 18, 18);
 }

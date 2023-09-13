@@ -16,7 +16,7 @@ export class RoomsListComponent implements OnInit {
   async ngOnInit() {
     this.rooms = await this.requestService.getAllRooms();
   }
-  navigateToRoom(id: string) {
-    this.router.navigate(['/room'], { state: { roomId: id } });
+  navigateToRoom(id: string, name: string) {
+    this.router.navigate(['/room'], { state: { roomId: id, roomName: name } });
   }
 }

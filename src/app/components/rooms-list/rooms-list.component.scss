@@ -1,9 +1,9 @@
-.container {
+#container {
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     app-room-box {
-        padding: 5vh 2vw;
+        padding: 5vh 1vw 5vh 2vw;
         height: min-content;
     }
 }

@@ -1,17 +1,18 @@
 body {
     background-color: rgba(114, 80, 16, 0.842);
-}
-.main {
-    transition: 0.3s;
-    width: calc(100% - 5vw);
-    height: auto;
-    left: 5vw;
-    top: 7.5vh;
-    position: absolute;
-    display: flex;
-}
-.mainShrink {
-    transition: 0.3s;
-    left: 16vw !important;
-    width: calc(100% - 16vw) !important;
+    .main {
+        transition: 0.3s;
+        width: calc(100% - 5vw);
+        left: 5vw;
+        top: 7.5vh;
+        position: absolute;
+        display: flex;
+        height: calc(100% - 7.5vh);
+        overflow-y: auto;
+    }
+    .mainShrink {
+        transition: 0.3s;
+        left: 15vw !important;
+        width: calc(100% - 15vw) !important;
+    }
 }

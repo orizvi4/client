@@ -4,9 +4,9 @@ import { RoomsListComponent } from './components/rooms-list/rooms-list.component
 import { RoomComponent } from './components/room/room.component';
 
 const routes: Routes = [
-    {path:'roomsList',component:RoomsListComponent},
+    {path:'live',component:RoomsListComponent},
     {path:'room',component:RoomComponent},
-    {path:'',redirectTo: 'roomsList', pathMatch: "full"}
+    {path:'',redirectTo: 'live', pathMatch: "full"}
  ];
 
 @NgModule({

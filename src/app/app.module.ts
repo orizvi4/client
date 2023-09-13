@@ -11,7 +11,7 @@ import { RequestService } from '../common/services/request.service';
 import { Constants } from '../common/constants';
 import { AppRoutingModule } from './app-routing.module';
 import { RoomComponent } from './components/room/room.component';
-import { CameraComponent } from './components/room/camera/camera.component';
+import { ChannelComponent } from './components/room/channel/channel.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { CameraComponent } from './components/room/camera/camera.component';
     HeaderComponent,
     RoomBoxComponent,
     RoomComponent,
-    CameraComponent
+    ChannelComponent
   ],
   imports: [
     CommonModule,

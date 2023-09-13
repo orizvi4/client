@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CameraComponent } from './camera.component';
+import { ChannelComponent } from './channel.component';
 
-describe('CameraComponent', () => {
-  let component: CameraComponent;
-  let fixture: ComponentFixture<CameraComponent>;
+describe('ChannelComponent', () => {
+  let component: ChannelComponent;
+  let fixture: ComponentFixture<ChannelComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CameraComponent]
+      declarations: [ChannelComponent]
     });
-    fixture = TestBed.createComponent(CameraComponent);
+    fixture = TestBed.createComponent(ChannelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
