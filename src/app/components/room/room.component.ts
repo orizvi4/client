@@ -1,5 +1,6 @@
+import { state } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 
@@ -9,7 +10,7 @@ import { RequestService } from 'src/common/services/request.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  constructor(private router: ActivatedRoute, private requestService: RequestService) {}
+  constructor(private router: Router, private requestService: RequestService) {}
   room: string = '';
   cameras: ChannelDTO[] = [];
 
@@ -19,5 +20,8 @@ export class RoomComponent implements OnInit {
     for (const camera of this.cameras) {
       this.requestService.connectChannel(camera._id);
     }
+  }
+  navigateToChannel(id: string) {
+    this.router.navigate(['/live/room/channel'], {state: { id: id } });
   }
 }

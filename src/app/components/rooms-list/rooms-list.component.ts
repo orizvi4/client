@@ -17,6 +17,6 @@ export class RoomsListComponent implements OnInit {
     this.rooms = await this.requestService.getAllRooms();
   }
   navigateToRoom(id: string, name: string) {
-    this.router.navigate(['/room'], { state: { roomId: id, roomName: name } });
+    this.router.navigate(['/live/room'], { state: { roomId: id, roomName: name } });
   }
 }

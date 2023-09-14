@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { Location } from '@angular/common';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
@@ -8,10 +9,21 @@ import Player from 'video.js/dist/types/player';
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.scss']
 })
-export class ChannelComponent implements AfterViewInit {
-  constructor(private requestService: RequestService) {}
+export class ChannelComponent implements AfterViewInit, OnInit {
+  constructor(private requestService: RequestService, private location: Location) {}
 
   @Input() id: string = '';
+  zoom: boolean = false;
+
+  ngOnInit(): void {
+    if (this.id == '') {
+      this.id = "channelId" + (history.state).id;
+      this.zoom = true;
+    }
+  }
+  back() {
+    this.location.back();
+  }
   async ngAfterViewInit() {
     const player: Player = videojs(this.id, {
       autoplay: 'muted',

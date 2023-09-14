@@ -1,6 +1,6 @@
 <p id="title">{{room}}</p>
 <div id="container">
     <div id="video-item" *ngFor="let camera of cameras">
-        <app-channel [id]="'channelId' + camera._id"></app-channel>
+        <app-channel (click)="navigateToChannel(camera._id)" [id]="'channelId' + camera._id"></app-channel>
     </div>
 </div>
