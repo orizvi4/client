@@ -1,0 +1,16 @@
+<div id="filter-container">
+    <p id="filter-title">filter</p>
+
+    <!-- <input type="text" placeholder="room's' name" id="filter-name" /> -->
+
+    <label class="title">Start Time:</label>
+    <input type="datetime-local" class="time" id="start-time" />
+
+    <label class="title">End Time:</label>
+    <input type="datetime-local" class="time" id="end-time" />
+</div>
+<div id="recordings-container">
+    <div class="video-element" *ngFor="let stream of streams | keyvalue">
+        <video [id]='stream.key' class="video-js"></video>
+    </div>
+</div>

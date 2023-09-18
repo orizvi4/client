@@ -12,6 +12,7 @@ import { Constants } from '../common/constants';
 import { AppRoutingModule } from './app-routing.module';
 import { RoomComponent } from './components/room/room.component';
 import { ChannelComponent } from './components/room/channel/channel.component';
+import { ArchiveComponent } from './components/archive/archive.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ChannelComponent } from './components/room/channel/channel.component';
     HeaderComponent,
     RoomBoxComponent,
     RoomComponent,
-    ChannelComponent
+    ChannelComponent,
+    ArchiveComponent
   ],
   imports: [
     CommonModule,
