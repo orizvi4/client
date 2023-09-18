@@ -18,7 +18,16 @@ export class RequestService {
     async connectChannel(id: string): Promise<any> {
         return (await axios.put<string>(`${this.constants.ROOM_HANDLER}/channel/connect?id=${id}`)).data;
     }
-    async getRecordings(filter: FilterDTO): Promise<string[]> {
-        return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
+    async getRecordings(filter?: FilterDTO): Promise<string[]> {
+        if (filter == null) {
+            return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: 0, end: new Date(Date.now()) } })).data;
+        }
+        else {
+            const start: Date = new Date(filter.startAt);
+            start.setHours(start.getHours()+3);
+            const end: Date = new Date(filter.endAt);
+            end.setHours(end.getHours()+3);
+            return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: start, end: end } })).data;
+        }
     }
 }
