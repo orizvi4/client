@@ -23,11 +23,7 @@ export class RequestService {
             return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: 0, end: new Date(Date.now()) } })).data;
         }
         else {
-            const start: Date = new Date(filter.startAt);
-            start.setHours(start.getHours()+3);
-            const end: Date = new Date(filter.endAt);
-            end.setHours(end.getHours()+3);
-            return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: start, end: end } })).data;
+            return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
     }
 }

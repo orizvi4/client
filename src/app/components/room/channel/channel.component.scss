@@ -1,6 +1,10 @@
 #container {
     position: relative;
     cursor: pointer;
+    .video-js {
+        width: 31.3vw;
+        height: 53vh;
+    }
     .icon {
         background-repeat: no-repeat;
         background-size: contain;
@@ -27,13 +31,11 @@
 
 .zoom {
     cursor: auto !important;
-    width: 80vw;
-    height: 80vh;
-    left: 4vw;
+    left: 20vw;
     top: 5vh;
     .video-js {
-        width: 80vw;
-        height: 80vh;
+        width: 48vw !important;
+        height: 80vh !important;
     }
     #streamIcon {
         width: 4rem;

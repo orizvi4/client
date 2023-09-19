@@ -28,10 +28,10 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     const player: Player = videojs(this.id, {
       autoplay: 'muted',
     });
-    // const url: string = (await this.requestService.connectChannel(this.id.substring(9))).url;
+    const url: string = (await this.requestService.connectChannel(this.id.substring(9))).url;
     player.src({
-      // src: url,
-      src: "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+      src: url,
+      //src: "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
       type: 'application/x-mpegURL'
     });
   }
