@@ -5,6 +5,7 @@ import { Constants } from "../constants";
 import { ChannelDTO } from "../models/channelDTO.interface";
 import { FilterDTO } from "../models/filterDTO.iterface";
 import { RecordingDTO } from "../models/recordingDTO.interface";
+import { RoomRecordings } from "../models/roomRecordingsDTO.interface";
 
 @Injectable()
 export class RequestService {
@@ -18,12 +19,12 @@ export class RequestService {
     async connectChannel(id: string): Promise<any> {
         return (await axios.put<string>(`${this.constants.ROOM_HANDLER}/channel/connect?id=${id}`)).data;
     }
-    async getRecordings(filter?: FilterDTO): Promise<string[]> {
+    async getRecordings(filter?: FilterDTO): Promise<RoomRecordings[]> {
         if (filter == null) {
-            return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: 0, end: new Date(Date.now()) } })).data;
+            return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: 0, end: new Date(Date.now()) } })).data;
         }
         else {
-            return (await axios.get<string[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
+            return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
     }
 }

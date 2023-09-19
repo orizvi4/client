@@ -10,7 +10,12 @@
     <input type="button" id="filter-button" (click)="filterRecordings()" value="filter" />
 </div>
 <div id="recordings-container">
-    <div class="video-element" *ngFor="let stream of streams | keyvalue">
-        <video [id]='stream.key' class="video-js"></video>
+    <div *ngFor="let roomRecording of roomRecordings">
+        <label class="room-name">{{roomRecording.room}}</label>
+        <div id="video-element-container">
+            <div class="video-element" *ngFor="let stream of roomRecording.streams | keyvalue">
+                <video [id]='stream.key' class="video-js"></video>
+            </div>
+        </div>
     </div>
 </div>
