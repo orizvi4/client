@@ -5,49 +5,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     overflow: hidden;
-    transition: width 0.3s;
+    transition: 0.3s;
     .text {
-        display: none; /* Initially hide text */
-        opacity: 0; /* Initially set opacity to 0 */
-        transition: opacity 0.5s; /* Slower text appearance */
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s;
         color: rgb(161, 138, 75);
         text-decoration: none;
         font-size: 2vw;
     }
     .icon {
-        content: "";
-        display: inline-block;
-        width: 4vw; /* Adjust the width of the image */
-        height: 9vh; /* Adjust the height of the image */
-        background-repeat: no-repeat; /* Prevent the image from repeating */
-        background-size: contain; /* Scale the image to fit within the dimensions */
+        width: 3vw;
+        height: 7vh;
+        background-repeat: no-repeat;
+        background-size: contain;
         transition: 0.3s;
         display: flex;
-        align-items: center;
         cursor: pointer;
     }
     #deerIcon {
-        content: "";
-        display: inline-block;
-        background-repeat: no-repeat; /* Prevent the image from repeating */
-        background-size: contain; /* Scale the image to fit within the dimensions */
-        align-items: center;
+        background-repeat: no-repeat;
+        background-size: contain;
         display: flex;
-        vertical-align: auto;
         background-image: url('../../../images/deerIcon.png');
         transition: 0.3s;
-        width: 90%; /* Adjust the width of the image */
-        height: 15vh; /* Adjust the height of the image */
+        width: 90%;
+        height: 13%;
     }
 }
 
 .sidenav:hover {
-    width: 15vw; /* Expand on hover */
+    width: 15vw;
     .text {
-        display: block; /* Show text on hover */
-        opacity: 1; /* Gradually increase opacity */
+        display: block;
+        opacity: 1;
         transition: 0.3s;
     }
     .icon {
@@ -55,14 +47,14 @@
         padding-right: 0.7vw;
     }
     #deerIcon {
-        transition: 0.3s;
-        width: 45%; /* Adjust the width of the image */
-        height: 20vh; /* Adjust the height of the image */
+        transition: 0.25s;
+        width: 45%;
+        height: 20%;
     }
 }
 
 .nav-item {
-    padding-bottom: 2.7vh;
+    padding-bottom: 1.5vh;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -70,8 +62,8 @@
 }
 
 .nav-item:hover {
-    transform: scale(1.15);
-    transition: 0.24s;
+    transform: scale(1.1);
+    transition: 0.3s;
 }
 
 #liveIcon {
@@ -79,5 +71,8 @@
 }
 #archiveIcon {
     background-image: url('../../../images/archiveIcon.png');
+}
+#userManagerIcon {
+    background-image: url('../../../images/userManagerIcon.png');
 }
 

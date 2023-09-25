@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RoomComponent } from './components/room/room.component';
 import { ChannelComponent } from './components/room/channel/channel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
+import { UserManagerComponent } from './components/user-manager/user-manager.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ArchiveComponent } from './components/archive/archive.component';
     RoomBoxComponent,
     RoomComponent,
     ChannelComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    UserManagerComponent
   ],
   imports: [
     CommonModule,

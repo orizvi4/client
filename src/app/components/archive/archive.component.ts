@@ -19,14 +19,28 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
   roomRecordings: RoomRecordings[] = [];
   init!: Promise<void>;
 
-  async filterRecordings() {
-    for (const roomRecording of this.roomRecordings) {
-      for (const stream of roomRecording.streams) {
-        const player: Player = videojs.getPlayer(stream[0]);
-        player.dispose();
-      }
-    }
+  async ngOnInit(): Promise<void> {
+    this.init = new Promise<void>(async (resolve) => {
+      await this.updateStreams();
+      resolve();
+    })
+  }
+  async ngAfterViewInit(): Promise<void> {
+    await this.init;
+    await this.updateVideoPlayers();
+  }
+  ngOnDestroy(): void {
+    this.deleteVideoPlayers();
+  }
+
+  async filterRecordings(): Promise<void> {
+    this.deleteVideoPlayers();
     const filter: FilterDTO = { startAt: this.startTime.nativeElement.value, endAt: this.endTime.nativeElement.value };
+    await this.updateStreams(filter);
+    await this.updateVideoPlayers();
+  }
+  
+  async updateStreams(filter?: FilterDTO): Promise<void> {
     this.roomRecordings = await this.requestService.getRecordings(filter);
     for (const roomRecording of this.roomRecordings) {
       roomRecording.streams = new Map<string, string>([]);
@@ -34,41 +48,12 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
       for (let i = 0; i < recordings.length; i++) {
         roomRecording.streams.set("record" + i, recordings[i]);
       }
-      setTimeout(() => {
-        for (const stream of roomRecording.streams) {
-          console.log(stream[1]);
-          const player: Player = videojs(stream[0], {
-            autoplay: 'muted',
-            controls: true,
-            loop: true
-          });
-          player.src({
-            src: stream[1],
-            type: 'application/x-mpegURL'
-          });
-        }
-      }, 0);
     }
   }
 
-  async ngOnInit() {
-    this.init = new Promise<void>(async (resolve) => {
-      this.roomRecordings = await this.requestService.getRecordings();
-      for (const roomRecording of this.roomRecordings) {
-        roomRecording.streams = new Map<string, string>([]);
-        const recordings: string[] = roomRecording.recordings;
-        for (let i = 0; i < recordings.length; i++) {
-          roomRecording.streams.set("record" + i, recordings[i]);
-        }
-      }
-      resolve();
-    })
-  }
-  async ngAfterViewInit() {
-    await this.init;
+  async updateVideoPlayers(): Promise<void> {
     for (const roomRecording of this.roomRecordings) {
       for (const stream of roomRecording.streams) {
-        console.log(stream[0]);
         setTimeout(() => {
           const player: Player = videojs(stream[0], {
             autoplay: 'muted',
@@ -83,7 +68,8 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
-  ngOnDestroy(): void {
+  
+  deleteVideoPlayers(): void {
     for (const roomRecording of this.roomRecordings) {
       for (const stream of roomRecording.streams) {
         const player: Player = videojs.getPlayer(stream[0]);

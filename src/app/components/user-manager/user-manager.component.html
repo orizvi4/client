@@ -1,0 +1,26 @@
+<table class="grid">
+    <tr id="table-head">
+        <th></th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>username</th>
+        <th>Date of Creation</th>
+        <th>Actions</th>
+    </tr>
+    <tr id="table-body" *ngFor="let user of users">
+        <td id="user-id">{{users.indexOf(user) + 1}}</td>
+        <td>{{user.givenName}}</td>
+        <td>{{user.sn}}</td>
+        <td>{{user.userPrincipalName}}</td>
+        <td>{{user.whenCreated}}</td>
+        <td>
+            <a class="icon" id="editIcon" ></a>
+            <a class="icon" id="trashIcon" (click)="deleteUser(user)" ></a>
+        </td>
+    </tr>
+    <tr id="table-foot">
+        <td colspan="6">
+            <input id="create-user-button" type="button" value="create new user" />
+        </td>
+    </tr>
+</table>

@@ -6,6 +6,7 @@ import { ChannelDTO } from "../models/channelDTO.interface";
 import { FilterDTO } from "../models/filterDTO.iterface";
 import { RecordingDTO } from "../models/recordingDTO.interface";
 import { RoomRecordings } from "../models/roomRecordingsDTO.interface";
+import { UserDTO } from "../models/userDTO.interface";
 
 @Injectable()
 export class RequestService {
@@ -26,5 +27,11 @@ export class RequestService {
         else {
             return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
+    }
+    async getUsers(): Promise<UserDTO[]> {
+        return (await axios.get<UserDTO[]>(`${this.constants.AUTH_SERVICE}/users`)).data;
+    }
+    async deleteUser(name: string): Promise<void> {
+        await axios.delete(`${this.constants.AUTH_SERVICE}/users/delete`, {params: {username: name}});
     }
 }

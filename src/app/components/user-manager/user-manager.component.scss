@@ -1,0 +1,87 @@
+.grid {
+    color: #333;
+    background: #fff;
+    border-collapse: collapse;
+    margin-left: 20vw;
+    margin-top: 7vh;
+    width: 80%;
+
+    tr {
+        box-sizing: border-box;
+        height: 6vh;
+
+        th {
+            padding-right: 2rem;
+            border: 0.1rem solid rgb(197, 191, 191);
+        }
+
+        td {
+            border: 0.1rem solid rgb(197, 191, 191);
+        }
+
+        #user-id {
+            text-align: center;
+            padding-right: 0;
+        }
+        .icon {
+            background-repeat: no-repeat;
+            background-size: contain;
+            display: inline-block;
+            width: 1.3rem;
+            height: 1.3rem;
+            cursor: pointer;
+    
+            &:hover {
+                transform: scale(1.1);
+            }
+
+        }
+
+        #editIcon {
+            background-image: url('../../../images/editIcon.png');
+            margin-left: 1vw;
+        }
+
+        #trashIcon {
+            background-image: url('../../../images/trashIcon.png');
+            margin-left: 1.5vw;
+        }
+
+        &:hover {
+            background: #fbfbfb;
+        }
+    }
+
+    #table-foot {
+        line-height: 2.4rem;
+        background: lighten(#75D64B, 37%);
+
+        #create-user-button {
+            font-family: "Open Sans";
+            font-size: inherit;
+            color: inherit;
+            border: 0px;
+            background: none;
+            line-height: inherit;
+            height: inherit;
+            padding: 0px 10px;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            font-weight: bold;
+            box-sizing: border-box;
+            outline: none;
+            padding-left: 2rem;
+
+            &:hover {
+                transform: scale(1.05);
+                transition: 0.1s;
+            }
+
+        }
+
+        &:hover {
+            background: lighten(#75D64B, 34%);
+        }
+    }
+}
