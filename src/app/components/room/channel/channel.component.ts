@@ -13,6 +13,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   constructor(private requestService: RequestService, private location: Location) {}
 
   @Input() id: string = '';
+  @Input() recording: boolean = false;
   zoom: boolean = false;
 
   ngOnInit(): void {
@@ -21,12 +22,14 @@ export class ChannelComponent implements AfterViewInit, OnInit {
       this.zoom = true;
     }
   }
-  back() {
+  async back() {
+    await this.requestService.stopChannelRecording(this.id.substring(9));
     this.location.back();
   }
   async ngAfterViewInit() {
     const player: Player = videojs(this.id, {
       autoplay: 'muted',
+      loop: true
     });
     const url: string = (await this.requestService.connectChannel(this.id.substring(9))).url;
     player.src({
@@ -38,6 +41,15 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     const player: Player = videojs.getPlayer(this.id);
     if (player) {
       player.dispose();
+    }
+  }
+  async record() {
+    this.recording = !this.recording;
+    if (this.recording) {
+      await this.requestService.startChannelRecording(this.id.substring(9));
+    }
+    else {
+      await this.requestService.stopChannelRecording(this.id.substring(9));
     }
   }
 }

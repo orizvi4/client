@@ -2,14 +2,38 @@
     display: flex;
     flex-wrap: wrap;
     margin-left: 10rem;
+
     app-channel {
         display: flex;
         padding: 0.5rem;
     }
 }
-#title {
+
+#title-container {
+    margin-top: 2vh;
+    background-color: #e91c3e;
+    margin-left: 40vw;
     display: flex;
-    margin: 0 0 0 41vw;
-    font-size: 7vh;
-    color: rgb(59, 18, 18);
+    align-items: center;
+    border-radius: 2vh;
+    height: 8vh;
+    
+    #title {
+        font-size: 7vh;
+        color: rgb(59, 18, 18);
+        padding-left: 1vw;
+    }
+    #recordingButton {
+        background-image: url('../../../images/recordingButton.png');
+        width: 4vw;
+        height: 6vh;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-decoration: none;
+        margin-left: 1vw;
+    }
+    .recordingStart {
+        background-image: url('../../../images/stopRecording.png') !important;
+    }
 }

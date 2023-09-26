@@ -2,5 +2,6 @@
     <video [id]="id" class="video-js"></video>
     <a class="icon" id="streamIcon"></a>
     <a class="icon" (click)="back()" id="backIcon"></a>
-    <a class="icon" id="recordingIcon"></a>
+    <a class="icon" id="recordingIcon" *ngIf="recording"></a>
+    <a class="icon" id="recordingButton" (click)="record()" [ngClass]="{'recordingStart': recording}"></a>
 </div>

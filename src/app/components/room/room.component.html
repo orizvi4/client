@@ -1,6 +1,10 @@
-<p id="title">{{room}}</p>
+<div id="title-container">
+    <p id="title">{{room}}</p>
+    <a id="recordingButton" (click)="record()" [ngClass]="{'recordingStart': recording}"></a>
+</div>
 <div id="container">
-    <div id="video-item" *ngFor="let camera of cameras">
-        <app-channel (click)="navigateToChannel(camera._id)" [id]="'channelId' + camera._id"></app-channel>
+    <div id="video-item" *ngFor="let channel of channels">
+        <app-channel (click)="navigateToChannel(channel._id)" [recording]="recording"
+            [id]="'channelId' + channel._id"></app-channel>
     </div>
 </div>

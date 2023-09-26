@@ -2,7 +2,7 @@
     position: relative;
     cursor: pointer;
     .video-js {
-        width: 31.3vw;
+        width: 31.6vw;
         height: 53vh;
     }
     .icon {
@@ -26,7 +26,7 @@
         right: 0.5rem;
         animation: blink 2s infinite;
     }
-
+    
 }
 
 .zoom {
@@ -34,7 +34,7 @@
     left: 20vw;
     top: 5vh;
     .video-js {
-        width: 48vw !important;
+        width: 47.7vw !important;
         height: 80vh !important;
     }
     #streamIcon {
@@ -50,12 +50,24 @@
         cursor: pointer;
         transition: 0.3s;
     }
-
+    
     #recordingIcon {
         width: 3rem;
         height: 4rem;
         cursor: auto;
         animation: blink 2s infinite;
+    }
+    #recordingButton {
+        background-image: url('../../../../images/recordingButton.png');
+        background-color: #e91c3e;
+        margin-top: 60%;
+        background-position: center center;
+        border-radius: 0 2vh 2vh 0;
+        width: 5vw;
+        cursor: pointer;
+    }
+    .recordingStart {
+        background-image: url('../../../../images/stopRecording.png') !important;
     }
 }
 .zoom:hover {

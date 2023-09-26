@@ -28,6 +28,12 @@ export class RequestService {
             return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
     }
+    async stopChannelRecording(id: string) {
+        await axios.put<string>(`${this.constants.ROOM_HANDLER}/channel/recorders/stop?id=${id}`);
+    }
+    async startChannelRecording(id: string) {
+        await axios.post<string>(`${this.constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`);
+    }
     async getUsers(): Promise<UserDTO[]> {
         return (await axios.get<UserDTO[]>(`${this.constants.AUTH_SERVICE}/users`)).data;
     }
