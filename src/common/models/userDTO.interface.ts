@@ -3,4 +3,5 @@ export interface UserDTO {
     givenName: string;//first name
     sn: string;//last name
     whenCreated: string;
+    isEdit: boolean;
 }

@@ -7,15 +7,34 @@
         <th>Date of Creation</th>
         <th>Actions</th>
     </tr>
-    <tr id="table-body" *ngFor="let user of users">
-        <td id="user-id">{{users.indexOf(user) + 1}}</td>
-        <td>{{user.givenName}}</td>
-        <td>{{user.sn}}</td>
+    <tr id="table-body" *ngFor="let user of users; let i = index">
+        <td id="user-id">{{i+1}}</td>
+
+        <td *ngIf="user.isEdit">
+            <input type="text" class="editInput" [(ngModel)]="user.givenName" />
+        </td>
+        <td *ngIf="!user.isEdit">
+            {{user.givenName}}
+        </td>
+
+        <td *ngIf="user.isEdit">
+            <input type="text" class="editInput" [(ngModel)]="user.sn" />
+        </td>
+        <td *ngIf="!user.isEdit">
+            {{user.sn}}
+        </td>
+
         <td>{{user.userPrincipalName}}</td>
         <td>{{user.whenCreated}}</td>
         <td>
-            <a class="icon" id="editIcon" ></a>
-            <a class="icon" id="trashIcon" (click)="deleteUser(user)" ></a>
+            <div *ngIf="user.isEdit">
+                <a class="icon" id="updateIcon" (click)="updateUser(user)"></a>
+                <a class="icon" id="cancelIcon" (click)="cancelEdit(user)"></a>
+            </div>
+            <div *ngIf="!user.isEdit">
+                <a class="icon" id="editIcon" (click)="editToggle(user)"></a>
+                <a class="icon" id="trashIcon" (click)="deleteUser(user)"></a>
+            </div>
         </td>
     </tr>
     <tr id="table-foot">

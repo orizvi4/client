@@ -37,7 +37,7 @@ export class RequestService {
     async getUsers(): Promise<UserDTO[]> {
         return (await axios.get<UserDTO[]>(`${this.constants.AUTH_SERVICE}/users`)).data;
     }
-    async deleteUser(name: string): Promise<void> {
-        await axios.delete(`${this.constants.AUTH_SERVICE}/users/delete`, {params: {username: name}});
+    async deleteUser(name: string): Promise<string> {
+        return (await axios.delete(`${this.constants.AUTH_SERVICE}/users/delete`, {params: {username: name}})).data;
     }
 }

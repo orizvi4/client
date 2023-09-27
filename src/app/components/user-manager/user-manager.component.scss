@@ -17,12 +17,18 @@
 
         td {
             border: 0.1rem solid rgb(197, 191, 191);
+
+            .editInput {
+                width: fit-content;
+                padding: 1vh 0 1vh 0;
+            }
         }
 
         #user-id {
             text-align: center;
             padding-right: 0;
         }
+
         .icon {
             background-repeat: no-repeat;
             background-size: contain;
@@ -30,7 +36,7 @@
             width: 1.3rem;
             height: 1.3rem;
             cursor: pointer;
-    
+
             &:hover {
                 transform: scale(1.1);
             }
@@ -41,14 +47,20 @@
             background-image: url('../../../images/editIcon.png');
             margin-left: 1vw;
         }
-
         #trashIcon {
             background-image: url('../../../images/trashIcon.png');
             margin-left: 1.5vw;
         }
-
         &:hover {
             background: #fbfbfb;
+        }
+        #cancelIcon {
+            background-image: url('../../../images/XButton.png');
+            margin-left: 1.5vw;
+        }
+        #updateIcon {
+            margin-left: 1vw;
+            background-image: url('../../../images/VButton.png');
         }
     }
 
