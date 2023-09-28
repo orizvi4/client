@@ -64,7 +64,10 @@ export class UserManagerComponent implements OnInit {
       this.users.push(this.tempUser);
     }
     else {
-
+      this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
+      this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
+      this.users.splice(this.users.indexOf(user), 1);
+      this.users.push(this.tempUser);
     }
   }
   async createUser() {

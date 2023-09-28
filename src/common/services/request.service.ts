@@ -40,4 +40,19 @@ export class RequestService {
     async deleteUser(name: string): Promise<string> {
         return (await axios.delete(`${this.constants.AUTH_SERVICE}/users/delete`, {params: {username: name}})).data;
     }
+    async addUser(user: UserDTO): Promise<UserDTO> {
+        return (await axios.post(`${this.constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn})).data;
+    }
+    async modifyUser(oldUsername:string, user: UserDTO): Promise<UserDTO> {
+        const body = [
+            {
+                username: oldUsername
+            },
+            {
+                username: user.givenName,
+                sn: user.sn
+            }
+        ];
+        return (await axios.put(`${this.constants.AUTH_SERVICE}/users/modify`, body)).data;
+    }
 }
