@@ -12,12 +12,16 @@ import swal from 'sweetalert';
 export class UserManagerComponent implements OnInit {
   constructor(private requestService: RequestService) { }
   users!: UserDTO[];
-  tempUser!: UserDTO;
+  tempUser: UserDTO | null | undefined = undefined;
+
+  formatDate(date: string) {
+    return `${date.substring(6, 8)}-${date.substring(4, 6)}-${date.substring(0, 4)}`;
+  }
 
   async ngOnInit(): Promise<void> {
     this.users = await this.requestService.getUsers();
     for (const user of this.users) {
-      user.whenCreated = `${user.whenCreated.substring(6, 8)}-${user.whenCreated.substring(4, 6)}-${user.whenCreated.substring(0, 4)}`;
+      user.whenCreated = this.formatDate(user.whenCreated);
     }
   }
   async deleteUser(user: UserDTO): Promise<void> {
@@ -41,13 +45,37 @@ export class UserManagerComponent implements OnInit {
 
     }
   }
-  updateUser(user: UserDTO) {
-
-  }
   cancelEdit(user: UserDTO) {
-    user.isEdit = false;
-    user.givenName = this.tempUser.givenName;
-    user.sn = this.tempUser.sn;
+    if (this.tempUser != null) {
+      user.isEdit = false;
+      user.givenName = this.tempUser.givenName;
+      user.sn = this.tempUser.sn;
+    }
+    else {
+      this.users.pop();
+      this.tempUser = undefined;
+    }
+  }
+  async updateUser(user: UserDTO) {
+    if (this.tempUser == null) { //new user
+      this.tempUser = await this.requestService.addUser(user);
+      this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
+      this.users.pop();
+      this.users.push(this.tempUser);
+    }
+    else {
+
+    }
+  }
+  async createUser() {
+    if (this.tempUser === undefined || this.tempUser != null) {
+      for (const user of this.users) {
+        user.isEdit = false;
+      }
+      this.tempUser = null;
+      const us: UserDTO = {userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true};
+      this.users.push(us);
+    }
   }
 
   editToggle(user: UserDTO) {
