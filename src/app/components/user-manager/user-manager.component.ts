@@ -25,24 +25,40 @@ export class UserManagerComponent implements OnInit {
     }
   }
   async deleteUser(user: UserDTO): Promise<void> {
-    const del = await swal({
-      title: "Are you sure?",
-      text: "Your will not be able to recover this user",
-      icon: "warning",
-      buttons: {
-        cancel: {
-          value: false,
-          visible: true
+    try {
+      const del = await swal({
+        title: "Are you sure?",
+        text: "Your will not be able to recover this user",
+        icon: "warning",
+        buttons: {
+          cancel: {
+            value: false,
+            visible: true
+          },
+          confirm: {
+            text: "delete"
+          }
         },
-        confirm: {
-          text: "delete"
+      });
+      if (del) {
+        const res = await this.requestService.deleteUser(user.givenName);
+        if (res == 'success') {
+          this.users.splice(this.users.indexOf(user), 1);
         }
-      },
-    });
-    if (del) {
-      console.log(await this.requestService.deleteUser(user.givenName));
-      this.users.splice(this.users.indexOf(user), 1);
-
+        else {
+          await swal({
+            title: "couldn't delete user",
+            icon: "error",
+          });
+        }
+      }
+    }
+    catch (err) {
+      console.log(err);
+      await swal({
+        title: "a server error has occured",
+        icon: "error",
+      });
     }
   }
   cancelEdit(user: UserDTO) {
@@ -57,17 +73,42 @@ export class UserManagerComponent implements OnInit {
     }
   }
   async updateUser(user: UserDTO) {
-    if (this.tempUser == null) { //new user
-      this.tempUser = await this.requestService.addUser(user);
-      this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
-      this.users.pop();
-      this.users.push(this.tempUser);
+    try {
+      if (this.tempUser == null) { //new user
+        this.tempUser = await this.requestService.addUser(user);
+        if (this.tempUser) {
+          this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
+          this.users.pop();
+          this.users.push(this.tempUser);
+        }
+        else {
+          await swal({
+            title: "couldn't create a new user",
+            icon: "error",
+          });
+        }
+      }
+      else {
+        this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
+        if (this.tempUser) {
+          this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
+          this.users.splice(this.users.indexOf(user), 1);
+          this.users.push(this.tempUser);
+        }
+        else {
+          await swal({
+            title: "couldn't update user",
+            icon: "error",
+          });
+        }
+      }
     }
-    else {
-      this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
-      this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
-      this.users.splice(this.users.indexOf(user), 1);
-      this.users.push(this.tempUser);
+    catch (err) {
+      console.log(err);
+      await swal({
+        title: "a server error has occured",
+        icon: "error",
+      });
     }
   }
   async createUser() {
@@ -76,7 +117,7 @@ export class UserManagerComponent implements OnInit {
         user.isEdit = false;
       }
       this.tempUser = null;
-      const us: UserDTO = {userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true};
+      const us: UserDTO = { userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
       this.users.push(us);
     }
   }
