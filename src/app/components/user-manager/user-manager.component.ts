@@ -12,7 +12,7 @@ import swal from 'sweetalert';
 export class UserManagerComponent implements OnInit {
   constructor(private requestService: RequestService) { }
   users!: UserDTO[];
-  tempUser: UserDTO | null | undefined = undefined;
+  tempUser: UserDTO | null = null;
 
   formatDate(date: string) {
     return `${date.substring(6, 8)}-${date.substring(4, 6)}-${date.substring(0, 4)}`;
@@ -63,7 +63,7 @@ export class UserManagerComponent implements OnInit {
     }
   }
   cancelEdit(user: UserDTO) {
-    if (this.tempUser != null) {
+    if (this.tempUser != null && this.tempUser.givenName != '') {
       user.isEdit = false;
       user.givenName = this.tempUser.givenName;
       user.sn = this.tempUser.sn;
@@ -71,56 +71,66 @@ export class UserManagerComponent implements OnInit {
     }
     else {
       this.users.pop();
-      this.tempUser = undefined;
+      this.tempUser = null;
     }
   }
-  async updateUser(user: UserDTO) {//here
-    try {
-      if (this.tempUser == null) { //new user
-        this.tempUser = await this.requestService.addUser(user);
-        if (this.tempUser) {
-          this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
-          this.users.pop();
-          this.users.push(this.tempUser);
+  async updateUser(user: UserDTO) {
+    if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
+      try {
+        if (this.tempUser != null && this.tempUser.givenName != '') { //new user
+          this.tempUser = await this.requestService.addUser(user);
+          if (this.tempUser) {
+            this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
+            this.users.pop();
+            this.users.push(this.tempUser);
+            this.tempUser = null;
+          }
+          else {
+            await swal({
+              title: "couldn't create a new user",
+              icon: "error",
+            });
+          }
         }
         else {
-          await swal({
-            title: "couldn't create a new user",
-            icon: "error",
-          });
+          const whenCreated: string = this.tempUser.whenCreated;
+          this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
+          if (this.tempUser) {
+            this.tempUser.whenCreated = whenCreated;
+            this.users.splice(this.users.indexOf(user), 1);
+            this.users.push(this.tempUser);
+            this.tempUser = null;
+          }
+          else {
+            await swal({
+              title: "couldn't update user",
+              icon: "error",
+            });
+          }
         }
       }
-      else {
-        this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
-        if (this.tempUser) {
-          this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
-          this.users.splice(this.users.indexOf(user), 1);
-          this.users.push(this.tempUser);
-        }
-        else {
-          await swal({
-            title: "couldn't update user",
-            icon: "error",
-          });
-        }
+      catch (err) {
+        console.log(err);
+        await swal({
+          title: "a server error has occured",
+          icon: "error",
+        });
       }
     }
-    catch (err) {
-      console.log(err);
+    else if (this.tempUser != null) {
       await swal({
-        title: "a server error has occured",
+        title: "please fill the name of the user",
         icon: "error",
       });
     }
   }
   async createUser() {
-    if (this.tempUser === undefined || this.tempUser != null) {
+    if (this.tempUser === null) {
       for (const user of this.users) {
         user.isEdit = false;
       }
-      this.tempUser = null;
-      const us: UserDTO = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
-      this.users.push(us);
+      this.tempUser = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
+      this.users.push(this.tempUser);
     }
   }
 
