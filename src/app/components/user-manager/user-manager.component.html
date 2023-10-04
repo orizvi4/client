@@ -5,6 +5,7 @@
         <th>Last Name</th>
         <th>User Login Name</th>
         <th>Date of Creation</th>
+        <th>Authority Level</th>
         <th>Actions</th>
     </tr>
     <tr id="table-body" *ngFor="let user of users; let i = index">
@@ -26,6 +27,17 @@
 
         <td>{{user.userPrincipalName}}</td>
         <td>{{user.whenCreated}}</td>
+
+        <td *ngIf="user.isEdit">
+            <select id="groups-list" [(ngModel)]="user.group">
+                <option value="users">users</option>
+                <option value="managers">managers</option>
+                <option value="commanders">commanders</option>
+              </select>
+        </td>
+        <td *ngIf="!user.isEdit">
+            {{user.group}}
+        </td>
         <td>
             <div *ngIf="user.isEdit">
                 <a class="icon" id="updateIcon" (click)="updateUser(user)"></a>
@@ -38,7 +50,7 @@
         </td>
     </tr>
     <tr id="table-foot">
-        <td colspan="6">
+        <td colspan="7">
             <input id="create-user-button" type="button" value="create new user" (click)="createUser()" />
         </td>
     </tr>

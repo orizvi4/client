@@ -22,6 +22,7 @@ export class UserManagerComponent implements OnInit {
     this.users = await this.requestService.getUsers();
     for (const user of this.users) {
       user.whenCreated = this.formatDate(user.whenCreated);
+      user.group = await this.requestService.getUserGroup(user.givenName);
     }
   }
   async deleteUser(user: UserDTO): Promise<void> {
@@ -66,13 +67,14 @@ export class UserManagerComponent implements OnInit {
       user.isEdit = false;
       user.givenName = this.tempUser.givenName;
       user.sn = this.tempUser.sn;
+      user.group = this.tempUser.group;
     }
     else {
       this.users.pop();
       this.tempUser = undefined;
     }
   }
-  async updateUser(user: UserDTO) {
+  async updateUser(user: UserDTO) {//here
     try {
       if (this.tempUser == null) { //new user
         this.tempUser = await this.requestService.addUser(user);
@@ -117,7 +119,7 @@ export class UserManagerComponent implements OnInit {
         user.isEdit = false;
       }
       this.tempUser = null;
-      const us: UserDTO = { userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
+      const us: UserDTO = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
       this.users.push(us);
     }
   }

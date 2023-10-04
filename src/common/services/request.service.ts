@@ -7,6 +7,7 @@ import { FilterDTO } from "../models/filterDTO.iterface";
 import { RecordingDTO } from "../models/recordingDTO.interface";
 import { RoomRecordings } from "../models/roomRecordingsDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
+import { group } from "@angular/animations";
 
 @Injectable()
 export class RequestService {
@@ -34,6 +35,8 @@ export class RequestService {
     async startChannelRecording(id: string) {
         await axios.post<string>(`${this.constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`);
     }
+
+
     async getUsers(): Promise<UserDTO[]> {
         return (await axios.get<UserDTO[]>(`${this.constants.AUTH_SERVICE}/users`)).data;
     }
@@ -41,7 +44,7 @@ export class RequestService {
         return (await axios.delete(`${this.constants.AUTH_SERVICE}/users/delete`, {params: {username: name}})).data;
     }
     async addUser(user: UserDTO): Promise<UserDTO> {
-        return (await axios.post(`${this.constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn})).data;
+        return (await axios.post(`${this.constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn, group: user.group})).data;
     }
     async modifyUser(oldUsername:string, user: UserDTO): Promise<UserDTO> {
         const body = [
@@ -50,9 +53,13 @@ export class RequestService {
             },
             {
                 username: user.givenName,
-                sn: user.sn
+                sn: user.sn,
+                group: user.group
             }
         ];
         return (await axios.put(`${this.constants.AUTH_SERVICE}/users/modify`, body)).data;
+    }
+    async getUserGroup(username: string): Promise<string> {
+        return (await axios.get(`${this.constants.AUTH_SERVICE}/groups/user`, {params: {username: username}})).data;
     }
 }

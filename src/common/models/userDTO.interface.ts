@@ -4,4 +4,5 @@ export interface UserDTO {
     sn: string;//last name
     whenCreated: string;
     isEdit: boolean;
+    group: string;
 }
