@@ -47,17 +47,21 @@
             background-image: url('../../../images/editIcon.png');
             margin-left: 1vw;
         }
+
         #trashIcon {
             background-image: url('../../../images/trashIcon.png');
             margin-left: 1.5vw;
         }
+
         &:hover {
             background: #fbfbfb;
         }
+
         #cancelIcon {
             background-image: url('../../../images/XButton.png');
             margin-left: 1.5vw;
         }
+
         #updateIcon {
             margin-left: 1vw;
             background-image: url('../../../images/VButton.png');
@@ -84,6 +88,7 @@
             box-sizing: border-box;
             outline: none;
             padding-left: 2rem;
+
 
             &:hover {
                 transform: scale(1.05);

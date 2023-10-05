@@ -4,17 +4,25 @@
     transition: 0.3s;
     position: absolute;
     background-color: rgb(75, 57, 9);
+
+    #title {
+        width: fit-content;
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+        color: rgb(161, 138, 75);
+        font-size: 5vh;
+        margin-left: 45vw;
+        display: inline-block;
+        vertical-align: middle;
+        transition: 0.3s;
+    }
 }
-#title {
-    width: fit-content;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    color: rgb(161, 138, 75);
-    font-size: 5vh;
-    margin-left: 45vw;
-}
+
 .mainShrink {
     transition: 0.3s;
     left: 15vw !important;
     width: calc(100% - 15vw) !important;
+    #title {
+        margin-left: 35vw !important;
+    }
 }

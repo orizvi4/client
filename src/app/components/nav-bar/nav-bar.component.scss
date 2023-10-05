@@ -7,6 +7,9 @@
     align-items: center;
     overflow: hidden;
     transition: 0.3s;
+    #spacer {
+        flex-grow: 1;
+    }
     .text {
         display: none;
         opacity: 0;
@@ -74,5 +77,8 @@
 }
 #userManagerIcon {
     background-image: url('../../../images/userManagerIcon.png');
+}
+#profileIcon {
+    background-image: url('../../../images/profileIcon.png');
 }
 
