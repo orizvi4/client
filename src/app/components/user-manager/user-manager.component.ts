@@ -77,7 +77,7 @@ export class UserManagerComponent implements OnInit {
   async updateUser(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
-        if (this.tempUser != null && this.tempUser.givenName != '') { //new user
+        if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user exist
           this.tempUser = await this.requestService.addUser(user);
           if (this.tempUser) {
             this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
@@ -124,6 +124,7 @@ export class UserManagerComponent implements OnInit {
       });
     }
   }
+  
   async createUser() {
     if (this.tempUser === null) {
       for (const user of this.users) {
