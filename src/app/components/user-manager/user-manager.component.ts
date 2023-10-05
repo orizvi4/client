@@ -63,7 +63,7 @@ export class UserManagerComponent implements OnInit {
     }
   }
   cancelEdit(user: UserDTO) {
-    if (this.tempUser != null && this.tempUser.givenName != '') {
+    if (this.tempUser != null && this.tempUser.whenCreated != '') {
       user.isEdit = false;
       user.givenName = this.tempUser.givenName;
       user.sn = this.tempUser.sn;
@@ -71,8 +71,8 @@ export class UserManagerComponent implements OnInit {
     }
     else {
       this.users.pop();
-      this.tempUser = null;
     }
+    this.tempUser = null;
   }
   async updateUser(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
@@ -133,13 +133,27 @@ export class UserManagerComponent implements OnInit {
       this.tempUser = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
       this.users.push(this.tempUser);
     }
+    else {
+      await swal({
+        title: "please finish updating current user",
+        icon: "warning",
+      });
+    }
   }
 
-  editToggle(user: UserDTO) {
-    for (const user of this.users) {
-      user.isEdit = false;
+  async editToggle(user: UserDTO) {
+    if (this.tempUser == null) {
+      for (const user of this.users) {
+        user.isEdit = false;
+      }
+      this.tempUser = { ...user };
+      user.isEdit = true;
     }
-    this.tempUser = { ...user };
-    user.isEdit = true;
+    else {
+      await swal({
+        title: "please finish updating current user",
+        icon: "warning",
+      });
+    }
   }
 }
