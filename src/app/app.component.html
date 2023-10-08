@@ -1,7 +1,12 @@
 <body>
-    <app-header [sideNavStatus]="sideNavStatus"></app-header>
-    <div class="main" [ngClass]="{'mainShrink': sideNavStatus}">
-        <router-outlet></router-outlet>
+    <div *ngIf="!user">
+        <app-login (userUpdate)="user = $event"></app-login>
     </div>
-    <app-nav-bar (sideNavToggled)="sideNavStatus = $event;"></app-nav-bar>
+    <div *ngIf="user">
+        <app-header [sideNavStatus]="sideNavStatus"></app-header>
+        <div class="main" [ngClass]="{'mainShrink': sideNavStatus}">
+            <router-outlet></router-outlet>
+        </div>
+        <app-nav-bar [user]="user" (sideNavToggled)="sideNavStatus = $event;"></app-nav-bar>
+    </div>
 </body>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserDTO } from 'src/common/models/userDTO.interface';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   sideNavStatus: boolean = false;
-  title = 'Client';
+  //   authority: string = '';
+  user!: UserDTO;
 }

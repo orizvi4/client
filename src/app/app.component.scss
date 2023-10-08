@@ -1,5 +1,9 @@
 body {
     background-color: rgba(114, 80, 16, 0.842);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
     .main {
         transition: 0.3s;
         width: calc(100% - 5vw);

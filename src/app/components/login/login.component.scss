@@ -1,0 +1,56 @@
+body {
+    background-color: #583911;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 0 6rem 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    margin-top: 10vh;
+    margin-left: 35vw;
+    height: fit-content;
+    background-image: url('../../../images/keyIcon.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+h1 {
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.text-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 3vh 3vh 0 0;
+    border: none;
+    border-bottom: 0.3rem solid black;
+    text-align: left;
+    background-color: #ccc;
+    width: 18vw;
+    margin-bottom: 5vh;
+}
+#password {
+    margin-bottom: 19vh;
+}
+
+#login-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 20px 34px;
+    border-radius: 2rem;
+    cursor: pointer;
+    &:hover {
+        background-color: #589ae0;
+    }
+}

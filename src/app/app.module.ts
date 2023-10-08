@@ -15,6 +15,8 @@ import { RoomComponent } from './components/room/room.component';
 import { ChannelComponent } from './components/room/channel/channel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
+import { LoginComponent } from './components/login/login.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
     RoomComponent,
     ChannelComponent,
     ArchiveComponent,
-    UserManagerComponent
+    UserManagerComponent,
+    LoginComponent,
+    UserCardComponent
   ],
   imports: [
     CommonModule,

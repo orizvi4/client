@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserDTO } from 'src/common/models/userDTO.interface';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
 export class NavBarComponent {
   constructor(private router: Router) {}
   @Output() sideNavToggled = new EventEmitter<boolean>();
+  @Input() authority: string = '';
   menuStatus: boolean = false;
+  userPopUp: boolean = false;
+  @Input() user!: UserDTO;
 
   sideNavToggle() {
     this.menuStatus = !this.menuStatus;
@@ -17,5 +21,8 @@ export class NavBarComponent {
   }
   navigate(place: string) {
     this.router.navigate([`/${place}`]);
+  }
+  openUserMenu() {
+    this.userPopUp = !this.userPopUp;
   }
 }
