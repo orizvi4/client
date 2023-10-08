@@ -10,7 +10,7 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
 export class NavBarComponent {
   constructor(private router: Router) {}
   @Output() sideNavToggled = new EventEmitter<boolean>();
-  @Input() authority: string = '';
+  @Output() signOut = new EventEmitter<boolean>();
   menuStatus: boolean = false;
   userPopUp: boolean = false;
   @Input() user!: UserDTO;
@@ -18,11 +18,15 @@ export class NavBarComponent {
   sideNavToggle() {
     this.menuStatus = !this.menuStatus;
     this.sideNavToggled.emit(this.menuStatus);
+    this.userPopUp = false;
   }
   navigate(place: string) {
     this.router.navigate([`/${place}`]);
   }
   openUserMenu() {
     this.userPopUp = !this.userPopUp;
+  }
+  signOutFunc() {
+    this.signOut.emit();
   }
 }

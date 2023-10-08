@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 
 @Component({
@@ -7,7 +8,12 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  constructor(private router: Router){}
   sideNavStatus: boolean = false;
-  //   authority: string = '';
-  user!: UserDTO;
+  user: UserDTO | null = null;
+
+  signOut() {
+    this.user = null;
+    this.router.navigate(['/login']);
+  }
 }

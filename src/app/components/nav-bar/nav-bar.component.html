@@ -14,10 +14,10 @@
         <a class="text">manage<br>users</a>
     </div>
 </div>
-    <div id="spacer"></div>
-    <app-user-card [user]="user" *ngIf="userPopUp"></app-user-card>
-    <div class="nav-item" (click)="openUserMenu()">
-        <a class="icon" id="profileIcon"></a>
-        <a class="text">profile</a>
-    </div>
+<app-user-card [user]="user" (signOut)="signOutFunc()" *ngIf="userPopUp"></app-user-card>
+<div id="spacer"></div>
+<div class="nav-item" (click)="openUserMenu()">
+    <a class="icon" id="profileIcon"></a>
+    <a class="text">profile</a>
+</div>
 </div>
