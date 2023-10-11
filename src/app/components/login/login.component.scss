@@ -1,5 +1,5 @@
 body {
-    background-color: #583911;
+    background-color: 3f3f3f;
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -8,7 +8,7 @@ body {
 }
 
 .login-container {
-    background-color: #ffffff;
+    background-color: white;
     padding: 0 6rem 2rem;
     border-radius: 2rem;
     text-align: center;
@@ -22,35 +22,40 @@ body {
 }
 
 h1 {
-    color: #333;
+    color: black;
     font-size: 2.5rem;
 }
 
 .text-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
     border-radius: 3vh 3vh 0 0;
     border: none;
     border-bottom: 0.3rem solid black;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
     text-align: left;
-    background-color: #ccc;
+    background-color: #c7c7c7;
     width: 18vw;
     margin-bottom: 5vh;
+    outline: none;
+    &::placeholder {
+        color: #3f3f3f;
+    }
 }
 #password {
     margin-bottom: 19vh;
 }
 
 #login-button {
-    background-color: #007BFF;
-    color: #fff;
+    background-color: black;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #808080;
     border: none;
     padding: 20px 34px;
     border-radius: 2rem;
     cursor: pointer;
     &:hover {
-        background-color: #589ae0;
+        background-color: rgb(39, 39, 39);
     }
 }

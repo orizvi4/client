@@ -1,26 +1,38 @@
 .grid {
-    color: #333;
-    background: #fff;
+    color: black;
+    background: white;
     border-collapse: collapse;
     margin-left: 20vw;
     margin-top: 7vh;
     width: 80%;
+    border-radius: 1rem;
+
 
     tr {
         box-sizing: border-box;
         height: 6vh;
+        border-radius: 1rem;
 
         th {
             padding-right: 2rem;
-            border: 0.1rem solid rgb(197, 191, 191);
+            border-radius: 1rem;
         }
 
         td {
-            border: 0.1rem solid rgb(197, 191, 191);
+            border: 0.1rem solid #808080;
+            border-radius: 1rem;
 
             .editInput {
-                width: fit-content;
-                padding: 1vh 0 1vh 0;
+                width: 7vw;
+                height: 4vh;
+                //padding: 1vh 0 1vh 0;
+            }
+
+            select {
+                border: 0.1rem solid black;
+                height: 5vh;
+                border-radius: 4px;
+                color: black;
             }
         }
 
@@ -72,7 +84,12 @@
         line-height: 2.4rem;
         background: lighten(#75D64B, 37%);
 
+        td {
+            border: none;
+        }
+
         #create-user-button {
+            border: none;
             font-family: "Open Sans";
             font-size: inherit;
             color: inherit;
@@ -88,7 +105,6 @@
             box-sizing: border-box;
             outline: none;
             padding-left: 2rem;
-
 
             &:hover {
                 transform: scale(1.05);
