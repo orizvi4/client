@@ -16,9 +16,16 @@ export class LoginComponent implements OnInit {
   @Output() userUpdate = new EventEmitter<UserDTO>();
 
   async ngOnInit() {
-    const res = await this.requestService.authenticateUser('ori', 'Turhmch123');
+    const res: UserDTO = {
+      givenName: "ori",
+      isEdit: false,
+      sn: 'zvi',
+      group: 'managers',
+      userPrincipalName: 'ori@orizvi.test',
+      whenCreated: '02032004'
+    };
     this.userUpdate.emit(res as UserDTO);
-    this.router.navigate(['/userManager'], { state: { user: res } });
+    this.router.navigate(['/archive'], { state: { user: res } });
   }
 
   async authenticateUser() {

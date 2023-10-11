@@ -1,6 +1,6 @@
 #filter-container {
-    background-color: rgb(75 57 9 / 53%);
-    border: 0.4vw solid #583911;
+    background-color: rgb(233, 230, 230);
+    border: 0.4vw solid black;
     padding: 2vh;
     left: 13vw;
     position: absolute;
@@ -13,14 +13,15 @@
 
     #filter-button {
         border-radius: 0.5rem;
-        border: 0.1rem solid black;
         font-size: 1.5rem;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        background-color: #664025;
+        background-color: black;
+        color: #808080;
+        padding: 0.6rem 1rem;
         cursor: pointer;
 
         &:hover {
-            background-color: #975f37;
+            background-color: rgb(39, 39, 39);
+            color: #a0a0a0;
         }
     }
 
@@ -33,13 +34,13 @@
     .time {
         padding: 2vh;
         margin-bottom: 3vh;
-        border: 0.2vw solid #583911;
+        border: 0.2vw solid black;
         border-radius: 1vw;
         transition: border-color 0.3s ease;
         width: 13vw;
         height: 4vh;
         margin-right: 2.5vw;
-        background-color: rgb(161 138 75);
+        background-color: #808080;
     }
 
     .title {
