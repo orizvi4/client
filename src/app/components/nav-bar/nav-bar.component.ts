@@ -27,6 +27,7 @@ export class NavBarComponent {
     this.userPopUp = !this.userPopUp;
   }
   signOutFunc() {
+    this.sideNavToggle();
     this.signOut.emit();
   }
 }

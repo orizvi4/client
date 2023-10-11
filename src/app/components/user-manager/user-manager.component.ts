@@ -78,8 +78,9 @@ export class UserManagerComponent implements OnInit {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
         if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user exist
-          this.tempUser = await this.requestService.addUser(user);
-          if (this.tempUser) {
+          const res: unknown = await this.requestService.addUser(user)
+          if (res !== 'fail') {
+            this.tempUser = res as UserDTO;
             this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
             this.users.pop();
             this.users.push(this.tempUser);
@@ -88,6 +89,7 @@ export class UserManagerComponent implements OnInit {
           else {
             await swal({
               title: "couldn't create a new user",
+              text: "the name of the user isn't correct or already exist",
               icon: "error",
             });
           }

@@ -18,7 +18,6 @@ export class LoginComponent {
   async authenticateUser() {
     try {
       const res = await this.requestService.authenticateUser(this.username.nativeElement.value, this.password.nativeElement.value);
-      console.log(res);
       if (res != 'fail') {
         await Swal.fire({
           title: "login successful",
