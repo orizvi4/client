@@ -29,6 +29,9 @@ export class RequestService {
             return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
     }
+    async deleteRecording(id: string): Promise<boolean> {
+        return (await axios.delete<boolean>(`${this.constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
+    }
     async stopChannelRecording(id: string) {
         await axios.put<string>(`${this.constants.ROOM_HANDLER}/channel/recorders/stop?id=${id}`);
     }
