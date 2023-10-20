@@ -14,7 +14,7 @@
     <label for="upload" class="upload-label"><b>+</b> upload recording</label>
     <input id="upload" class="upload-button" type="button" (click)="toggleUpload()">
     <div class="uploadForm" *ngIf="formUpload">
-        <app-upload-form (popup)="toggleUpload()"></app-upload-form>
+        <app-upload-form (popup)="toggleUpload($event)"></app-upload-form>
     </div>
 </div>
 <div id="recordings-container">

@@ -109,9 +109,19 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  async toggleUpload() {
+  async toggleUpload(uploaded?: boolean) {
     this.formUpload = !this.formUpload;
-        
+    if (uploaded) {
+      if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
+        await this.filterRecordings();
+      }
+      else {
+        this.deleteVideoPlayers();
+        const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
+        await this.updateStreams(filter);
+        await this.updateVideoPlayers();
+      }
+    }
   }
 
 }

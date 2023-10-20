@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { ElementRef, Injectable } from "@angular/core";
 import axios, { AxiosResponse } from "axios";
 import { RoomDTO } from "../models/roomDTO.interface";
 import { Constants } from "../constants";
@@ -31,6 +31,14 @@ export class RequestService {
         else {
             return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
+    }
+    async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
+        const suffix: number = (await axios.get<number>(`${this.constants.IMPORT_SERVICE}/file/suffix`, {params: {channel: channel}})).data + 1;
+        const formData = new FormData();
+        formData.append('file', file.nativeElement.files[0]);
+        formData.append('startAt', start);
+        formData.append('endAt', end);
+        return (await axios.post<boolean>(`${this.constants.IMPORT_SERVICE}/file/upload`, formData, {params: {channel: channel, suffix: suffix}})).data;
     }
     async deleteRecording(id: string): Promise<boolean> {
         return (await axios.delete<boolean>(`${this.constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
