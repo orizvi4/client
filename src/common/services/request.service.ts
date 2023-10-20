@@ -12,6 +12,9 @@ import { group } from "@angular/animations";
 @Injectable()
 export class RequestService {
     constructor(private constants: Constants) { }
+    async getChannels(): Promise<ChannelDTO[]> {
+        return (await axios.get<ChannelDTO[]>(`${this.constants.ROOM_HANDLER}/channel/all`)).data;
+    }
     async getAllRooms(): Promise<RoomDTO[]> {
         return (await axios.get<RoomDTO[]>(`${this.constants.ROOM_HANDLER}/room/all`)).data;
     }

@@ -19,6 +19,7 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('endTime') endTime!: ElementRef;
   roomRecordings: RoomRecordings[] = [];
   init!: Promise<void>;
+  formUpload: boolean = false;
 
   async ngOnInit(): Promise<void> {
     this.init = new Promise<void>(async (resolve) => {
@@ -107,6 +108,10 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
         text: "couldn't delete"
       });
     }
+  }
+  async toggleUpload() {
+    this.formUpload = !this.formUpload;
+        
   }
 
 }

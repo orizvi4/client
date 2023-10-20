@@ -17,6 +17,7 @@ import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
+import { UploadFormComponent } from './components/archive/uploadForm/upload-form/upload-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { UserCardComponent } from './components/user-card/user-card.component';
     ArchiveComponent,
     UserManagerComponent,
     LoginComponent,
-    UserCardComponent
+    UserCardComponent,
+    UploadFormComponent
   ],
   imports: [
     CommonModule,

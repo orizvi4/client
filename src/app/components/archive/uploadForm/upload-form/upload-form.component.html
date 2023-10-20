@@ -1,0 +1,18 @@
+<form id="my-form">
+    <label for="fileInput">Upload the Video:</label>
+    <input type="file" class="file" id="fileInput">
+
+    <label for="startTime">Start Time:</label>
+    <input type="datetime-local" step="1" id="startTime" class="time" placeholder="Start Time">
+
+    <label for="endTime">End Time:</label>
+    <input type="datetime-local" step="1" id="endTime" class="time" placeholder="End Time">
+
+    <label for="dropdown">Select an Channel:</label>
+    <select id="channel">
+        <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel._id}}</option>
+    </select>
+
+    <input type="button" class="button" value="Save" (click)="save()">
+    <input type="button" class="button" value="Cancel" (click)="cancel()">
+</form>

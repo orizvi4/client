@@ -8,20 +8,20 @@
     height: 20vh;
     margin: 2vh auto;
     border-radius: 2vw;
-    box-shadow: 0 1vw 2vw rgba(0, 0, 0, 0.2);
     text-align: center;
+
 
     #filter-button {
         border-radius: 0.5rem;
         font-size: 1.5rem;
         background-color: black;
-        color: #808080;
+        color: white;
         padding: 0.6rem 1rem;
         cursor: pointer;
+        transition: .3s;
 
         &:hover {
             background-color: rgb(39, 39, 39);
-            color: #a0a0a0;
         }
     }
 
@@ -51,6 +51,45 @@
     }
 }
 
+.upload-container {
+    position: relative;
+    display: inline-block;
+    top: 30vh;
+    left: 39vw;
+
+
+    .upload-label {
+        display: block;
+        padding: 1em 2em;
+        color: white;
+        background: black;
+        border-radius: .4em;
+        transition: .3s;
+
+        &:hover {
+            cursor: pointer;
+            background: #222;
+        }
+    }
+
+    .upload-button {
+        position: absolute;
+        width: 0;
+        height: 100%;
+        opacity: 0;
+    }
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
 #recordings-container {
     display: flex;
     flex-wrap: wrap;
@@ -60,7 +99,7 @@
     .room-name {
         font-weight: bold;
         font-size: 2rem;
-        margin-left: 37.5vw;
+        margin-left: 36.8vw;
     }
 
     .video-js {

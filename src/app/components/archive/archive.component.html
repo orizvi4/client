@@ -9,6 +9,14 @@
 
     <input type="button" id="filter-button" (click)="filterRecordings()" value="filter" />
 </div>
+<div class="overlay" *ngIf="formUpload"></div>
+<div class="upload-container">
+    <label for="upload" class="upload-label"><b>+</b> upload recording</label>
+    <input id="upload" class="upload-button" type="button" (click)="toggleUpload()">
+    <div class="uploadForm" *ngIf="formUpload">
+        <app-upload-form (popup)="toggleUpload()"></app-upload-form>
+    </div>
+</div>
 <div id="recordings-container">
     <div *ngFor="let roomRecording of roomRecordings">
         <label class="room-name">{{roomRecording.room}}</label>
