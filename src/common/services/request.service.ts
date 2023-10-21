@@ -40,6 +40,9 @@ export class RequestService {
         formData.append('endAt', end);
         return (await axios.post<boolean>(`${this.constants.IMPORT_SERVICE}/file/upload`, formData, {params: {channel: channel, suffix: suffix}})).data;
     }
+    async isDateValid(start: string, end: string, channel: string): Promise<boolean> {
+        return (await axios.post<boolean>(`${this.constants.IMPORT_SERVICE}/file/date`, {startAt: start, endAt: end, channel: channel})).data;
+    }
     async deleteRecording(id: string): Promise<boolean> {
         return (await axios.delete<boolean>(`${this.constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
     }

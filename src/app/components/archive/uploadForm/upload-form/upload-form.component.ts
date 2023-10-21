@@ -23,7 +23,18 @@ export class UploadFormComponent implements OnInit {
   }
   async save() {
     if (this.fileInput.nativeElement.value != '' && this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-      const res: boolean = await this.requestService.saveRecording(this.fileInput, this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
+      let res: boolean = await this.requestService.isDateValid(this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
+      if (res) {
+        res = await this.requestService.saveRecording(this.fileInput, this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
+      }
+      else {
+        await Swal.fire({
+          icon: 'warning',
+          title: 'date invalid',
+          text: 'date already exist'
+        })
+        return;
+      }
       if (res) {
         await Swal.fire({
           icon: 'success',
