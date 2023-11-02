@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from "@angular/core";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { RoomDTO } from "../models/roomDTO.interface";
 import { Constants } from "../constants";
 import { ChannelDTO } from "../models/channelDTO.interface";

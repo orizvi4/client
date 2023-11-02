@@ -9,24 +9,24 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   constructor(private requestService: RequestService, private router: Router) { }
   @ViewChild('username') username!: ElementRef;
   @ViewChild('password') password!: ElementRef;
   @Output() userUpdate = new EventEmitter<UserDTO>();
 
-  async ngOnInit() {
-    const res: UserDTO = {
-      givenName: "ori",
-      isEdit: false,
-      sn: 'zvi',
-      group: 'managers',
-      userPrincipalName: 'ori@orizvi.test',
-      whenCreated: '02032004'
-    };
-    this.userUpdate.emit(res as UserDTO);
-    this.router.navigate(['/archive'], { state: { user: res } });
-  }
+  // async ngOnInit() {
+  //   const res: UserDTO = {
+  //     givenName: "ori",
+  //     isEdit: false,
+  //     sn: 'zvi',
+  //     group: 'managers',
+  //     userPrincipalName: 'ori@orizvi.test',
+  //     whenCreated: '02032004'
+  //   };
+  //   this.userUpdate.emit(res as UserDTO);
+  //   this.router.navigate(['/archive'], { state: { user: res } });
+  // }
 
   async authenticateUser() {
     try {
@@ -37,9 +37,9 @@ export class LoginComponent implements OnInit {
           text: `welcome ${this.username.nativeElement.value}`,
           icon: "success",
         });
-        const res = await this.requestService.authenticateUser('ori', 'Turhmch123');
+        console.log(res);
         this.userUpdate.emit(res as UserDTO);
-        this.router.navigate(['/live'], { state: { user: res } });
+        this.router.navigate(['/live']);
       }
       else {
         await Swal.fire({
