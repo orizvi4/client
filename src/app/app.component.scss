@@ -13,6 +13,7 @@ body {
         display: flex;
         height: calc(100% - 7.5vh);
         overflow-y: auto;
+        overflow-x: hidden;
     }
     .mainShrink {
         transition: 0.3s;

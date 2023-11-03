@@ -6,6 +6,7 @@ import { ChannelComponent } from './components/room/channel/channel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { LoginComponent } from './components/login/login.component';
+import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
 
 const routes: Routes = [
     {path:'live',component:RoomsListComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
     {path:'archive',component:ArchiveComponent},
     {path:'userManager',component:UserManagerComponent},
     {path:'login',component:LoginComponent},
+    {path:'logsDisplay',component:LogsDisplayComponent},
     {path:'',redirectTo: 'login', pathMatch: "full"}
  ];
 

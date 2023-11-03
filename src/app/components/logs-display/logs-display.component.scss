@@ -1,0 +1,8 @@
+#main {
+    height: 100%;
+    overflow: hidden;
+    iframe {
+        width: calc(100vw - 5vw);
+        height: 100%;
+    }
+}

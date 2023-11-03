@@ -18,6 +18,7 @@ import { UserManagerComponent } from './components/user-manager/user-manager.com
 import { LoginComponent } from './components/login/login.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { UploadFormComponent } from './components/archive/uploadForm/upload-form/upload-form.component';
+import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UploadFormComponent } from './components/archive/uploadForm/upload-form
     UserManagerComponent,
     LoginComponent,
     UserCardComponent,
-    UploadFormComponent
+    UploadFormComponent,
+    LogsDisplayComponent
   ],
   imports: [
     CommonModule,

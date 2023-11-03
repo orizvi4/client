@@ -1,23 +1,27 @@
 <div class="sidenav" (mouseleave)="sideNavToggle()" (mouseenter)="sideNavToggle()">
     <a id="deerIcon"></a>
     <div class="nav-item" (click)="navigate('live')">
-        <a class="icon" id="liveIcon" ></a>
+        <a class="icon" id="liveIcon"></a>
         <a class="text">Live</a>
     </div>
     <div class="nav-item" (click)="navigate('archive')">
-        <a class="icon" id="archiveIcon" ></a>
+        <a class="icon" id="archiveIcon"></a>
         <a class="text">Archive</a>
     </div>
     <div *ngIf="user.group == 'managers'">
-    <div class="nav-item" (click)="navigate('userManager')">
-        <a class="icon" id="userManagerIcon"></a>
-        <a class="text">manage<br>users</a>
+        <div class="nav-item" (click)="navigate('userManager')">
+            <a class="icon" id="userManagerIcon"></a>
+            <a class="text">manage<br>users</a>
+        </div>
+        <div class="nav-item" (click)="navigate('logsDisplay')">
+            <a class="icon" id="logsIcon"></a>
+            <a class="text">logs<br>display</a>
+        </div>
     </div>
-</div>
-<app-user-card [user]="user" (signOut)="signOutFunc()" *ngIf="userPopUp"></app-user-card>
-<div id="spacer"></div>
-<div class="nav-item" (click)="openUserMenu()">
-    <a class="icon" id="profileIcon"></a>
-    <a class="text">profile</a>
-</div>
+    <app-user-card [user]="user" (signOut)="signOutFunc()" *ngIf="userPopUp"></app-user-card>
+    <div id="spacer"></div>
+    <div class="nav-item" (click)="openUserMenu()">
+        <a class="icon" id="profileIcon"></a>
+        <a class="text">profile</a>
+    </div>
 </div>
