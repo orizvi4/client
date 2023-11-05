@@ -79,7 +79,7 @@ export class RequestService {
     async getUserGroup(username: string): Promise<string> {
         return (await axios.get(`${this.constants.AUTH_SERVICE}/groups/user`, {params: {username: username}})).data;
     }
-    async authenticateUser(username: string, password: string): Promise<UserDTO | string> {
+    async authenticateUser(username: string, password: string): Promise<UserDTO> {
         return (await axios.post(`${this.constants.AUTH_SERVICE}/users/authenticate`, {username: username, password: password})).data;
     }
 }

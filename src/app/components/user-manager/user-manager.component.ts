@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -19,10 +20,19 @@ export class UserManagerComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.users = await this.requestService.getUsers();
-    for (const user of this.users) {
-      user.whenCreated = this.formatDate(user.whenCreated);
-      user.group = await this.requestService.getUserGroup(user.givenName);
+    try {
+      this.users = await this.requestService.getUsers();
+      for (const user of this.users) {
+        user.whenCreated = this.formatDate(user.whenCreated);
+        user.group = await this.requestService.getUserGroup(user.givenName);
+      }
+    }
+    catch (err: any) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: "couldn't load users, please try again later"
+      });
     }
   }
   async deleteUser(user: UserDTO): Promise<void> {
@@ -113,9 +123,10 @@ export class UserManagerComponent implements OnInit {
       }
       catch (err) {
         console.log(err);
-        await swal({
-          title: "a server error has occured",
-          icon: "error",
+        await Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: "please try again later"
         });
       }
     }
@@ -128,17 +139,26 @@ export class UserManagerComponent implements OnInit {
   }
   
   async createUser() {
-    if (this.tempUser === null) {
-      for (const user of this.users) {
-        user.isEdit = false;
+    try {
+      if (this.tempUser === null) {
+        for (const user of this.users) {
+          user.isEdit = false;
+        }
+        this.tempUser = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
+        this.users.push(this.tempUser);
       }
-      this.tempUser = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
-      this.users.push(this.tempUser);
+      else {
+        await swal({
+          title: "please finish updating current user",
+          icon: "warning",
+        });
+      }
     }
-    else {
-      await swal({
-        title: "please finish updating current user",
-        icon: "warning",
+    catch (err) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'server error',
+        text: "please try again later"
       });
     }
   }
