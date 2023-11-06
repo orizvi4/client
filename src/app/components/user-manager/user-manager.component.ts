@@ -81,46 +81,37 @@ export class UserManagerComponent implements OnInit {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
         if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user exist
-          const res: unknown = await this.requestService.addUser(user)
-          if (res !== 'fail') {
-            this.tempUser = res as UserDTO;
-            this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
-            this.users.pop();
-            this.users.push(this.tempUser);
-            this.tempUser = null;
-          }
-          else {
-            await swal({
-              title: "couldn't create a new user",
-              text: "the name of the user isn't correct or already exist",
-              icon: "error",
-            });
-          }
+          const res: UserDTO = await this.requestService.addUser(user)
+          this.tempUser = res as UserDTO;
+          this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
+          this.users.pop();
+          this.users.push(this.tempUser);
+          this.tempUser = null;
         }
         else {
           const whenCreated: string = this.tempUser.whenCreated;
           this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
-          if (this.tempUser) {
-            this.tempUser.whenCreated = whenCreated;
-            this.users.splice(this.users.indexOf(user), 1);
-            this.users.push(this.tempUser);
-            this.tempUser = null;
-          }
-          else {
-            await swal({
-              title: "couldn't update user",
-              icon: "error",
-            });
-          }
+
+          this.tempUser.whenCreated = whenCreated;
+          this.users.splice(this.users.indexOf(user), 1);
+          this.users.push(this.tempUser);
+          this.tempUser = null;
         }
       }
       catch (err: any) {
         console.log(err);
         if (err.response.status == 403) {
+          await swal({
+            title: "couldn't create a new user",
+            text: "the name of the user isn't correct or already exist",
+            icon: "error",
+          });
+        }
+        else if (err.response.status == 400) {
           await Swal.fire({
             icon: 'error',
-            title: 'add user error',
-            text: "user already exist, please try again later"
+            title: 'modify user error',
+            text: "user name already exist, please try another name"
           });
         }
         else {
@@ -139,7 +130,7 @@ export class UserManagerComponent implements OnInit {
       });
     }
   }
-  
+
   async createUser() {
     try {
       if (this.tempUser === null) {
