@@ -52,23 +52,16 @@ export class UserManagerComponent implements OnInit {
         },
       });
       if (del) {
-        const res = await this.requestService.deleteUser(user.givenName);
-        if (res == 'success') {
-          this.users.splice(this.users.indexOf(user), 1);
-        }
-        else {
-          await swal({
-            title: "couldn't delete user",
-            icon: "error",
-          });
-        }
+        await this.requestService.deleteUser(user.givenName);
+        this.users.splice(this.users.indexOf(user), 1);
       }
     }
     catch (err) {
       console.log(err);
-      await swal({
-        title: "a server error has occured",
-        icon: "error",
+      await Swal.fire({
+        icon: 'error',
+        title: 'delete user error',
+        text: "a server error has occured, please try again later"
       });
     }
   }
@@ -121,13 +114,22 @@ export class UserManagerComponent implements OnInit {
           }
         }
       }
-      catch (err) {
+      catch (err: any) {
         console.log(err);
-        await Swal.fire({
-          icon: 'error',
-          title: 'server error',
-          text: "please try again later"
-        });
+        if (err.response.status == 403) {
+          await Swal.fire({
+            icon: 'error',
+            title: 'add user error',
+            text: "user already exist, please try again later"
+          });
+        }
+        else {
+          await Swal.fire({
+            icon: 'error',
+            title: 'server error',
+            text: "please try again later"
+          });
+        }
       }
     }
     else if (this.tempUser != null) {
