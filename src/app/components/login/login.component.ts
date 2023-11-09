@@ -26,7 +26,7 @@ export class LoginComponent {
       whenCreated: '02032004'
     };
     this.userUpdate.emit(res as UserDTO);
-    this.router.navigate(['/userManager'], { state: { user: res } });
+    this.router.navigate(['/live'], { state: { user: res } });
   }
 
   async authenticateUser() {

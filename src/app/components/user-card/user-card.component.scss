@@ -1,29 +1,32 @@
 .info-card {
-    position: fixed;
+    position: absolute;
+    bottom: 1rem;
     width: 13vw;
     height: 36vh;
+    border: 0.1rem solid black;
     border-radius: 1.2rem;
-    background-color: white;
-    padding: 1vh 3vw;
+    background-color: rgb(240, 235, 235);
+    padding: 1vh 2vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 
     .name {
         font-weight: bolder;
         font-size: 1.5rem;
         margin: 4vh 0 0 0;
-        color: #808080;
+        color: #7a7a7a;
 
     }
     .username {
         margin: 0;
         font-size: 1.1rem;
-        color: rgba(103, 106, 112, 0.712);
+        color: rgba(112, 114, 117, 0.712);
     }
     .authority-title {
         font-size: 1.2rem;
-        color: rgba(103, 106, 112, 0.712);
+        color: rgba(105, 107, 110, 0.712);
         margin-bottom: 0;
     }
     .authority {
