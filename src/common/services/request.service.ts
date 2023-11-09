@@ -16,7 +16,7 @@ export class RequestService {
         return (await axios.get<ChannelDTO[]>(`${this.constants.ROOM_HANDLER}/channel/all`)).data;
     }
     async getAllRooms(): Promise<RoomDTO[]> {
-        return (await axios.get<RoomDTO[]>(`${this.constants.ROOM_HANDLER}/room/all`)).data;
+        return (await axios.get<RoomDTO[]>(`${this.constants.ROOM_HANDLER}/room/all`, {timeout: 2000})).data;
     }
     async getRoomById(id: string): Promise<RoomDTO> {
         return (await axios.get<RoomDTO>(`${this.constants.ROOM_HANDLER}/room/id`, { params: { id: id } })).data;
@@ -33,7 +33,13 @@ export class RequestService {
         }
     }
     async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
-        const suffix: number = (await axios.get<number>(`${this.constants.IMPORT_SERVICE}/file/suffix`, {params: {channel: channel}})).data + 1;
+        let suffix;
+        try {
+            suffix = (await axios.get<number>(`${this.constants.IMPORT_SERVICE}/file/suffix`, {params: {channel: channel}})).data + 1;
+        }
+        catch(err) {
+            throw err;
+        }
         const formData = new FormData();
         formData.append('file', file.nativeElement.files[0]);
         formData.append('startAt', start);

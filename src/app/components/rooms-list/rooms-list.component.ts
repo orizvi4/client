@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rooms-list',
@@ -14,7 +15,16 @@ export class RoomsListComponent implements OnInit {
   rooms: RoomDTO[] = [];
   
   async ngOnInit() {
-    this.rooms = await this.requestService.getAllRooms();
+    try {
+      this.rooms = await this.requestService.getAllRooms();
+    }
+    catch(err) {
+      Swal.fire({
+        title: 'server error',
+        icon: 'error',
+        text: "couldn't load rooms, try again later"
+      });
+    }
   }
   navigateToRoom(id: string, name: string) {
     this.router.navigate(['/live/room'], { state: { roomId: id, roomName: name } });

@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./upload-form.component.scss']
 })
 export class UploadFormComponent implements OnInit {
-  constructor(private requestService: RequestService) {}
+  constructor(private requestService: RequestService) { }
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('startTime') startTime!: ElementRef;
@@ -22,38 +22,38 @@ export class UploadFormComponent implements OnInit {
     this.channels = await this.requestService.getChannels();
   }
   async save() {
-    if (this.fileInput.nativeElement.value != '' && this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-      let res: boolean = await this.requestService.isDateValid(this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
-      if (res) {
-        res = await this.requestService.saveRecording(this.fileInput, this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
-      }
-      else {
-        await Swal.fire({
-          icon: 'warning',
-          title: 'date invalid',
-          text: 'date already exist'
-        })
-        return;
-      }
-      if (res) {
+    try {
+      if (this.fileInput.nativeElement.value != '' && this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
+        let res: boolean = await this.requestService.isDateValid(this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
+        if (res) {
+          res = await this.requestService.saveRecording(this.fileInput, this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
+        }
+        else {
+          await Swal.fire({
+            icon: 'warning',
+            title: 'date invalid',
+            text: 'date already exist'
+          })
+          return;
+        }
         await Swal.fire({
           icon: 'success',
           title: 'video added succesfully'
         });
+        this.popup.emit(true);
       }
       else {
         await Swal.fire({
           icon: 'error',
-          title: 'server error',
-          text: 'try again'
-        })
+          title: 'fill all the data'
+        });
       }
-      this.popup.emit(true);
     }
-    else {
+    catch (err) {
       await Swal.fire({
         icon: 'error',
-        title: 'fill all the data'
+        title: 'server error',
+        text: 'please try again later'
       });
     }
   }
