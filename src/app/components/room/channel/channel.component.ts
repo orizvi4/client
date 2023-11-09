@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AxiosError } from 'axios';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
 import videojs from 'video.js';
@@ -27,13 +28,15 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     try {
       await this.requestService.stopChannelRecording(this.id.substring(9));
     }
-    catch (err) {//check the status
+    catch (err) {
       console.log(err);
-      await Swal.fire({
-        title: 'server error',
-        icon: 'error',
-        text: "couldn't stop recording camera, try again later"//change the message
-      });
+      if ((err as AxiosError).response?.status != 400) {
+        await Swal.fire({
+          title: 'server error',
+          icon: 'error',
+          text: "couldn't stop recording camera, try again later"
+        });
+      }
     }
     finally {
       this.location.back();
