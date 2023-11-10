@@ -17,7 +17,7 @@
         <app-upload-form (popup)="toggleUpload($event)"></app-upload-form>
     </div>
 </div>
-<div id="recordings-container">
+<div id="recordings-container" [ngClass]="{'empty-div': !roomRecordings.length}">
     <div *ngFor="let roomRecording of roomRecordings">
         <label class="room-name">{{roomRecording.room}}</label>
         <div id="video-element-container">
