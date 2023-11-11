@@ -9,4 +9,7 @@ export class JwtService {
     static async refreshAccessToken(): Promise<void> {
         Cookies.set('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`,{}, { headers: { Authorization: `Bearer ${Cookies.get('refreshToken')}` } })).data);
     }
+    static async blackListToken(): Promise<void> {
+        await axios.post(`${Constants.AUTH_SERVICE}/users/logout`,{accessToken: Cookies.get('accessToken'), refreshToken: Cookies.get('refreshToken')}, { headers: { Authorization: `Bearer ${Cookies.get('accessToken')}` } });
+    }
 }

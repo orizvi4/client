@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import Cookies from 'js-cookie';
 import { UserDTO } from 'src/common/models/userDTO.interface';
+import { JwtService } from 'src/common/services/jwt.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +14,11 @@ export class AppComponent {
   sideNavStatus: boolean = false;
   user: UserDTO | null = null;
 
-  signOut() {
+  async signOut() {
     this.user = null;
+    await JwtService.blackListToken();
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
     this.router.navigate(['/login']);
   }
 }

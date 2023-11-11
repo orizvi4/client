@@ -29,7 +29,7 @@ export class UserManagerComponent implements OnInit {
         user.group = await this.requestService.getUserGroup(user.givenName);
       }
     }
-    catch (err: any) {
+    catch (err: any) {//make a client session verify and logout
       if ((err as AxiosError).response?.status == 401) {
         await Swal.fire({
           icon: 'error',
