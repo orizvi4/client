@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AxiosError } from 'axios';
 import { UserDTO } from 'src/common/models/userDTO.interface';
+import { JwtService } from 'src/common/services/jwt.service';
 import { RequestService } from 'src/common/services/request.service';
 import swal from 'sweetalert';
 import Swal from 'sweetalert2';
@@ -28,11 +30,22 @@ export class UserManagerComponent implements OnInit {
       }
     }
     catch (err: any) {
-      await Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: "couldn't load users, please try again later"
-      });
+      if ((err as AxiosError).response?.status == 401) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'access denied',
+          text: "session has timed out, please log in again"
+        });
+        await JwtService.refreshAccessToken();
+        this.ngOnInit();
+      }
+      else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: "couldn't load users, please try again later"
+        });
+      }
     }
   }
   async deleteUser(user: UserDTO): Promise<void> {
@@ -58,11 +71,22 @@ export class UserManagerComponent implements OnInit {
     }
     catch (err) {
       console.log(err);
-      await Swal.fire({
-        icon: 'error',
-        title: 'delete user error',
-        text: "a server error has occured, please try again later"
-      });
+      if ((err as AxiosError).response?.status == 401) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'access denied',
+          text: "session has timed out, please log in again"
+        });
+        await JwtService.refreshAccessToken();
+        this.deleteUser(user);
+      }
+      else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'delete user error',
+          text: "a server error has occured, please try again later"
+        });
+      }
     }
   }
   cancelEdit(user: UserDTO) {
@@ -114,6 +138,15 @@ export class UserManagerComponent implements OnInit {
             text: "user name already exist, please try another name"
           });
         }
+        else if ((err as AxiosError).response?.status == 401) {
+          await Swal.fire({
+            icon: 'error',
+            title: 'access denied',
+            text: "session has timed out, please log in again"
+          });
+          await JwtService.refreshAccessToken();
+          this.updateUser(user);
+        }
         else {
           await Swal.fire({
             icon: 'error',
@@ -148,11 +181,22 @@ export class UserManagerComponent implements OnInit {
       }
     }
     catch (err) {
-      await Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: "please try again later"
-      });
+      if ((err as AxiosError).response?.status == 401) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'access denied',
+          text: "session has timed out, please log in again"
+        });
+        await JwtService.refreshAccessToken();
+        this.createUser();
+      }
+      else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: "please try again later"
+        });
+      }
     }
   }
 

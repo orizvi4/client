@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
 
 @Component({
   selector: 'app-login',
@@ -16,18 +17,18 @@ export class LoginComponent {
   @ViewChild('password') password!: ElementRef;
   @Output() userUpdate = new EventEmitter<UserDTO>();
 
-  async ngOnInit() {
-    const res: UserDTO = {
-      givenName: "ori",
-      isEdit: false,
-      sn: 'zvi',
-      group: 'managers',
-      userPrincipalName: 'ori@orizvi.test',
-      whenCreated: '02032004'
-    };
-    this.userUpdate.emit(res as UserDTO);
-    this.router.navigate(['/live'], { state: { user: res } });
-  }
+  // async ngOnInit() {
+  //   const res: UserDTO = {
+  //     givenName: "ori",
+  //     isEdit: false,
+  //     sn: 'zvi',
+  //     group: 'managers',
+  //     userPrincipalName: 'ori@orizvi.test',
+  //     whenCreated: '02032004'
+  //   };
+  //   this.userUpdate.emit(res as UserDTO);
+  //   this.router.navigate(['/live'], { state: { user: res } });
+  // }
 
   async authenticateUser() {
     try {
@@ -37,7 +38,8 @@ export class LoginComponent {
         text: `welcome ${this.username.nativeElement.value}`,
         icon: "success",
       });
-      console.log(res);
+      Cookies.set('accessToken', res.accessToken as string, {expires: 7});
+      Cookies.set('refreshToken', res.refreshToken as string, {expires: 7});
       this.userUpdate.emit(res as UserDTO);
       this.router.navigate(['/live']);
     }

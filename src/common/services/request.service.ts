@@ -7,35 +7,34 @@ import { FilterDTO } from "../models/filterDTO.iterface";
 import { RecordingDTO } from "../models/recordingDTO.interface";
 import { RoomRecordings } from "../models/roomRecordingsDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
-import { group } from "@angular/animations";
+import Cookies from "js-cookie";
 
 @Injectable()
 export class RequestService {
-    constructor(private constants: Constants) { }
     async getChannels(): Promise<ChannelDTO[]> {
-        return (await axios.get<ChannelDTO[]>(`${this.constants.ROOM_HANDLER}/channel/all`)).data;
+        return (await axios.get<ChannelDTO[]>(`${Constants.ROOM_HANDLER}/channel/all`)).data;
     }
     async getAllRooms(): Promise<RoomDTO[]> {
-        return (await axios.get<RoomDTO[]>(`${this.constants.ROOM_HANDLER}/room/all`, {timeout: 2000})).data;
+        return (await axios.get<RoomDTO[]>(`${Constants.ROOM_HANDLER}/room/all`, {timeout: 2000})).data;
     }
     async getRoomById(id: string): Promise<RoomDTO> {
-        return (await axios.get<RoomDTO>(`${this.constants.ROOM_HANDLER}/room/id`, { params: { id: id } })).data;
+        return (await axios.get<RoomDTO>(`${Constants.ROOM_HANDLER}/room/id`, { params: { id: id } })).data;
     }
     async connectChannel(id: string): Promise<any> {
-        return (await axios.put<string>(`${this.constants.ROOM_HANDLER}/channel/connect?id=${id}`)).data;
+        return (await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/connect?id=${id}`)).data;
     }
     async getRecordings(filter?: FilterDTO): Promise<RoomRecordings[]> {
         if (filter == null) {
-            return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: 0, end: new Date(Date.now()) } })).data;
+            return (await axios.get<RoomRecordings[]>(`${Constants.ROOM_HANDLER}/recording`, { params: { start: 0, end: new Date(Date.now()) } })).data;
         }
         else {
-            return (await axios.get<RoomRecordings[]>(`${this.constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
+            return (await axios.get<RoomRecordings[]>(`${Constants.ROOM_HANDLER}/recording`, { params: { start: filter.startAt, end: filter.endAt } })).data;
         }
     }
     async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
         let suffix;
         try {
-            suffix = (await axios.get<number>(`${this.constants.IMPORT_SERVICE}/file/suffix`, {params: {channel: channel}})).data + 1;
+            suffix = (await axios.get<number>(`${Constants.IMPORT_SERVICE}/file/suffix`, {params: {channel: channel}})).data + 1;
         }
         catch(err) {
             throw err;
@@ -44,30 +43,30 @@ export class RequestService {
         formData.append('file', file.nativeElement.files[0]);
         formData.append('startAt', start);
         formData.append('endAt', end);
-        return (await axios.post<boolean>(`${this.constants.IMPORT_SERVICE}/file/upload`, formData, {params: {channel: channel, suffix: suffix}})).data;
+        return (await axios.post<boolean>(`${Constants.IMPORT_SERVICE}/file/upload`, formData, {params: {channel: channel, suffix: suffix}})).data;
     }
     async isDateValid(start: string, end: string, channel: string): Promise<boolean> {
-        return (await axios.post<boolean>(`${this.constants.IMPORT_SERVICE}/file/date`, {startAt: start, endAt: end, channel: channel})).data;
+        return (await axios.post<boolean>(`${Constants.IMPORT_SERVICE}/file/date`, {startAt: start, endAt: end, channel: channel})).data;
     }
     async deleteRecording(id: string): Promise<boolean> {
-        return (await axios.delete<boolean>(`${this.constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
+        return (await axios.delete<boolean>(`${Constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
     }
     async stopChannelRecording(id: string) {
-        await axios.put<string>(`${this.constants.ROOM_HANDLER}/channel/recorders/stop?id=${id}`);
+        await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/recorders/stop?id=${id}`);
     }
     async startChannelRecording(id: string) {
-        await axios.post<string>(`${this.constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`);
+        await axios.post<string>(`${Constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`);
     }
 
 
     async getUsers(): Promise<UserDTO[]> {
-        return (await axios.get<UserDTO[]>(`${this.constants.AUTH_SERVICE}/users`)).data;
+        return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users`,{headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
     }
     async deleteUser(name: string): Promise<string> {
-        return (await axios.delete(`${this.constants.AUTH_SERVICE}/users/delete`, {params: {username: name}})).data;
+        return (await axios.delete(`${Constants.AUTH_SERVICE}/users/delete`, {params: {username: name}, headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
     }
     async addUser(user: UserDTO): Promise<UserDTO> {
-        return (await axios.post(`${this.constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn, group: user.group})).data;
+        return (await axios.post(`${Constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn, group: user.group},{headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
     }
     async modifyUser(oldUsername:string, user: UserDTO): Promise<UserDTO> {
         const body = [
@@ -80,12 +79,12 @@ export class RequestService {
                 group: user.group
             }
         ];
-        return (await axios.put(`${this.constants.AUTH_SERVICE}/users/modify`, body)).data;
+        return (await axios.put(`${Constants.AUTH_SERVICE}/users/modify`, body, {headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
     }
     async getUserGroup(username: string): Promise<string> {
-        return (await axios.get(`${this.constants.AUTH_SERVICE}/groups/user`, {params: {username: username}})).data;
+        return (await axios.get(`${Constants.AUTH_SERVICE}/groups/user`, {params: {username: username}, headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
     }
     async authenticateUser(username: string, password: string): Promise<UserDTO> {
-        return (await axios.post(`${this.constants.AUTH_SERVICE}/users/authenticate`, {username: username, password: password})).data;
+        return (await axios.post(`${Constants.AUTH_SERVICE}/users/authenticate`, {username: username, password: password})).data;
     }
 }

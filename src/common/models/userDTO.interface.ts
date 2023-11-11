@@ -5,4 +5,6 @@ export interface UserDTO {
     whenCreated: string;
     isEdit: boolean;
     group: string;
+    accessToken?: string;
+    refreshToken?: string;
 }
