@@ -13,6 +13,17 @@ export class AppComponent {
   constructor(private router: Router){}
   sideNavStatus: boolean = false;
   user: UserDTO | null = null;
+  
+  updateUser() {
+    this.user = {
+      group: localStorage.getItem('group')as string,
+      givenName: localStorage.getItem('givenName') as string,
+      userPrincipalName: localStorage.getItem('userPrincipalName') as string,
+      sn: localStorage.getItem('sn') as string,
+      isEdit: false,
+      whenCreated: ''
+    }
+  }
 
   async signOut() {
     this.user = null;

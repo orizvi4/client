@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import Swal from 'sweetalert2';
 
@@ -22,6 +22,7 @@ export class UserCardComponent {
     // if (res.isConfirmed) {
     //   this.signOut.emit();
     // }
+    localStorage.clear();
     this.signOut.emit();
   }
 }

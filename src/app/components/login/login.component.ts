@@ -11,11 +11,18 @@ import Cookies from 'js-cookie';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(private requestService: RequestService, private router: Router) { }
   @ViewChild('username') username!: ElementRef;
   @ViewChild('password') password!: ElementRef;
-  @Output() userUpdate = new EventEmitter<UserDTO>();
+  @Output() userUpdate = new EventEmitter<void>();
+
+  ngOnInit(): void {
+    if (localStorage.length > 0){
+      this.userUpdate.emit();
+      this.router.navigate(['/live']);
+    }
+  }
 
   // async ngOnInit() {
   //   const res: UserDTO = {
@@ -40,7 +47,11 @@ export class LoginComponent {
       });
       Cookies.set('accessToken', res.accessToken as string, {expires: 7});
       Cookies.set('refreshToken', res.refreshToken as string, {expires: 7});
-      this.userUpdate.emit(res as UserDTO);
+      localStorage.setItem('userPrincipalName', res.userPrincipalName);
+      localStorage.setItem('givenName', res.givenName);
+      localStorage.setItem('group', res.group);
+      localStorage.setItem('sn', res.sn);
+      this.userUpdate.emit();
       this.router.navigate(['/live']);
     }
     catch (err: any) {

@@ -1,6 +1,6 @@
 <body>
     <div *ngIf="!user">
-        <app-login (userUpdate)="user = $event"></app-login>
+        <app-login (userUpdate)="updateUser()"></app-login>
     </div>
     <div *ngIf="user">
         <app-header [sideNavStatus]="sideNavStatus"></app-header>
