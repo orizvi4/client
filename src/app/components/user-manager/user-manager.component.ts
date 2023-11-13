@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-manager.component.scss']
 })
 export class UserManagerComponent implements OnInit {
-  constructor(private requestService: RequestService) { }
+  constructor(private requestService: RequestService, private jwtService: JwtService) { }
   users!: UserDTO[];
   tempUser: UserDTO | null = null;
 
@@ -29,14 +29,14 @@ export class UserManagerComponent implements OnInit {
         user.group = await this.requestService.getUserGroup(user.givenName);
       }
     }
-    catch (err: any) {//make a client session verify and logout
+    catch (err: any) {
       if ((err as AxiosError).response?.status == 401) {
         await Swal.fire({
           icon: 'error',
           title: 'access denied',
           text: "session has timed out, please log in again"
         });
-        await JwtService.refreshAccessToken();
+        await this.jwtService.refreshAccessToken();
         this.ngOnInit();
       }
       else {
@@ -77,7 +77,7 @@ export class UserManagerComponent implements OnInit {
           title: 'access denied',
           text: "session has timed out, please log in again"
         });
-        await JwtService.refreshAccessToken();
+        await this.jwtService.refreshAccessToken();
         this.deleteUser(user);
       }
       else {
@@ -144,7 +144,7 @@ export class UserManagerComponent implements OnInit {
             title: 'access denied',
             text: "session has timed out, please log in again"
           });
-          await JwtService.refreshAccessToken();
+          await this.jwtService.refreshAccessToken();
           this.updateUser(user);
         }
         else {
@@ -187,7 +187,7 @@ export class UserManagerComponent implements OnInit {
           title: 'access denied',
           text: "session has timed out, please log in again"
         });
-        await JwtService.refreshAccessToken();
+        await this.jwtService.refreshAccessToken();
         this.createUser();
       }
       else {

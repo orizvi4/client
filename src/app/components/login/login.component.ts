@@ -15,27 +15,19 @@ export class LoginComponent implements OnInit {
   constructor(private requestService: RequestService, private router: Router) { }
   @ViewChild('username') username!: ElementRef;
   @ViewChild('password') password!: ElementRef;
-  @Output() userUpdate = new EventEmitter<void>();
+  @Output() userUpdate = new EventEmitter<string>();
 
-  ngOnInit(): void {
-    if (localStorage.length > 0){
-      this.userUpdate.emit();
-      this.router.navigate(['/live']);
-    }
-  }
-
-  // async ngOnInit() {
-  //   const res: UserDTO = {
-  //     givenName: "ori",
-  //     isEdit: false,
-  //     sn: 'zvi',
-  //     group: 'managers',
-  //     userPrincipalName: 'ori@orizvi.test',
-  //     whenCreated: '02032004'
-  //   };
-  //   this.userUpdate.emit(res as UserDTO);
-  //   this.router.navigate(['/live'], { state: { user: res } });
+  // async ngOnInit(): Promise<void> {
+  //   if (localStorage.length > 0){
+  //     this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
+  //     this.router.navigate(['/live']);
+  //   }
   // }
+
+  async ngOnInit() {
+    this.userUpdate.emit('ff');
+    this.router.navigate(['/live']);
+  }
 
   async authenticateUser() {
     try {

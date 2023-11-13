@@ -19,6 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { UploadFormComponent } from './components/archive/uploadForm/upload-form/upload-form.component';
 import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
+import { JwtService } from 'src/common/services/jwt.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { LogsDisplayComponent } from './components/logs-display/logs-display.com
     AppRoutingModule,
     FormsModule
   ],
-  providers: [RequestService, Constants],
+  providers: [RequestService, Constants, JwtService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

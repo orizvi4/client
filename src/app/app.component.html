@@ -1,8 +1,8 @@
 <body>
     <div *ngIf="!user">
-        <app-login (userUpdate)="updateUser()"></app-login>
+        <app-login (userUpdate)="updateUser($event)"></app-login>
     </div>
-    <div *ngIf="user">
+    <div *ngIf="user" (mousemove)="timerReset()" (keydown)="timerReset()">
         <app-header [sideNavStatus]="sideNavStatus"></app-header>
         <div class="main" [ngClass]="{'mainShrink': sideNavStatus}">
             <router-outlet></router-outlet>

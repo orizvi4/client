@@ -22,7 +22,6 @@ export class UserCardComponent {
     // if (res.isConfirmed) {
     //   this.signOut.emit();
     // }
-    localStorage.clear();
     this.signOut.emit();
   }
 }
