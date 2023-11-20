@@ -21,7 +21,7 @@ export class NavBarComponent {
     this.userPopUp = false;
   }
   navigate(place: string) {
-    this.router.navigate([`/${place}`]);
+    this.router.navigate([`/${place}`], {state: {group: this.user.group}});
   }
   openUserMenu() {
     this.userPopUp = !this.userPopUp;

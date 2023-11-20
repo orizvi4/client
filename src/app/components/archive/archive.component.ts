@@ -20,6 +20,7 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
   roomRecordings: RoomRecordings[] = [];//check if videos
   init!: Promise<void>;
   formUpload: boolean = false;
+  group: string= '';
 
   async ngOnInit(): Promise<void> {
     this.init = new Promise<void>(async (resolve, reject) => {
@@ -31,7 +32,9 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
         reject(err);
       }
     });
+    this.group= history.state.group;
   }
+
   async ngAfterViewInit(): Promise<void> {
     try {
       await this.init;
