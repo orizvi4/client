@@ -7,7 +7,6 @@ import { FilterDTO } from "../models/filterDTO.iterface";
 import { RecordingDTO } from "../models/recordingDTO.interface";
 import { RoomRecordings } from "../models/roomRecordingsDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
-import Cookies from "js-cookie";
 
 @Injectable()
 export class RequestService {
@@ -60,13 +59,13 @@ export class RequestService {
 
 
     async getUsers(): Promise<UserDTO[]> {
-        return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users`,{headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
+        return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users`,{headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}})).data;
     }
     async deleteUser(name: string): Promise<string> {
-        return (await axios.delete(`${Constants.AUTH_SERVICE}/users/delete`, {params: {username: name}, headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
+        return (await axios.delete(`${Constants.AUTH_SERVICE}/users/delete`, {params: {username: name}, headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}})).data;
     }
     async addUser(user: UserDTO): Promise<UserDTO> {
-        return (await axios.post(`${Constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn, group: user.group},{headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
+        return (await axios.post(`${Constants.AUTH_SERVICE}/users/add`, {username: user.givenName, sn: user.sn, group: user.group},{headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}})).data;
     }
     async modifyUser(oldUsername:string, user: UserDTO): Promise<UserDTO> {
         const body = [
@@ -79,10 +78,10 @@ export class RequestService {
                 group: user.group
             }
         ];
-        return (await axios.put(`${Constants.AUTH_SERVICE}/users/modify`, body, {headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
+        return (await axios.put(`${Constants.AUTH_SERVICE}/users/modify`, body, {headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}})).data;
     }
     async getUserGroup(username: string): Promise<string> {
-        return (await axios.get(`${Constants.AUTH_SERVICE}/groups/user`, {params: {username: username}, headers: {Authorization: `Bearer ${Cookies.get('accessToken')}`}})).data;
+        return (await axios.get(`${Constants.AUTH_SERVICE}/groups/user`, {params: {username: username}, headers: {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}})).data;
     }
     async authenticateUser(username: string, password: string): Promise<UserDTO> {
         return (await axios.post(`${Constants.AUTH_SERVICE}/users/authenticate`, {username: username, password: password})).data;

@@ -4,7 +4,6 @@ import { AxiosError } from 'axios';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
-import Cookies from 'js-cookie';
 
 @Component({
   selector: 'app-login',
@@ -17,17 +16,17 @@ export class LoginComponent implements OnInit {
   @ViewChild('password') password!: ElementRef;
   @Output() userUpdate = new EventEmitter<string>();
 
-  // async ngOnInit(): Promise<void> {
-  //   if (localStorage.length > 0){
-  //     this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
-  //     this.router.navigate(['/live']);
-  //   }
-  // }
-
-  async ngOnInit() {
-    this.userUpdate.emit('ff');
-    this.router.navigate(['/live']);
+  async ngOnInit(): Promise<void> {
+    if (localStorage.length > 0){
+      this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
+      this.router.navigate(['/live']);
+    }
   }
+
+  // async ngOnInit() {
+  //   this.userUpdate.emit('ff');
+  //   this.router.navigate(['/live']);
+  // }
 
   async authenticateUser() {
     try {
@@ -37,13 +36,12 @@ export class LoginComponent implements OnInit {
         text: `welcome ${this.username.nativeElement.value}`,
         icon: "success",
       });
-      Cookies.set('accessToken', res.accessToken as string, {expires: 7});
-      Cookies.set('refreshToken', res.refreshToken as string, {expires: 7});
+      localStorage.setItem('accessToken', res.accessToken as string);
+      localStorage.setItem('refreshToken', res.refreshToken as string);
       localStorage.setItem('userPrincipalName', res.userPrincipalName);
       localStorage.setItem('givenName', res.givenName);
-      localStorage.setItem('group', res.group);
       localStorage.setItem('sn', res.sn);
-      this.userUpdate.emit();
+      this.userUpdate.emit(res.group);
       this.router.navigate(['/live']);
     }
     catch (err: any) {

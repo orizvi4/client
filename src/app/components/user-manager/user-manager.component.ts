@@ -36,8 +36,6 @@ export class UserManagerComponent implements OnInit {
           title: 'access denied',
           text: "session has timed out, please log in again"
         });
-        await this.jwtService.refreshAccessToken();
-        this.ngOnInit();
       }
       else {
         await Swal.fire({
@@ -77,8 +75,6 @@ export class UserManagerComponent implements OnInit {
           title: 'access denied',
           text: "session has timed out, please log in again"
         });
-        await this.jwtService.refreshAccessToken();
-        this.deleteUser(user);
       }
       else {
         await Swal.fire({
@@ -144,8 +140,6 @@ export class UserManagerComponent implements OnInit {
             title: 'access denied',
             text: "session has timed out, please log in again"
           });
-          await this.jwtService.refreshAccessToken();
-          this.updateUser(user);
         }
         else {
           await Swal.fire({
@@ -187,8 +181,6 @@ export class UserManagerComponent implements OnInit {
           title: 'access denied',
           text: "session has timed out, please log in again"
         });
-        await this.jwtService.refreshAccessToken();
-        this.createUser();
       }
       else {
         await Swal.fire({

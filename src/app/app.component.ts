@@ -32,29 +32,27 @@ export class AppComponent {
   }
 
   updateUser(group: string) {
-    // this.user = {
-    //   group: group,//check
-    //   givenName: localStorage.getItem('givenName') as string,
-    //   userPrincipalName: localStorage.getItem('userPrincipalName') as string,
-    //   sn: localStorage.getItem('sn') as string,
-    //   isEdit: false,
-    //   whenCreated: ''
-    // }
     this.user = {
-      givenName: "ori",
+      group: group,//check
+      givenName: localStorage.getItem('givenName') as string,
+      userPrincipalName: localStorage.getItem('userPrincipalName') as string,
+      sn: localStorage.getItem('sn') as string,
       isEdit: false,
-      sn: 'zvi',
-      group: 'commanders',
-      userPrincipalName: 'ori@orizvi.test',
-      whenCreated: '02032004'
-    };
+      whenCreated: ''
+    }
+    // this.user = {
+    //   givenName: "ori",
+    //   isEdit: false,
+    //   sn: 'zvi',
+    //   group: 'managers',
+    //   userPrincipalName: 'ori@orizvi.test',
+    //   whenCreated: '02032004'
+    // };
   }
 
   async signOut() {
     this.user = null;
     await this.jwtService.blackListToken();
-    Cookies.remove('accessToken');
-    Cookies.remove('refreshToken');
     localStorage.clear();
     this.router.navigate(['/login']);
   }
