@@ -11,7 +11,7 @@ export class UserCardComponent {
   @Input() user!: UserDTO;
   @Output() signOut = new EventEmitter<boolean>();
 
-  async signOutFunc() {
+  async signOutFunc() {//fix
     // const res = await Swal.fire({
     //   title: "log out",
     //   text: "are you sure you want to log out?",

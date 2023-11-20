@@ -65,7 +65,7 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-    catch(err) {
+    catch (err) {
       console.log(err);
       await Swal.fire({
         title: 'server error',
@@ -110,8 +110,8 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
-    catch(err) {
-      
+    catch (err) {
+
       throw err;
     }
   }
@@ -126,16 +126,25 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   async deleteRecording(recording: string) {
     try {
-      recording = recording.substring(30, recording.indexOf('/playlist'));
-      await this.requestService.deleteRecording(recording);
-      if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-        await this.filterRecordings();
-      }
-      else {
-        this.deleteVideoPlayers();
-        const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
-        await this.updateStreams(filter);
-        await this.updateVideoPlayers();
+      const res = await Swal.fire({
+        icon: 'warning',
+        title: 'delete recording',
+        text: 'are you sure you want to delete the recording?',
+        showCancelButton: true,
+        confirmButtonText: 'delete'
+      });
+      if (res.isConfirmed) {
+        recording = recording.substring(30, recording.indexOf('/playlist'));
+        await this.requestService.deleteRecording(recording);
+        if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
+          await this.filterRecordings();
+        }
+        else {
+          this.deleteVideoPlayers();
+          const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
+          await this.updateStreams(filter);
+          await this.updateVideoPlayers();
+        }
       }
     }
     catch (err) {

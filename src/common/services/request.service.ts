@@ -34,7 +34,7 @@ export class RequestService {
     async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
         let suffix;
         try {
-            suffix = (await axios.get<number>(`${Constants.IMPORT_SERVICE}/file/suffix`, {params: {channel: channel}})).data + 1;
+            suffix = (await axios.get<number>(`${Constants.CONTENT_MANAGER}/file/suffix`, {params: {channel: channel}})).data + 1;
         }
         catch(err) {
             throw err;
@@ -43,10 +43,10 @@ export class RequestService {
         formData.append('file', file.nativeElement.files[0]);
         formData.append('startAt', start);
         formData.append('endAt', end);
-        return (await axios.post<boolean>(`${Constants.IMPORT_SERVICE}/file/upload`, formData, {params: {channel: channel, suffix: suffix}})).data;
+        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/upload`, formData, {params: {channel: channel, suffix: suffix}})).data;
     }
     async isDateValid(start: string, end: string, channel: string): Promise<boolean> {
-        return (await axios.post<boolean>(`${Constants.IMPORT_SERVICE}/file/date`, {startAt: start, endAt: end, channel: channel})).data;
+        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/date`, {startAt: start, endAt: end, channel: channel})).data;
     }
     async deleteRecording(id: string): Promise<boolean> {
         return (await axios.delete<boolean>(`${Constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
