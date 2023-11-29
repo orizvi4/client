@@ -13,7 +13,16 @@ import Swal from 'sweetalert2';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router, private jwtService: JwtService) { }
+  constructor(private router: Router, private jwtService: JwtService) { 
+    this.user = {
+      givenName: "ori",
+      isEdit: false,
+      sn: 'zvi',
+      group: 'managers',
+      userPrincipalName: 'ori@orizvi.test',
+      whenCreated: '02032004'
+    };
+  }
 
   sideNavStatus: boolean = false;
   user: UserDTO | null = null;
@@ -33,24 +42,17 @@ export class AppComponent {
 
   updateUser(group: string) {
     this.user = {
-      group: group,//check
+      group: group,
       givenName: localStorage.getItem('givenName') as string,
       userPrincipalName: localStorage.getItem('userPrincipalName') as string,
       sn: localStorage.getItem('sn') as string,
       isEdit: false,
       whenCreated: ''
     }
-    // this.user = {
-    //   givenName: "ori",
-    //   isEdit: false,
-    //   sn: 'zvi',
-    //   group: 'managers',
-    //   userPrincipalName: 'ori@orizvi.test',
-    //   whenCreated: '02032004'
-    // };
   }
 
   async signOut() {
+    this.timer$.next();
     this.user = null;
     await this.jwtService.blackListToken();
     localStorage.clear();

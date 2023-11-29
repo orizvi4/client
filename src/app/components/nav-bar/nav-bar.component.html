@@ -11,11 +11,11 @@
     <div *ngIf="user.group == 'managers'">
         <div class="nav-item" (click)="navigate('userManager')">
             <a class="icon" id="userManagerIcon"></a>
-            <a class="text">manage<br>users</a>
+            <a class="text">manage users</a>
         </div>
         <div class="nav-item" (click)="navigate('logsDisplay')">
             <a class="icon" id="logsIcon"></a>
-            <a class="text">logs<br>display</a>
+            <a class="text">logs display</a>
         </div>
     </div>
     <app-user-card [user]="user" (signOut)="signOutFunc()" *ngIf="userPopUp"></app-user-card>

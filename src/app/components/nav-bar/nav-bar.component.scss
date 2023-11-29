@@ -4,56 +4,58 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     overflow: hidden;
     transition: 0.3s;
+
     #spacer {
         flex-grow: 1;
     }
+
     .text {
         display: none;
         opacity: 0;
-        transition: opacity 0.5s;
+        transition: 1s;
         color: black;
         text-decoration: none;
-        font-size: 2vw;
+        font-size: 1.6vw;
+        margin-left: 0.4vw;
+        align-items: center;
     }
+
     .icon {
-        width: 3vw;
         height: 7vh;
+        margin-left: 1vw;
         background-repeat: no-repeat;
         background-size: contain;
-        transition: 0.3s;
         display: flex;
         cursor: pointer;
+        aspect-ratio: 1;
     }
+
     #deerIcon {
         background-repeat: no-repeat;
         background-size: contain;
         display: flex;
         background-image: url('../../../images/deerIcon.png');
-        transition: 0.3s;
-        width: 90%;
-        height: 13%;
+        margin-left: 0.2vw;
+        height: 13vh;
+        margin-bottom: 1vh;
     }
 }
 
 .sidenav:hover {
     width: 15vw;
+
     .text {
-        display: block;
-        opacity: 1;
-        transition: 0.3s;
+        display: inline-block;
+        opacity: 0;
+        white-space: nowrap;
+        animation: fadeInText 0.5s ease-out forwards;
+        display: inline-block;
+        white-space: nowrap;
     }
-    .icon {
-        transition: 0.3s;
-        padding-right: 0.7vw;
-    }
-    #deerIcon {
-        transition: 0.25s;
-        width: 45%;
-        height: 20%;
-    }
+
 }
 
 app-user-card {
@@ -62,31 +64,44 @@ app-user-card {
 }
 
 .nav-item {
-    padding-bottom: 1.5vh;
+    padding: 0.75vh 0 0.75vh 0;
     display: flex;
-    align-items: center;
-    text-decoration: none;
     cursor: pointer;
-}
-
-.nav-item:hover {
-    transform: scale(1.1);
-    transition: 0.3s;
+    align-items: center;
+    &:hover {
+        transition: 0.2s;
+        background-color: #969696;
+    }
 }
 
 #liveIcon {
     background-image: url('../../../images/liveIcon.png');
 }
+
 #archiveIcon {
     background-image: url('../../../images/archiveIcon.png');
 }
+
 #userManagerIcon {
     background-image: url('../../../images/userManagerIcon.png');
 }
+
 #profileIcon {
     background-image: url('../../../images/profileIcon.png');
 }
+
 #logsIcon {
     background-image: url('../../../images/logsIcon.png');
 }
 
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

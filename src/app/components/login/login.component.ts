@@ -23,10 +23,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // async ngOnInit() {
-  //   this.userUpdate.emit('ff');
-  //   this.router.navigate(['/live']);
-  // }
 
   async authenticateUser() {
     try {

@@ -17,7 +17,7 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('startTime') startTime!: ElementRef;
   @ViewChild('endTime') endTime!: ElementRef;
-  roomRecordings: RoomRecordings[] = [];//check if videos
+  roomRecordings: RoomRecordings[] = [];
   init!: Promise<void>;
   formUpload: boolean = false;
   group: string= '';

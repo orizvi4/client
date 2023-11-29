@@ -10,7 +10,7 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
 export class NavBarComponent {
   constructor(private router: Router) {}
   @Output() sideNavToggled = new EventEmitter<boolean>();
-  @Output() signOut = new EventEmitter<boolean>();
+  @Output() signOut = new EventEmitter<void>();
   menuStatus: boolean = false;
   userPopUp: boolean = false;
   @Input() user!: UserDTO;

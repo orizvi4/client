@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class UserCardComponent {
   @Input() user!: UserDTO;
-  @Output() signOut = new EventEmitter<boolean>();
+  @Output() signOut = new EventEmitter<void>();
 
   async signOutFunc() {//fix
     // const res = await Swal.fire({
@@ -20,6 +20,7 @@ export class UserCardComponent {
     //   confirmButtonText: 'log out'
     // });
     // if (res.isConfirmed) {
+    //   console.log('before');
     //   this.signOut.emit();
     // }
     this.signOut.emit();

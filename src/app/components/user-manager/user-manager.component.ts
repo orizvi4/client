@@ -46,6 +46,7 @@ export class UserManagerComponent implements OnInit {
       }
     }
   }
+
   async deleteUser(user: UserDTO): Promise<void> {
     try {
       const del = await swal({
@@ -85,6 +86,7 @@ export class UserManagerComponent implements OnInit {
       }
     }
   }
+
   cancelEdit(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.whenCreated != '') {
       user.isEdit = false;
@@ -97,6 +99,7 @@ export class UserManagerComponent implements OnInit {
     }
     this.tempUser = null;
   }
+  
   async updateUser(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
