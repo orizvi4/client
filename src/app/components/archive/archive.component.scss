@@ -103,24 +103,27 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 31vh;
-    margin-left: 6vw;
+    margin-left: 10vw;
+    background-color: #EEE;
 
 
     .room-name {
         font-weight: bold;
         font-size: 2rem;
-        margin-left: 36.8vw;
+        margin-left: 33vw;
     }
 
     .video-js {
         display: flex;
-        width: 23.8vw;
-        height: 40vh;
+        width: auto;
+        height: 36.3vh;
+        aspect-ratio: 65.3/49;
     }
 
     #video-element-container {
         display: flex;
         flex-wrap: wrap;
+        border-radius: 3vh;
 
         .delete-button {
             background-repeat: no-repeat;
