@@ -1,24 +1,24 @@
 #filter-container {
     background-color: rgb(233, 230, 230);
-    border: 0.4vw solid black;
+    border: 0.2vw solid black;
     padding: 2vh;
     left: 13vw;
     position: absolute;
     width: 65vw;
     height: 20vh;
-    margin: 2vh auto;
-    border-radius: 2vw;
+    margin: 1vh auto;
+    border-radius: 0.5vw;
     text-align: center;
 
 
     #filter-button {
-        border-radius: 0.5rem;
-        font-size: 1.5rem;
+        border-radius: 0.3vw;
+        font-size: 3vh;
         background-color: black;
         color: white;
-        padding: 0.6rem 1rem;
+        padding: 1vh 2vw;
         cursor: pointer;
-        transition: .3s;
+        transition: .2s;
 
         &:hover {
             background-color: rgb(39, 39, 39);
@@ -29,18 +29,19 @@
         font-size: 5vh;
         font-weight: bold;
         margin-top: 0;
+        margin-bottom: 1vh;
     }
 
     .time {
         padding: 2vh;
         margin-bottom: 3vh;
         border: 0.2vw solid black;
-        border-radius: 1vw;
+        border-radius: 0.5vw;
         transition: border-color 0.3s ease;
         width: 13vw;
         height: 4vh;
         margin-right: 2.5vw;
-        background-color: #808080;
+        background-color: #EEE;
     }
 
     .title {
@@ -63,7 +64,7 @@
         padding: 1em 2em;
         color: white;
         background: black;
-        border-radius: .4em;
+        border-radius: 0.3vw;
         transition: .3s;
 
         &:hover {

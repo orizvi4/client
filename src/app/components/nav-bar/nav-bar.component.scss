@@ -20,12 +20,11 @@
         text-decoration: none;
         font-size: 1.6vw;
         margin-left: 0.4vw;
-        align-items: center;
+        align-self: center;
     }
 
     .icon {
         height: 7vh;
-        margin-left: 1vw;
         background-repeat: no-repeat;
         background-size: contain;
         display: flex;
@@ -44,9 +43,8 @@
     }
 }
 
-.sidenav:hover {
+.sideNavStatus {
     width: 15vw;
-
     .text {
         display: inline-block;
         opacity: 0;
@@ -64,10 +62,9 @@ app-user-card {
 }
 
 .nav-item {
-    padding: 0.75vh 0 0.75vh 0;
+    padding: 0.75vh 0 0.75vh 0.9vw;
     display: flex;
     cursor: pointer;
-    align-items: center;
     &:hover {
         transition: 0.2s;
         background-color: #969696;

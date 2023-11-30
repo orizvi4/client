@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 
@@ -11,14 +11,21 @@ export class NavBarComponent {
   constructor(private router: Router) {}
   @Output() sideNavToggled = new EventEmitter<boolean>();
   @Output() signOut = new EventEmitter<void>();
-  menuStatus: boolean = false;
+  @Input() sideNavStatus: boolean = false;
   userPopUp: boolean = false;
   @Input() user!: UserDTO;
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['sideNavStatus']) {
+      this.userPopUp = false;
+    }
+  }
+
   sideNavToggle() {
-    this.menuStatus = !this.menuStatus;
-    this.sideNavToggled.emit(this.menuStatus);
-    this.userPopUp = false;
+    if (this.userPopUp == false) {
+      this.sideNavStatus = !this.sideNavStatus;
+      this.sideNavToggled.emit(this.sideNavStatus);
+    }
   }
   navigate(place: string) {
     this.router.navigate([`/${place}`], {state: {group: this.user.group}});

@@ -1,4 +1,4 @@
-<div class="sidenav" (mouseleave)="sideNavToggle()" (mouseenter)="sideNavToggle()">
+<div class="sidenav" [ngClass]="{'sideNavStatus': sideNavStatus}" (mouseleave)="sideNavToggle()" (mouseenter)="sideNavToggle()">
     <a id="deerIcon"></a>
     <div class="nav-item" (click)="navigate('live')">
         <a class="icon" id="liveIcon"></a>
