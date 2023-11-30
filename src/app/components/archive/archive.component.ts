@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FilterDTO } from 'src/common/models/filterDTO.iterface';
-import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import { RoomRecordings } from 'src/common/models/roomRecordingsDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
@@ -12,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './archive.component.html',
   styleUrls: ['./archive.component.scss']
 })
-export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ArchiveComponent implements OnInit {
   constructor(private requestService: RequestService) { }
 
   @ViewChild('startTime') startTime!: ElementRef;
@@ -20,25 +19,12 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
   roomRecordings: RoomRecordings[] = [];
   init!: Promise<void>;
   formUpload: boolean = false;
-  group: string= '';
+  group: string = '';
 
   async ngOnInit(): Promise<void> {
-    this.init = new Promise<void>(async (resolve, reject) => {
-      try {
-        await this.updateStreams();
-        resolve();
-      }
-      catch (err) {
-        reject(err);
-      }
-    });
-    this.group= history.state.group;
-  }
-
-  async ngAfterViewInit(): Promise<void> {
     try {
-      await this.init;
-      await this.updateVideoPlayers();
+      await this.updateStreams();
+      this.group = history.state.group;
     }
     catch (err) {
       console.log(err);
@@ -49,17 +35,14 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  ngOnDestroy(): void {
-    this.deleteVideoPlayers();
-  }
+
 
   async filterRecordings(): Promise<void> {
     try {
       if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-        this.deleteVideoPlayers();
+
         const filter: FilterDTO = { startAt: this.startTime.nativeElement.value, endAt: this.endTime.nativeElement.value };
         await this.updateStreams(filter);
-        await this.updateVideoPlayers();
       }
       else {
         Swal.fire({
@@ -78,14 +61,14 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private async updateStreams(filter?: FilterDTO): Promise<void> { //updates the room recordings array
+  private async updateStreams(filter?: FilterDTO): Promise<void> {
     try {
       this.roomRecordings = await this.requestService.getRecordings(filter);
       for (const roomRecording of this.roomRecordings) {
-        roomRecording.streams = new Map<string, string>([]);
+        roomRecording.streams = {};
         const recordings: string[] = roomRecording.recordings;
         for (let i = 0; i < recordings.length; i++) {
-          roomRecording.streams.set("record" + i, recordings[i]);
+          roomRecording.streams["record" + i] = recordings[i];
         }
       }
     }
@@ -95,38 +78,6 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private async updateVideoPlayers(): Promise<void> { //add all the video elements
-    try {
-      for (const roomRecording of this.roomRecordings) {
-        for (const stream of roomRecording.streams) {
-          setTimeout(() => {
-            const player: Player = videojs(stream[0], {
-              autoplay: 'muted',
-              controls: true,
-              loop: true
-            });
-            player.src({
-              src: stream[1],
-              type: 'application/x-mpegURL'
-            });
-          });
-        }
-      }
-    }
-    catch (err) {
-
-      throw err;
-    }
-  }
-
-  private deleteVideoPlayers(): void {//deletes all the video elements 
-    for (const roomRecording of this.roomRecordings) {
-      for (const stream of roomRecording.streams) {
-        const player: Player = videojs.getPlayer(stream[0]);
-        player.dispose();
-      }
-    }
-  }
   async deleteRecording(recording: string) {
     try {
       const res = await Swal.fire({
@@ -143,10 +94,8 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
           await this.filterRecordings();
         }
         else {
-          this.deleteVideoPlayers();
           const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
           await this.updateStreams(filter);
-          await this.updateVideoPlayers();
         }
       }
     }
@@ -166,10 +115,8 @@ export class ArchiveComponent implements OnInit, AfterViewInit, OnDestroy {
           await this.filterRecordings();
         }
         else {
-          this.deleteVideoPlayers();
           const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
           await this.updateStreams(filter);
-          await this.updateVideoPlayers();
         }
       }
     }

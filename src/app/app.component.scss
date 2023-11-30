@@ -14,10 +14,29 @@ body {
         height: calc(100% - 7.5vh);
         overflow-y: auto;
         overflow-x: hidden;
+        .userPopupOverlay {
+            height: 100%;
+            width: 100%;
+            z-index: 99;
+            position: fixed;
+            overflow: hidden;
+            top: 0;
+            left: 15vw;
+        }
     }
     .mainShrink {
         transition: 0.3s;
         left: 15vw !important;
         width: calc(100% - 15vw) !important;
     }
+    .userPopupOverlay {
+        height: 100%;
+        width: calc(100% - 15vw);
+        z-index: 99;
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        left: 15vw;
+    }
+
 }
