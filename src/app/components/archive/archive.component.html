@@ -22,8 +22,7 @@
         <label class="room-name">{{roomRecording.room}}</label>
         <div id="video-element-container">
             <div class="video-element" *ngFor="let stream of roomRecording.streams | keyvalue">
-                <a class="delete-button" (click)="deleteRecording(stream.value)"></a>
-                <video [id]='stream.key' class="video-js"></video>
+                <app-recording-box [value]="stream.value" [key]="stream.key" (deleteRecording)="deleteRecording($event)"></app-recording-box>
             </div>
         </div>
     </div>

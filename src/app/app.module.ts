@@ -17,9 +17,10 @@ import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
-import { UploadFormComponent } from './components/archive/uploadForm/upload-form/upload-form.component';
+import { UploadFormComponent } from './components/archive/upload-form/upload-form.component';
 import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
 import { JwtService } from 'src/common/services/jwt.service';
+import { RecordingBoxComponent } from './components/archive/recording-box/recording-box.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { JwtService } from 'src/common/services/jwt.service';
     LoginComponent,
     UserCardComponent,
     UploadFormComponent,
-    LogsDisplayComponent
+    LogsDisplayComponent,
+    RecordingBoxComponent
   ],
   imports: [
     CommonModule,

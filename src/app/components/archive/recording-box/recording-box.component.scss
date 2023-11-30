@@ -1,0 +1,23 @@
+.video-js {
+    display: flex;
+    width: auto;
+    height: 36.3vh;
+    aspect-ratio: 65.3/49;
+}
+.delete-button {
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    cursor: pointer;
+    background-image: url('../../../../images/deleteIcon.png');
+    width: 3vw;
+    height: 5vh;
+    margin: 1vh 0.3vw;
+    display: inline-block;
+    z-index: 1;
+    transition: 0.2s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
