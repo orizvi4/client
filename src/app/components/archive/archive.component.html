@@ -20,8 +20,8 @@
 <div id="recordings-container" [ngClass]="{'empty-div': !roomRecordings.length}">
     <div *ngFor="let roomRecording of roomRecordings">
         <label class="room-name">{{roomRecording.room}}</label>
-        <div id="video-element-container">
-            <div class="video-element" *ngFor="let stream of roomRecording.streams | keyvalue">
+        <div id="room-recording-container">
+            <div class="room-recording" *ngFor="let stream of roomRecording.streams | keyvalue">
                 <app-recording-box [value]="stream.value" [key]="stream.key" (deleteRecording)="deleteRecording($event)"></app-recording-box>
             </div>
         </div>

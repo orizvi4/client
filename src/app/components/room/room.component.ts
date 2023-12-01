@@ -20,8 +20,8 @@ export class RoomComponent implements OnInit {
     try {
       this.channels = (await this.requestService.getRoomById((history.state).roomId)).channels;
       this.room = (history.state).roomName;
-      for (const camera of this.channels) {
-        this.requestService.connectChannel(camera._id);
+      for (const channel of this.channels) {
+        this.requestService.connectChannel(channel._id);
       }
     }
     catch (err) {

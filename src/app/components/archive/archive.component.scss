@@ -1,6 +1,6 @@
 #filter-container {
     background-color: rgb(233, 230, 230);
-    border: 0.2vw solid black;
+    border: 0.1vw solid black;
     padding: 2vh;
     left: 13vw;
     position: absolute;
@@ -35,7 +35,7 @@
     .time {
         padding: 2vh;
         margin-bottom: 3vh;
-        border: 0.2vw solid black;
+        border: 0.1vw solid black;
         border-radius: 0.5vw;
         transition: border-color 0.3s ease;
         width: 13vw;
@@ -89,6 +89,8 @@
     overflow: hidden;
     top: 0;
     left: 0;
+    background-color: gray;
+    opacity: 0.4;
 }
 
 .empty-div {
@@ -104,8 +106,6 @@
     flex-wrap: wrap;
     margin-top: 31vh;
     margin-left: 10vw;
-    background-color: #EEE;
-
 
     .room-name {
         font-weight: bold;
@@ -113,33 +113,18 @@
         margin-left: 33vw;
     }
 
-    
-
-    #video-element-container {
+    #room-recording-container {
         display: flex;
         flex-wrap: wrap;
-        border-radius: 3vh;
+        justify-content: center;
+        align-items: center;
+        width: 73vw;
+        background-color: rgb(233, 230, 230);
+        border: 0.1rem solid black;
+        border-radius: 0.5vw;
 
-        .delete-button {
-            background-repeat: no-repeat;
-            background-size: contain;
-            position: absolute;
-            cursor: pointer;
-            background-image: url('../../../images/deleteIcon.png');
-            width: 3vw;
-            height: 5vh;
-            margin: 1vh 0.3vw;
-            display: inline-block;
-            z-index: 1;
-            transition: 0.2s;
-
-            &:hover {
-                transform: scale(1.1);
-            }
+        .room-recording {
+            padding: 3vh;
         }
-    }
-
-    .video-element {
-        padding: 3vh;
     }
 }

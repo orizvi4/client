@@ -1,9 +1,14 @@
-.video-js {
+$VIDEO-BORDER-RADIUS: 0.8rem;
+
+.video-js,
+video {
+    border-radius: $VIDEO-BORDER-RADIUS;
     display: flex;
     width: auto;
     height: 36.3vh;
     aspect-ratio: 65.3/49;
 }
+
 .delete-button {
     background-repeat: no-repeat;
     background-size: contain;
