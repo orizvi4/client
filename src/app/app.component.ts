@@ -14,14 +14,14 @@ import Swal from 'sweetalert2';
 })
 export class AppComponent {
   constructor(private router: Router, private jwtService: JwtService) { 
-    this.user = {
-      givenName: "ori",
-      isEdit: false,
-      sn: 'zvi',
-      group: 'managers',
-      userPrincipalName: 'ori@orizvi.test',
-      whenCreated: '02032004'
-    };
+    // this.user = {
+    //   givenName: "ori",
+    //   isEdit: false,
+    //   sn: 'zvi',
+    //   group: 'managers',
+    //   userPrincipalName: 'ori@orizvi.test',
+    //   whenCreated: '02032004'
+    // };
   }
 
   sideNavStatus: boolean = false;

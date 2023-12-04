@@ -1,8 +1,10 @@
+@import '../../../styles.scss';
+
 .grid {
-    color: black;
-    background: white;
+    color: $black;
+    background: $light-blue;
     border-collapse: collapse;
-    margin-left: 20vw;
+    margin-left: 18vw;
     margin-top: 7vh;
     width: 80%;
     border-radius: 1rem;
@@ -11,27 +13,29 @@
     tr {
         box-sizing: border-box;
         height: 6vh;
-        border-radius: 1rem;
 
         th {
             padding-right: 2rem;
-            border-radius: 1rem;
+            box-sizing: border-box;
         }
 
         td {
-            border: 0.1rem solid #808080;
-            border-radius: 1rem;
+            border: 0.15rem solid $background;
 
             .editInput {
                 width: 7vw;
                 height: 4vh;
+                background-color: $background;
+                border-radius: 0.6vh;
+                border: 0.1rem solid $black;
             }
 
             select {
-                border: 0.1rem solid black;
+                border: 0.1rem solid $black;
                 height: 5vh;
-                border-radius: 4px;
-                color: black;
+                border-radius: 0.6vh;
+                color: $black;
+                background-color: $background;
             }
         }
 
@@ -64,10 +68,6 @@
             margin-left: 1.5vw;
         }
 
-        &:hover {
-            background: #fbfbfb;
-        }
-
         #cancelIcon {
             background-image: url('../../../images/XButton.png');
             margin-left: 1.5vw;
@@ -77,43 +77,33 @@
             margin-left: 1vw;
             background-image: url('../../../images/VButton.png');
         }
+
+        &:hover:not(#table-head, #table-foot) {
+            background: $blue;
+        }
     }
 
     #table-foot {
         line-height: 2.4rem;
-        background: lighten(#75D64B, 37%);
 
         td {
             border: none;
+            border-radius: 1rem;
         }
 
         #create-user-button {
             border: none;
             font-family: "Open Sans";
             font-size: inherit;
-            color: inherit;
-            border: 0px;
             background: none;
-            line-height: inherit;
-            height: inherit;
-            padding: 0px 10px;
+            padding: 0 1.6vh;
             cursor: pointer;
-            display: inline-block;
             width: 100%;
             font-weight: bold;
-            box-sizing: border-box;
-            outline: none;
-            padding-left: 2rem;
-
-            &:hover {
-                transform: scale(1.05);
-                transition: 0.1s;
-            }
-
         }
-
+        
         &:hover {
-            background: lighten(#75D64B, 34%);
+            background: darken($light-blue, 2%);
         }
     }
 }

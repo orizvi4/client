@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (localStorage.length > 0){
       this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
-      this.router.navigate(['/live']);
+      this.router.navigate(['/userManager']);//live
     }
   }
 
