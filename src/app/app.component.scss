@@ -1,5 +1,7 @@
+@import '../styles.scss';
+
 body {
-    background-color: #EEE;
+    background-color: $background;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -14,15 +16,7 @@ body {
         height: calc(100% - 7.5vh);
         overflow-y: auto;
         overflow-x: hidden;
-        .userPopupOverlay {
-            height: 100%;
-            width: 100%;
-            z-index: 99;
-            position: fixed;
-            overflow: hidden;
-            top: 0;
-            left: 15vw;
-        }
+        // background: linear-gradient(#141e30, #243b55);
     }
     .mainShrink {
         transition: 0.3s;
@@ -32,7 +26,7 @@ body {
     .userPopupOverlay {
         height: 100%;
         width: calc(100% - 15vw);
-        z-index: 99;
+        z-index: 2;
         position: fixed;
         overflow: hidden;
         top: 0;

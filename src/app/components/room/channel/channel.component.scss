@@ -1,3 +1,5 @@
+@import '../../../../styles.scss';
+
 #container {
     position: relative;
     cursor: pointer;
@@ -59,7 +61,7 @@
     }
     #recordingButton {
         background-image: url('../../../../images/recordingButton.png');
-        background-color: #e91c3e;
+        background-color: $red;
         margin-top: 60%;
         background-position: center center;
         border-radius: 0 2vh 2vh 0;

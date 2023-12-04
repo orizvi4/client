@@ -1,11 +1,14 @@
+@import '../../../../styles.scss';
+
+$border-radius: 0.4rem;
+
 #my-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
-    background-color: #fff;
-    border: 0.1vw solid black;
-    border-radius: 0.4rem;
+    background-color: $light-blue;
+    border-radius: $border-radius;
     padding: 1.4vw;
     z-index: 3;
     top: 50%;
@@ -17,10 +20,15 @@
     width: fit-content;
     padding: 1.5vh;
     margin-bottom: 2.45vh;
-    border: 0.2vw solid black;
-    border-radius: 1vw;
-    transition: border-color 0.3s ease;
-    color: #000;
+    outline: none;
+    border-radius: $border-radius;
+    border: 0.2vw solid $background;
+    color: $black;
+    transition: 0.1s;
+
+    &:focus {
+        border-color: $light-green;
+    }
 }
 
 
@@ -28,33 +36,36 @@
     width: fit-content;
     padding: 1.5vh;
     margin-bottom: 2.45vh;
-    border: 0.2vw solid black;
-    border-radius: 1vw;
-    color: #000;
+    background-color: $background;
+    border-radius: $border-radius;
+    color: $black;
 }
 
 .button {
-    background-color: #000;
-    color: #fff;
+    background-color: $black;
+    color: $background;
     padding: 0.73vw 1.46vw;
     border: none;
     cursor: pointer;
-    border-radius: 1vw;
+    border-radius: $border-radius;
     margin-right: 0.73vw;
     margin-bottom: 1vh;
+    transition: 0.1s;
 
     &:hover {
-        background-color: #333;
-        transform: scale(1.05);
-        transition: 0.1s;
+        background-color: $light-black;
     }
 }
 
 select {
-    color: #000;
+    color: $black;
     width: fit-content;
     padding: 1.5vh;
     margin-bottom: 2.45vh;
-    border: 0.2vw solid black;
-    border-radius: 1vw;
+    border-radius: $border-radius;
+    border: 0.2vw solid $background;
+
+    &:focus {
+        border-color: $light-green;
+    }
 }

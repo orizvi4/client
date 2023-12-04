@@ -23,8 +23,8 @@ export class ArchiveComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      await this.updateStreams();
       this.group = history.state.group;
+      await this.updateStreams();
     }
     catch (err) {
       console.log(err);

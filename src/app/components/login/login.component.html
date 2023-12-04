@@ -2,8 +2,14 @@
     <div class="login-container">
         <h1>Login</h1>
 
-        <input type="text" class="text-input" id="username" placeholder="username" #username /><br />
-        <input type="password" class="text-input" id="password" placeholder="password" #password /><br />
+        <div class="text-input">
+            <input type="text" required="true" id="username" #username />
+            <label>Username</label>
+        </div>
+        <div class="text-input">
+            <input type="password" required="true" id="password" #password />
+            <label>Password</label>
+        </div>
 
         <input type="button" id="login-button" value="OK" (click)="authenticateUser()" />
     </div>

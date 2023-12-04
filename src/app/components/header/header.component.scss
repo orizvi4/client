@@ -1,15 +1,19 @@
+@import '../../../styles.scss';
+
 #header {
     left: 5vw;
     width: calc(100% - 5vw);
     transition: 0.3s;
     position: absolute;
-    background-color: black;
+    background-color: $background;
+    border-bottom: 0.3vh solid $light-grey;
+    z-index: 2;
 
     #title {
         width: fit-content;
         margin-top: 1vh;
         margin-bottom: 1vh;
-        color: #808080;
+        color: $black;
         font-size: 5vh;
         margin-left: 45vw;
         display: inline-block;

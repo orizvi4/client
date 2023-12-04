@@ -1,3 +1,5 @@
+@import '../../../styles.scss';
+
 #container {
     display: flex;
     flex-wrap: wrap;
@@ -11,7 +13,7 @@
 
 #title-container {
     margin-top: 2vh;
-    background-color: #e91c3e;
+    background-color: $red;
     margin-left: 40vw;
     display: flex;
     align-items: center;

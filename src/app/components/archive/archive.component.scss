@@ -1,27 +1,36 @@
+@import '../../../styles.scss';
+
+.container {
+    width: 100vw;
+    margin: 0 0;
+    position: absolute;
+}
+
 #filter-container {
-    background-color: rgb(233, 230, 230);
-    border: 0.1vw solid black;
+    background-color: $light-blue;
+    color: $black;
     padding: 2vh;
     left: 13vw;
     position: absolute;
     width: 65vw;
     height: 20vh;
-    margin: 1vh auto;
+    margin: 2vh auto;
     border-radius: 0.5vw;
     text-align: center;
 
 
     #filter-button {
-        border-radius: 0.3vw;
+        border-radius: 0.8vw;
+        border: none;
         font-size: 3vh;
-        background-color: black;
-        color: white;
+        background-color: $black;
+        color: $background;
         padding: 1vh 2vw;
         cursor: pointer;
         transition: .2s;
 
         &:hover {
-            background-color: rgb(39, 39, 39);
+            background-color: $light-black;
         }
     }
 
@@ -35,13 +44,19 @@
     .time {
         padding: 2vh;
         margin-bottom: 3vh;
-        border: 0.1vw solid black;
+        border: 0.2vw solid $background;
         border-radius: 0.5vw;
-        transition: border-color 0.3s ease;
         width: 13vw;
-        height: 4vh;
+        height: 2.5vh;
         margin-right: 2.5vw;
-        background-color: #EEE;
+        background-color: $background;
+        color: $black;
+        transition: border-color 0.2s ease;
+        outline: none;
+
+        &:focus {
+            border-color: $light-grey;
+        }
     }
 
     .title {
@@ -62,14 +77,14 @@
     .upload-label {
         display: block;
         padding: 1em 2em;
-        color: white;
-        background: black;
-        border-radius: 0.3vw;
-        transition: .3s;
+        color: $background;
+        background: $black;
+        border-radius: 0.8vw;
+        transition: .2s;
 
         &:hover {
             cursor: pointer;
-            background: #222;
+            background: $light-black;
         }
     }
 
@@ -94,23 +109,25 @@
 }
 
 .empty-div {
-    width: 80vw;
+    width: 73vw;
     height: 40vh;
     background-image: url('../../../images/emptyFolderIcon.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
 }
-#recordings-container {
-    display: flex;
-    flex-wrap: wrap;
+
+.recordings-container {
     margin-top: 31vh;
-    margin-left: 10vw;
+    position: relative;
+    left: 10vw;
+    
 
     .room-name {
         font-weight: bold;
         font-size: 2rem;
         margin-left: 33vw;
+        color: $black;
     }
 
     #room-recording-container {
@@ -119,8 +136,7 @@
         justify-content: center;
         align-items: center;
         width: 73vw;
-        background-color: rgb(233, 230, 230);
-        border: 0.1rem solid black;
+        background-color: $light-blue;
         border-radius: 0.5vw;
 
         .room-recording {

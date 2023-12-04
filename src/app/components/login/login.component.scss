@@ -1,61 +1,83 @@
+@import '../../../styles.scss';
+
 body {
-    background-color: 3f3f3f;
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
     display: flex;
-}
+    background-color: $background;
 
-.login-container {
-    background-color: white;
-    padding: 0 6rem 2rem;
-    border-radius: 2rem;
-    text-align: center;
-    margin-top: 10vh;
-    margin-left: 35vw;
-    height: fit-content;
-    background-image: url('../../../images/keyIcon.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
+    .login-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        padding: 40px;
+        transform: translate(-50%, -50%);
+        background-color: $blue;
+        box-sizing: border-box;
+        box-shadow: 0 15px 25px black;
+        border-radius: 10px;
 
-h1 {
-    color: black;
-    font-size: 2.5rem;
-}
+        h1 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: $black;
+            text-align: center;
+        }
 
-.text-input {
-    border-radius: 3vh 3vh 0 0;
-    border: none;
-    border-bottom: 0.3rem solid black;
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    text-align: left;
-    background-color: #c7c7c7;
-    width: 18vw;
-    margin-bottom: 5vh;
-    outline: none;
-    &::placeholder {
-        color: #3f3f3f;
+        .text-input {
+            position: relative;
+        
+            label {
+                position: absolute;
+                top:0;
+                left: 0;
+                padding: 10px 0;
+                font-size: 16px;
+                color: $black;
+                pointer-events: none;
+                transition: .5s;
+            }
+        
+            input {
+                &:focus~label, &:valid~label {
+                    top: -20px;
+                    left: 0;
+                    font-size: 12px;
+                }
+        
+                width: 100%;
+                padding: 10px 0;
+                font-size: 16px;
+                color: $background;
+                margin-bottom: 30px;
+                border: none;
+                border-bottom: 1px solid $background;
+                outline: none;
+                background: transparent;
+            }
+        }
+
+        #login-button {
+            background-color: $light-grey;
+            font-size: 1rem;
+            font-weight: bolder;
+            color: $black;
+            border: 0.1rem solid $light-grey;
+            padding: 13px 34px;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+        
+            &:hover {
+                background-color: $light-blue;
+            }
+        }
+
     }
 }
-#password {
-    margin-bottom: 19vh;
-}
 
-#login-button {
-    background-color: black;
-    font-size: 1rem;
-    font-weight: bolder;
-    color: #808080;
-    border: none;
-    padding: 20px 34px;
-    border-radius: 2rem;
-    cursor: pointer;
-    &:hover {
-        background-color: rgb(39, 39, 39);
-    }
-}
+
+

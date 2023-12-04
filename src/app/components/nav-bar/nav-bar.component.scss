@@ -1,6 +1,8 @@
+@import '../../../styles.scss';
+
 .sidenav {
     width: 5vw;
-    background-color: #808080;
+    background-color: $light-grey;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -16,7 +18,7 @@
         display: none;
         opacity: 0;
         transition: 1s;
-        color: black;
+        color: $black;
         text-decoration: none;
         font-size: 1.6vw;
         margin-left: 0.4vw;
@@ -45,6 +47,7 @@
 
 .sideNavStatus {
     width: 15vw;
+
     .text {
         display: inline-block;
         opacity: 0;
@@ -58,17 +61,17 @@
 
 app-user-card {
     margin: 10vh 10vw;
-    z-index: 1;
+    z-index: 3;
 }
 
 .nav-item {
     padding: 0.75vh 0 0.75vh 0.9vw;
     display: flex;
     cursor: pointer;
-    
+
     &:hover {
         transition: 0.2s;
-        background-color: #969696;
+        background-color: $light-green;
     }
 }
 

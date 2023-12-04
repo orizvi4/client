@@ -1,8 +1,6 @@
-$VIDEO-BORDER-RADIUS: 0.8rem;
 
-.video-js,
-video {
-    border-radius: $VIDEO-BORDER-RADIUS;
+.video-js, video {
+    border-radius: 0.5rem;
     display: flex;
     width: auto;
     height: 36.3vh;

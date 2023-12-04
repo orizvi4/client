@@ -8,7 +8,7 @@
     <label for="endTime">End Time:</label>
     <input type="datetime-local" step="1" id="endTime" class="time" placeholder="End Time" #endTime>
 
-    <label for="dropdown">Select an Channel:</label>
+    <label for="dropdown">Select a Channel:</label>
     <select id="channel" #channelSelect>
         <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel._id}}</option>
     </select>
