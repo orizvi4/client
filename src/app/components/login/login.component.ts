@@ -17,32 +17,49 @@ export class LoginComponent implements OnInit {
   @Output() userUpdate = new EventEmitter<string>();
 
   async ngOnInit(): Promise<void> {
-    if (localStorage.length > 0){
-      this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
-      this.router.navigate(['/userManager']);//live
+    if (localStorage.length > 0) {
+      try {
+        this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
+        this.router.navigate(['/live']);
+      }
+      catch (err) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'server error'
+        });
+      }
     }
   }
 
 
   async authenticateUser() {
     try {
-      const res: UserDTO = await this.requestService.authenticateUser(this.username.nativeElement.value, this.password.nativeElement.value);
-      await Swal.fire({
-        title: "login successful",
-        text: `welcome ${this.username.nativeElement.value}`,
-        icon: "success",
-      });
-      localStorage.setItem('accessToken', res.accessToken as string);
-      localStorage.setItem('refreshToken', res.refreshToken as string);
-      localStorage.setItem('userPrincipalName', res.userPrincipalName);
-      localStorage.setItem('givenName', res.givenName);
-      localStorage.setItem('sn', res.sn);
-      this.userUpdate.emit(res.group);
-      this.router.navigate(['/live']);
+      if (this.username.nativeElement.value.length > 0 && this.password.nativeElement.value.length > 0) {
+        const res: UserDTO = await this.requestService.authenticateUser(this.username.nativeElement.value, this.password.nativeElement.value);
+        await Swal.fire({
+          title: "login successful",
+          text: `welcome ${this.username.nativeElement.value}`,
+          icon: "success",
+        });
+        localStorage.setItem('accessToken', res.accessToken as string);
+        localStorage.setItem('refreshToken', res.refreshToken as string);
+        localStorage.setItem('userPrincipalName', res.userPrincipalName);
+        localStorage.setItem('givenName', res.givenName);
+        localStorage.setItem('sn', res.sn);
+        this.userUpdate.emit(res.group);
+        this.router.navigate(['/live']);
+      }
+      else {
+        await Swal.fire({
+          title: "login error",
+          text: 'please fill the user and password',
+          icon: "warning",
+        });
+      }
     }
     catch (err: any) {
-      if (err.response.status == 500) {
-        Swal.fire({
+      if (err.response == null || err.response.status == 500) {
+        await Swal.fire({
           icon: 'error',
           title: 'server error'
         });
