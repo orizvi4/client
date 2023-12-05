@@ -52,10 +52,10 @@ export class AppComponent {
   }
 
   async signOut() {
-    this.timer$.next();
-    this.user = null;
     await this.jwtService.blackListToken();
     localStorage.clear();
+    this.timer$.next();
+    this.user = null;
     this.router.navigate(['/login']);
   }
 }

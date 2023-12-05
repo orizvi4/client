@@ -23,10 +23,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/live']);
       }
       catch (err) {
-        await Swal.fire({
-          icon: 'error',
-          title: 'server error'
-        });
+        localStorage.clear();
       }
     }
   }

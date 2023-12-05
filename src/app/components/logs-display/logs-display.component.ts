@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Constants } from 'src/common/constants';
 
 @Component({
   selector: 'app-logs-display',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./logs-display.component.scss']
 })
 export class LogsDisplayComponent {
-
+  kibana: string = Constants.KIBANA;
 }
