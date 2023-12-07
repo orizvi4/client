@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FilterDTO } from 'src/common/models/filterDTO.iterface';
-import { RoomRecordings } from 'src/common/models/roomRecordingsDTO.interface';
+import { RoomRecordingsDTO } from 'src/common/models/roomRecordingsDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
@@ -16,7 +16,7 @@ export class ArchiveComponent implements OnInit {
 
   @ViewChild('startTime') startTime!: ElementRef;
   @ViewChild('endTime') endTime!: ElementRef;
-  roomRecordings: RoomRecordings[] = [];
+  roomRecordings: RoomRecordingsDTO[] = [];
   init!: Promise<void>;
   formUpload: boolean = false;
   group: string = '';
@@ -64,13 +64,6 @@ export class ArchiveComponent implements OnInit {
   private async updateStreams(filter?: FilterDTO): Promise<void> {
     try {
       this.roomRecordings = await this.requestService.getRecordings(filter);
-      for (const roomRecording of this.roomRecordings) {
-        roomRecording.streams = {};
-        const recordings: string[] = roomRecording.recordings;
-        for (let i = 0; i < recordings.length; i++) {
-          roomRecording.streams["record" + i] = recordings[i];
-        }
-      }
     }
     catch (err) {
       this.roomRecordings = [];

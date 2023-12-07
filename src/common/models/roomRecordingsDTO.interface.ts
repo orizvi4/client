@@ -1,5 +1,6 @@
-export interface RoomRecordings {
+import { RecordingDTO } from "./recordingDTO.interface";
+
+export interface RoomRecordingsDTO {
     room: string;
-    recordings: string[];
-    streams: {[id: string]: string};
+    recordings: RecordingDTO[];
 }

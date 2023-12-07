@@ -10,6 +10,7 @@
 
     <input type="button" id="filter-button" (click)="filterRecordings()" value="filter" />
 </div>
+
 <div class="overlay" *ngIf="formUpload"></div>
 <div class="upload-container" *ngIf="group == 'commanders'">
     <label for="upload" class="upload-label"><b>+</b> upload recording</label>
@@ -18,12 +19,13 @@
         <app-upload-form (popup)="toggleUpload($event)"></app-upload-form>
     </div>
 </div>
+
 <div class="recordings-container" [ngClass]="{'empty-div': !roomRecordings.length}">
     <div *ngFor="let roomRecording of roomRecordings">
         <label class="room-name">{{roomRecording.room}}</label>
         <div id="room-recording-container">
-            <div class="room-recording" *ngFor="let stream of roomRecording.streams | keyvalue">
-                <app-recording-box [value]="stream.value" [key]="stream.key" (deleteRecording)="deleteRecording($event)"></app-recording-box>
+            <div class="room-recording" *ngFor="let recording of roomRecording.recordings">
+                <app-recording-box [recording]="recording" (deleteRecording)="deleteRecording($event)"></app-recording-box>
             </div>
         </div>
     </div>
