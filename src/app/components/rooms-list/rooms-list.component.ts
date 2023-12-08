@@ -19,10 +19,20 @@ export class RoomsListComponent implements OnInit {
       this.rooms = await this.requestService.getAllRooms();
     }
     catch(err) {
-      Swal.fire({
-        title: 'server error',
-        icon: 'error',
-        text: "couldn't load rooms, try again later"
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "couldn't load rooms, try again later"
       });
     }
   }

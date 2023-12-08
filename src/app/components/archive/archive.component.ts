@@ -28,10 +28,20 @@ export class ArchiveComponent implements OnInit {
     }
     catch (err) {
       console.log(err);
-      await Swal.fire({
-        title: 'server error',
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
         icon: 'error',
-        text: "couldn't load recordings, try again later"
+        title: "couldn't load recordings, try again later"
       });
     }
   }

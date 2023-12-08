@@ -1,7 +1,7 @@
 @import '../../../styles.scss';
 
 .sidenav {
-    width: 5vw;
+    width: $nav-width;
     background-color: $light-grey;
     height: 100vh;
     display: flex;
@@ -46,8 +46,8 @@
     }
 }
 
-.sideNavStatus {
-    width: 15vw;
+.expanded {
+    width: $nav-expanded-width;
 
     .text {
         display: inline-block;

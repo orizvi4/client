@@ -1,8 +1,8 @@
 @import '../../../styles.scss';
 
 #header {
-    left: 5vw;
-    width: calc(100% - 5vw);
+    left: $nav-width;
+    width: calc(100% - $nav-width);
     transition: 0.3s;
     position: absolute;
     background-color: $background;
@@ -24,8 +24,8 @@
 
 .mainShrink {
     transition: 0.3s;
-    left: 15vw !important;
-    width: calc(100% - 15vw) !important;
+    left: $nav-expanded-width !important;
+    width: calc(100% - $nav-expanded-width) !important;
     #title {
         margin-left: 35vw !important;
     }

@@ -33,11 +33,27 @@ export class LoginComponent implements OnInit {
     try {
       if (this.username.nativeElement.value.length > 0 && this.password.nativeElement.value.length > 0) {
         const res: UserDTO = await this.requestService.authenticateUser(this.username.nativeElement.value, this.password.nativeElement.value);
-        await Swal.fire({
-          title: "login successful",
-          text: `welcome ${this.username.nativeElement.value}`,
-          icon: "success",
+        
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
         });
+        Toast.fire({
+          icon: "success",
+          text: "Signed in successfully"
+        });
+        // await Swal.fire({
+        //   title: "login successful",
+        //   text: `welcome ${this.username.nativeElement.value}`,
+        //   icon: "success",
+        // });
         localStorage.setItem('accessToken', res.accessToken as string);
         localStorage.setItem('refreshToken', res.refreshToken as string);
         localStorage.setItem('userPrincipalName', res.userPrincipalName);

@@ -22,6 +22,10 @@ export class UserManagerComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    await this.updateAllUsers();
+  }
+
+  async updateAllUsers() {
     try {
       this.users = await this.requestService.getUsers();
       for (const user of this.users) {
@@ -103,7 +107,7 @@ export class UserManagerComponent implements OnInit {
   async updateUser(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
-        if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user exist
+        if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user
           const res: UserDTO = await this.requestService.addUser(user)
           this.tempUser = res as UserDTO;
           this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
@@ -111,7 +115,7 @@ export class UserManagerComponent implements OnInit {
           this.users.push(this.tempUser);
           this.tempUser = null;
         }
-        else {
+        else { //existing user
           const whenCreated: string = this.tempUser.whenCreated;
           this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
 
@@ -119,6 +123,8 @@ export class UserManagerComponent implements OnInit {
           this.users.splice(this.users.indexOf(user), 1);
           this.users.push(this.tempUser);
           this.tempUser = null;
+
+          // await this.updateAllUsers();
         }
       }
       catch (err: any) {

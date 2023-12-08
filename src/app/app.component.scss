@@ -8,28 +8,28 @@ body {
 
     .main {
         transition: 0.3s;
-        width: calc(100% - 5vw);
-        left: 5vw;
-        top: 7.5vh;
+        width: calc(100% - $nav-width);
+        left: $nav-width;
+        top: $header-height;
         position: absolute;
         display: flex;
-        height: calc(100% - 7.5vh);
+        height: calc(100% - $header-height);
         overflow-y: auto;
         overflow-x: hidden;
     }
     .mainShrink {
         transition: 0.3s;
-        left: 15vw !important;
-        width: calc(100% - 15vw) !important;
+        left: $nav-expanded-width !important;
+        width: calc(100% - $nav-expanded-width) !important;
     }
     .userPopupOverlay {
         height: 100%;
-        width: calc(100% - 15vw);
+        width: calc(100% - $nav-expanded-width);
         z-index: 2;
         position: fixed;
         overflow: hidden;
         top: 0;
-        left: 15vw;
+        left: $nav-expanded-width;
     }
 
 }
