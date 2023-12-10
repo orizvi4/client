@@ -25,7 +25,7 @@ export class RecordingBoxComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy(): void {//closes before finsish
     const player: Player = videojs.getPlayer(this.recording._id);
     player.dispose();
   }

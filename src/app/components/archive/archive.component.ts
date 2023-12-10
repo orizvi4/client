@@ -91,7 +91,7 @@ export class ArchiveComponent implements OnInit {
         confirmButtonText: 'delete'
       });
       if (res.isConfirmed) {
-        recording = recording.substring(30, recording.indexOf('/playlist'));
+        recording = recording.substring(recording.indexOf("/mp4:") + 5, recording.indexOf('/playlist'));
         await this.requestService.deleteRecording(recording);
         if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
           await this.filterRecordings();

@@ -117,14 +117,9 @@ export class UserManagerComponent implements OnInit {
         }
         else { //existing user
           const whenCreated: string = this.tempUser.whenCreated;
-          this.tempUser = await this.requestService.modifyUser(this.tempUser.givenName, user);
-
-          this.tempUser.whenCreated = whenCreated;
-          this.users.splice(this.users.indexOf(user), 1);
-          this.users.push(this.tempUser);
+          await this.requestService.modifyUser(this.tempUser.givenName, user);
           this.tempUser = null;
-
-          // await this.updateAllUsers();
+          await this.updateAllUsers();
         }
       }
       catch (err: any) {
