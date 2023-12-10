@@ -1,4 +1,4 @@
-@import '../../../../styles.scss';
+@import '../../../../../styles.scss';
 
 #container {
     position: relative;
@@ -19,12 +19,12 @@
     }
 
     #streamIcon {
-        background-image: url('../../../../images/streamIcon.png');
+        background-image: url('../../../../../images/streamIcon.png');
         left: 0.5rem;
     }
 
     #recordingIcon {
-        background-image: url('../../../../images/recordingIcon.png');
+        background-image: url('../../../../../images/recordingIcon.png');
         right: 0.5rem;
         animation: blink 2s infinite;
     }
@@ -46,7 +46,7 @@
     }
     #backIcon {
         opacity: 0;
-        background-image: url('../../../../images/backIcon.png');
+        background-image: url('../../../../../images/backIcon.png');
         width: 4rem;
         height: 5rem;
         cursor: pointer;
@@ -60,7 +60,7 @@
         animation: blink 2s infinite;
     }
     #recordingButton {
-        background-image: url('../../../../images/recordingButton.png');
+        background-image: url('../../../../../images/recordingButton.png');
         background-color: $red;
         margin-top: 60%;
         background-position: center center;
@@ -69,7 +69,7 @@
         cursor: pointer;
     }
     .recordingStart {
-        background-image: url('../../../../images/stopRecording.png') !important;
+        background-image: url('../../../../../images/stopRecording.png') !important;
     }
 }
 .zoom:hover {

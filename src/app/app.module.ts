@@ -7,20 +7,20 @@ import { AppComponent } from './app.component';
 import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { RoomBoxComponent } from './components/rooms-list/room-box/room-box.component';
+import { RoomBoxComponent } from './components/rooms-list/components/room-box/room-box.component';
 import { RequestService } from '../common/services/request.service';
 import { Constants } from '../common/constants';
 import { AppRoutingModule } from './app-routing.module';
 import { RoomComponent } from './components/room/room.component';
-import { ChannelComponent } from './components/room/channel/channel.component';
+import { ChannelComponent } from './components/room/components/channel/channel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
-import { UploadFormComponent } from './components/archive/upload-form/upload-form.component';
+import { UploadFormComponent } from './components/archive/components/upload-form/upload-form.component';
 import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
 import { JwtService } from 'src/common/services/jwt.service';
-import { RecordingBoxComponent } from './components/archive/recording-box/recording-box.component';
+import { RecordingBoxComponent } from './components/archive/components/recording-box/recording-box.component';
 
 @NgModule({
   declarations: [

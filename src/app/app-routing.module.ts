@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RoomsListComponent } from './components/rooms-list/rooms-list.component';
 import { RoomComponent } from './components/room/room.component';
-import { ChannelComponent } from './components/room/channel/channel.component';
+import { ChannelComponent } from './components/room/components/channel/channel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { LoginComponent } from './components/login/login.component';
