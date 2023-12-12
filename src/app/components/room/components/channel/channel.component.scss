@@ -3,10 +3,15 @@
 #container {
     position: relative;
     cursor: pointer;
+
     .video-js {
-        width: 31.6vw;
-        height: 53vh;
+        position: relative;
+        display: flex;
+        width: auto;
+        height: 20vw;
+        aspect-ratio: 479 / 269;
     }
+
     .icon {
         background-repeat: no-repeat;
         background-size: contain;
@@ -28,22 +33,25 @@
         right: 0.5rem;
         animation: blink 2s infinite;
     }
-    
+
 }
 
 .zoom {
     cursor: auto !important;
-    left: 20vw;
+    left: 22vw;
     top: 5vh;
+
     .video-js {
         width: 47.7vw !important;
         height: 80vh !important;
     }
+
     #streamIcon {
         width: 4rem;
         height: 5rem;
         cursor: auto;
     }
+
     #backIcon {
         opacity: 0;
         background-image: url('../../../../../images/backIcon.png');
@@ -52,13 +60,14 @@
         cursor: pointer;
         transition: 0.3s;
     }
-    
+
     #recordingIcon {
         width: 3rem;
         height: 4rem;
         cursor: auto;
         animation: blink 2s infinite;
     }
+
     #recordingButton {
         background-image: url('../../../../../images/recordingButton.png');
         background-color: $red;
@@ -68,19 +77,23 @@
         width: 5vw;
         cursor: pointer;
     }
+
     .recordingStart {
         background-image: url('../../../../../images/stopRecording.png') !important;
     }
 }
+
 .zoom:hover {
     #backIcon {
         opacity: 0.7;
         transition: 0.3s;
     }
+
     #backIcon:hover {
         opacity: 1;
     }
 }
+
 @keyframes blink {
     0% {
         opacity: 1;

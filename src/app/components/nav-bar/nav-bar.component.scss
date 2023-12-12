@@ -6,7 +6,6 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: left;
     overflow: hidden;
     transition: 0.3s;
 
@@ -26,10 +25,9 @@
     }
 
     .icon {
-        height: 7vh;
+        height: 3rem;
         background-repeat: no-repeat;
         background-size: contain;
-        display: flex;
         cursor: pointer;
         aspect-ratio: 1;
     }
@@ -66,7 +64,9 @@ app-user-card {
 }
 
 .nav-item {
-    padding: 0.75vh 0 0.75vh 0.9vw;
+    padding: 0.75vh 0 0.75vh 0;
+    position: relative;
+    margin-left: 0.7rem;
     display: flex;
     cursor: pointer;
 

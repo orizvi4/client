@@ -3,17 +3,17 @@
 #container {
     display: flex;
     flex-wrap: wrap;
-    margin-left: 10rem;
+    margin-left: 12vw;
 
-    app-channel {
+    .video-item {
         display: flex;
         padding: 0.5rem;
     }
+
 }
 
 #title-container {
     margin-top: 2vh;
-    background-color: $red;
     margin-left: 40vw;
     display: flex;
     align-items: center;
@@ -22,17 +22,19 @@
     
     #title {
         font-size: 7vh;
-        color: rgb(59, 18, 18);
+        color: $black;
         padding-left: 1vw;
     }
     #recordingButton {
+        background-color: $red;
         background-image: url('../../../images/recordingButton.png');
-        width: 4vw;
+        width: 6vw;
         height: 6vh;
         cursor: pointer;
         background-repeat: no-repeat;
         background-size: contain;
-        text-decoration: none;
+        background-position: center center;
+        border-radius: 20rem;
         margin-left: 1vw;
     }
     .recordingStart {

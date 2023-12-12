@@ -1,10 +1,16 @@
+.time {
+    font-size: 1.2vw;
+}
+#endDate {
+    float: right;
+}
 
 .video-js, video {
     border-radius: 0.5rem;
     display: flex;
     width: auto;
-    height: 36.3vh;
-    aspect-ratio: 65.3/49;
+    height: 17vw;
+    aspect-ratio: 479 / 270;
 }
 
 .delete-button {

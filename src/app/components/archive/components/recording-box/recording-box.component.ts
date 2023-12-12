@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
@@ -8,10 +8,17 @@ import Player from 'video.js/dist/types/player';
   templateUrl: './recording-box.component.html',
   styleUrls: ['./recording-box.component.scss']
 })
-export class RecordingBoxComponent implements AfterViewInit, OnDestroy {
+export class RecordingBoxComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @Input() recording!: RecordingDTO;
   @Output() deleteRecording: EventEmitter<string> = new EventEmitter<string>();
+  startDate!: string;
+  endDate!: string;
+
+  ngOnInit(): void {
+    this.startDate = new Date(this.recording.startAt.toString().slice(0, -1)).toLocaleString();
+    this.endDate = new Date(this.recording.endAt.toString().slice(0, -1)).toLocaleString();
+  }
 
   ngAfterViewInit(): void {
     const player: Player = videojs(this.recording._id, {
