@@ -18,8 +18,8 @@
         display: flex;
         position: absolute;
         text-decoration: none;
-        width: 2rem;
-        height: 3rem;
+        width: 3rem;
+        height: 4rem;
         top: 0.5rem;
     }
 
@@ -36,14 +36,13 @@
 
 }
 
-.zoom {
-    cursor: auto !important;
-    left: 22vw;
+#container.zoom {
+    cursor: auto;
+    left: 12vw;
     top: 5vh;
 
     .video-js {
-        width: 47.7vw !important;
-        height: 80vh !important;
+        height: 40vw;
     }
 
     #streamIcon {
@@ -62,8 +61,8 @@
     }
 
     #recordingIcon {
-        width: 3rem;
-        height: 4rem;
+        width: 3vw;
+        height: 4vh;
         cursor: auto;
         animation: blink 2s infinite;
     }
@@ -71,10 +70,11 @@
     #recordingButton {
         background-image: url('../../../../../images/recordingButton.png');
         background-color: $red;
-        margin-top: 60%;
+        margin-top: 48%;
         background-position: center center;
         border-radius: 0 2vh 2vh 0;
         width: 5vw;
+        height: 6vh;
         cursor: pointer;
     }
 
@@ -83,7 +83,7 @@
     }
 }
 
-.zoom:hover {
+#container.zoom:hover {
     #backIcon {
         opacity: 0.7;
         transition: 0.3s;

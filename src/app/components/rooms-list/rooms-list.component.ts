@@ -37,6 +37,6 @@ export class RoomsListComponent implements OnInit {
     }
   }
   navigateToRoom(id: string, name: string) {
-    this.router.navigate(['/live/room'], { state: { roomId: id, roomName: name } });
+    this.router.navigate(['/live/room'], { state: { roomId: id} });
   }
 }

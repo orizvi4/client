@@ -2,6 +2,7 @@ import { state } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
+import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
 
@@ -12,14 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class RoomComponent implements OnInit {
   constructor(private router: Router, private requestService: RequestService) { }
-  room: string = '';
+  room: RoomDTO = {_id: "", channels: [], isRecording: false, name: ""};
   channels: ChannelDTO[] = [];
-  recording: boolean = false;
 
   async ngOnInit() {
     try {
-      this.channels = (await this.requestService.getRoomById((history.state).roomId)).channels;
-      this.room = (history.state).roomName;
+      this.room = await this.requestService.getRoomById((history.state).roomId);
+      this.channels = this.room.channels;
       for (const channel of this.channels) {
         this.requestService.connectChannel(channel._id);
       }
@@ -38,19 +38,19 @@ export class RoomComponent implements OnInit {
   }
   async record() {
     try {
-      this.recording = !this.recording;
+      if (this.room.isRecording == false) {
+        await this.requestService.recordRoom((history.state).roomId, true);
+      }
+      else {
+        await this.requestService.recordRoom((history.state).roomId, false);
+      }
+      this.room.isRecording = !this.room.isRecording;
       for (const channel of this.channels) {
-        if (this.recording) {
-          await this.requestService.startChannelRecording(channel._id);
-        }
-        else {
-          await this.requestService.stopChannelRecording(channel._id);
-        }
+        channel.isRecording = this.room.isRecording; 
       }
     }
     catch (err) {
       console.log(err);
-      this.recording = !this.recording;
       Swal.fire({
         title: 'server error',
         icon: 'error',

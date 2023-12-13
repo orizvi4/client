@@ -18,11 +18,12 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   @Input() recording: boolean = false;
   zoom: boolean = false;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.id == '') {
       this.id = "channelId" + (history.state).id;
       this.zoom = true;
     }
+    this.recording = (await this.requestService.getChannel(this.id.substring(9))).isRecording;
   }
   async back() {
     try {
@@ -73,11 +74,18 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   async record() {
     try {
       this.recording = !this.recording;
+      let res: string;
       if (this.recording) {
-        await this.requestService.startChannelRecording(this.id.substring(9));
+        res = await this.requestService.startChannelRecording(this.id.substring(9));
+        if (res == "success") {
+          this.recording = true;
+        }
       }
       else {
-        await this.requestService.stopChannelRecording(this.id.substring(9));
+        res = await this.requestService.stopChannelRecording(this.id.substring(9));
+        if (res == "success") {
+          this.recording = false;
+        }
       }
     }
     catch(err) {
