@@ -18,7 +18,7 @@ export class AppComponent {
       givenName: "ori",
       isEdit: false,
       sn: 'zvi',
-      group: 'managers',
+      group: 'commanders',
       userPrincipalName: 'ori@orizvi.test',
       whenCreated: '02032004'
     };

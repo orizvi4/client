@@ -5,6 +5,8 @@ import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
 import Swal from 'sweetalert2';
+import { ChannelDTO } from 'src/common/models/channelDTO.interface';
+import { RoomDTO } from 'src/common/models/roomDTO.interface';
 
 @Component({
   selector: 'app-archive',
@@ -16,15 +18,22 @@ export class ArchiveComponent implements OnInit {
 
   @ViewChild('startTime') startTime!: ElementRef;
   @ViewChild('endTime') endTime!: ElementRef;
+  @ViewChild('roomSelect') roomSelect!: ElementRef;
+  @ViewChild('channel') channel!: ElementRef;
+
   roomRecordings: RoomRecordingsDTO[] = [];
-  init!: Promise<void>;
   formUpload: boolean = false;
   group: string = '';
+  channels: ChannelDTO[] = [];
+  rooms: RoomDTO[] = [];
+  timeFilter: boolean = false;
 
   async ngOnInit(): Promise<void> {
     try {
       this.group = history.state.group;
       await this.updateStreams();
+      this.channels = await this.requestService.getAllChannels();
+      this.rooms = await this.requestService.getAllRooms();
     }
     catch (err) {
       console.log(err);
@@ -44,6 +53,10 @@ export class ArchiveComponent implements OnInit {
         title: "couldn't load recordings, try again later"
       });
     }
+  }
+
+  timeToggle() {
+    this.timeFilter = !this.timeFilter;
   }
 
 

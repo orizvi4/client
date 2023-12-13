@@ -19,7 +19,7 @@ export class UploadFormComponent implements OnInit {
   channels: ChannelDTO[] = [];
 
   async ngOnInit(): Promise<void> {
-    this.channels = await this.requestService.getChannels();
+    this.channels = await this.requestService.getAllChannels();
   }
   async save() {
     try {

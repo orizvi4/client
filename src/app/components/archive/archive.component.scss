@@ -13,16 +13,87 @@
     left: 13vw;
     position: absolute;
     width: 65vw;
-    height: 20vh;
+    height: 27vh;
     margin: 2vh auto;
-    border-radius: 0.5vw;
+    border-radius: 0.5em;
     text-align: center;
 
+    #select-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        select {
+            color: $black;
+            width: min-content;
+            padding: 0.8vh 0;
+            font-size: 1vw;
+            margin-bottom: 1vh;
+            border-radius: 0.4em;
+            border: 0.2em solid $background;
+            text-align: center;
+            margin-right: 3vw;
+            background-color: $background;
+    
+            &:focus {
+                border-color: $light-green;
+            }
+        }
+    
+        #checkbox {
+            display: flex;
+            align-items: center;
+    
+            #time-checkbox-container {
+                cursor: pointer;
+                font-size: 1vw;
+                width: 1vw;
+                aspect-ratio: 1;
+                user-select: none;
+                border: 0.25vw solid $black;
+                display: inline-block;
+                position: relative;
+            }
+    
+            #time-checkbox {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 0;
+                opacity: 0;
+            }
+    
+            #time-checkbox-checkmark {
+                content: '';
+                position: absolute;
+                top: 20%;
+                left: 20%;
+                background-color: $black;
+                width: 60%;
+                height: 60%;
+                transform: scale(0);
+                transition: .1s ease;
+            }
+    
+            #time-checkbox:checked~#time-checkbox-checkmark {
+                transform: scale(1);
+            }
+    
+            #time-checkbox-text {
+                width: auto;
+                font-size: 1vw;
+                font-weight: bold;
+                margin-left: 0.2vw;
+            }
+        }
+    }
 
     #filter-button {
-        border-radius: 0.8vw;
+        margin-top: 3vh;
+        border-radius: 0.5em;
         border: none;
-        font-size: 3vh;
+        font-size: 1vw;
         background-color: $black;
         color: $background;
         padding: 1vh 2vw;
@@ -43,7 +114,6 @@
 
     .time {
         padding: 2vh;
-        margin-bottom: 3vh;
         border: 0.2vw solid $background;
         border-radius: 0.5vw;
         width: 13vw;
@@ -53,6 +123,7 @@
         color: $black;
         transition: border-color 0.2s ease;
         outline: none;
+        font-size: 1vw;
 
         &:focus {
             border-color: $light-grey;
@@ -61,7 +132,7 @@
 
     .title {
         width: auto;
-        font-size: 3vh;
+        font-size: 1.2vw;
         font-weight: bold;
         margin-right: 0.7vw;
     }
@@ -70,17 +141,18 @@
 .upload-container {
     position: relative;
     display: inline-block;
-    top: 30vh;
+    top: 35vh;
     left: 39vw;
 
 
     .upload-label {
         display: block;
-        padding: 1em 2em;
+        padding: 2vh 2vw;
         color: $background;
         background: $black;
-        border-radius: 0.8vw;
+        border-radius: 0.4em;
         transition: .2s;
+        font-size: 1.2vw;
 
         &:hover {
             cursor: pointer;
@@ -118,16 +190,18 @@
 }
 
 .recordings-container {
-    margin-top: 31vh;
+    top: 37vh;
     position: relative;
     left: 10vw;
-    
+
 
     .room-name {
         font-weight: bold;
-        font-size: 2rem;
-        margin-left: 33vw;
+        font-size: 2.2vw;
+        margin: 1.5vh 0;
         color: $black;
+        width: 100%;
+        text-align: center;
     }
 
     #room-recording-container {
@@ -137,10 +211,11 @@
         align-items: center;
         width: 73vw;
         background-color: $light-blue;
-        border-radius: 0.5vw;
+        border-radius: 0.5em;
+        margin-bottom: 5vh;
 
         .room-recording {
-            padding: 3vh;
+            padding: 3vh 2vw;
         }
     }
 }

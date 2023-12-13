@@ -3,7 +3,9 @@
 .container {
     display: flex;
     flex-wrap: wrap;
-    overflow: auto;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
 
     app-room-box {
         padding: 5vh 1vw 5vh 2vw;

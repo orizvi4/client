@@ -10,7 +10,7 @@ import { UserDTO } from "../models/userDTO.interface";
 
 @Injectable()
 export class RequestService {
-    async getChannels(): Promise<ChannelDTO[]> {
+    async getAllChannels(): Promise<ChannelDTO[]> {
         return (await axios.get<ChannelDTO[]>(`${Constants.ROOM_HANDLER}/channel/all`)).data;
     }
 

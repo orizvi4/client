@@ -1,33 +1,58 @@
 <div class="container">
-<div id="filter-container">
-    <p id="filter-title">filter</p>
+    <div id="filter-container">
+        <p id="filter-title">filter</p>
 
-    <label class="title">Start Time:</label>
-    <input type="datetime-local" step="1" class="time" id="start-time" #startTime />
+        <div id="select-row">
+            <label class="title">Room</label>
+            <select #roomSelect>
+                <option value="all">all</option>
+                <option *ngFor="let room of rooms" value="{{room.name}}">{{room.name}}</option>
+            </select>
 
-    <label class="title">End Time:</label>
-    <input type="datetime-local" step="1" class="time" id="end-time" #endTime />
+            <label class="title">Channel</label>
+            <select #channelSelect>
+                <option value="all">all</option>
+                <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel._id}}</option>
+            </select>
 
-    <input type="button" id="filter-button" (click)="filterRecordings()" value="filter" />
-</div>
+            <span id="checkbox">
+                <label id="time-checkbox-container">
+                    <input id="time-checkbox" type="checkbox" (click)="timeToggle()"/>
+                    <div id="time-checkbox-checkmark"></div>
+                </label>
+                <label id="time-checkbox-text">filter by time</label>
+            </span>
+        </div>
 
-<div class="overlay" *ngIf="formUpload"></div>
-<div class="upload-container" *ngIf="group == 'commanders'">
-    <label for="upload" class="upload-label"><b>+</b> upload recording</label>
-    <input id="upload" class="upload-button" type="button" (click)="toggleUpload()"/>
-    <div class="uploadForm" *ngIf="formUpload">
-        <app-upload-form (popup)="toggleUpload($event)"></app-upload-form>
+        <div id="time-row" *ngIf="timeFilter">
+            <label class="title">Start Time:</label>
+            <input type="datetime-local" step="1" class="time" id="start-time" #startTime />
+            <label class="title">End Time:</label>
+            <input type="datetime-local" step="1" class="time" id="end-time" #endTime />
+
+        </div>
+        <input type="button" id="filter-button" (click)="filterRecordings()" value="filter" />
+
     </div>
-</div>
 
-<div class="recordings-container" [ngClass]="{'empty-div': !roomRecordings.length}">
-    <div *ngFor="let roomRecording of roomRecordings">
-        <label class="room-name">{{roomRecording.room}}</label>
-        <div id="room-recording-container">
-            <div class="room-recording" *ngFor="let recording of roomRecording.recordings">
-                <app-recording-box [recording]="recording" (deleteRecording)="deleteRecording($event)"></app-recording-box>
+    <div class="overlay" *ngIf="formUpload"></div>
+    <div class="upload-container" *ngIf="group == 'commanders'">
+        <label for="upload" class="upload-label"><b>+</b> upload recording</label>
+        <input id="upload" class="upload-button" type="button" (click)="toggleUpload()" />
+        <div class="uploadForm" *ngIf="formUpload">
+            <app-upload-form (popup)="toggleUpload($event)"></app-upload-form>
+        </div>
+    </div>
+
+    <div class="recordings-container" [ngClass]="{'empty-div': !roomRecordings.length}">
+        <div *ngFor="let roomRecording of roomRecordings">
+            <div id="room-recording-container">
+                <label class="room-name">{{roomRecording.room}}</label>
+                <div class="room-recording" *ngFor="let recording of roomRecording.recordings">
+                    <app-recording-box [recording]="recording"
+                        (deleteRecording)="deleteRecording($event)"></app-recording-box>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>

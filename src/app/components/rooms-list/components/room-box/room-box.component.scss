@@ -1,28 +1,24 @@
 @import '../../../../../styles.scss';
 
 .room {
-    padding: 3vh 7vw;
+    width: 14vw;
+    height: 16vh;
     border-radius: 0.4rem;
-    width: min-content;
     background-color: $light-blue;
     color: $black;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
     text-align: center;
     transition: 0.2s;
 
     .title {
-        width: fit-content;
         font-size: 4vh;
-        top: 0;
     }
 
     &:hover {
         background-color: $blue;
-        
-        .title {
-            transform: scale(1.1);
-            transition: 0.24s;
-        }
-
+        transform: scale(1.05);
+        transition: 0.2s;
     }
 }
