@@ -26,22 +26,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     this.recording = (await this.requestService.getChannel(this.id.substring(9))).isRecording;
   }
   async back() {
-    try {
-      await this.requestService.stopChannelRecording(this.id.substring(9));
-    }
-    catch (err) {
-      console.log(err);
-      if ((err as AxiosError).response?.status != 400) {
-        await Swal.fire({
-          title: 'server error',
-          icon: 'error',
-          text: "couldn't stop recording camera, try again later"
-        });
-      }
-    }
-    finally {
-      this.location.back();
-    }
+    this.location.back();
   }
   async ngAfterViewInit() {
     try {
@@ -55,7 +40,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         type: 'application/x-mpegURL'
       });
     }
-    catch(err) {
+    catch (err) {
       console.log(err);
       await Swal.fire({
         title: 'server error',
@@ -88,7 +73,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         }
       }
     }
-    catch(err) {
+    catch (err) {
       await Swal.fire({
         title: 'server error',
         icon: 'error',
