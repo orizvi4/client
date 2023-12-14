@@ -5,13 +5,13 @@
         <div id="select-row">
             <label class="title">Room</label>
             <select #roomSelect>
-                <option value="all">all</option>
+                <option value="all" default>all</option>
                 <option *ngFor="let room of rooms" value="{{room.name}}">{{room.name}}</option>
             </select>
 
             <label class="title">Channel</label>
             <select #channelSelect>
-                <option value="all">all</option>
+                <option value="all" default>all</option>
                 <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel._id}}</option>
             </select>
 
@@ -20,7 +20,7 @@
                     <input id="time-checkbox" type="checkbox" (click)="timeToggle()"/>
                     <div id="time-checkbox-checkmark"></div>
                 </label>
-                <label id="time-checkbox-text">filter by time</label>
+                <label for="time-checkbox" id="time-checkbox-text">filter by time</label>
             </span>
         </div>
 
@@ -31,7 +31,7 @@
             <input type="datetime-local" step="1" class="time" id="end-time" #endTime />
 
         </div>
-        <input type="button" id="filter-button" (click)="filterRecordings()" value="filter" />
+        <input type="button" id="filter-button" (click)="updateStreams()" value="filter" />
 
     </div>
 

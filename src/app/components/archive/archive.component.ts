@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FilterDTO } from 'src/common/models/filterDTO.iterface';
+import { FilterDTO } from 'src/common/models/filterDTO.class';
 import { RoomRecordingsDTO } from 'src/common/models/roomRecordingsDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
@@ -19,21 +19,21 @@ export class ArchiveComponent implements OnInit {
   @ViewChild('startTime') startTime!: ElementRef;
   @ViewChild('endTime') endTime!: ElementRef;
   @ViewChild('roomSelect') roomSelect!: ElementRef;
-  @ViewChild('channel') channel!: ElementRef;
+  @ViewChild('channelSelect') channelSelect!: ElementRef;
 
   roomRecordings: RoomRecordingsDTO[] = [];
   formUpload: boolean = false;
   group: string = '';
   channels: ChannelDTO[] = [];
   rooms: RoomDTO[] = [];
-  timeFilter: boolean = false;
+  timeFilter: boolean = false;//filter by time or not
 
   async ngOnInit(): Promise<void> {
     try {
       this.group = history.state.group;
-      await this.updateStreams();
       this.channels = await this.requestService.getAllChannels();
       this.rooms = await this.requestService.getAllRooms();
+      await this.updateStreams();
     }
     catch (err) {
       console.log(err);
@@ -60,32 +60,29 @@ export class ArchiveComponent implements OnInit {
   }
 
 
-  async filterRecordings(): Promise<void> {
-    try {
+  private filterRecordings(): FilterDTO {
+    if (this.timeFilter) {
       if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-
-        const filter: FilterDTO = { startAt: this.startTime.nativeElement.value, endAt: this.endTime.nativeElement.value };
-        await this.updateStreams(filter);
+        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, this.startTime.nativeElement.value, this.endTime.nativeElement.value);
+      }
+      else if (this.startTime.nativeElement.value == '' && this.endTime.nativeElement.value == '') {
+        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), new Date());
+      }
+      else if (this.startTime.nativeElement.value != '') {
+        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, this.startTime.nativeElement.value, new Date());
       }
       else {
-        Swal.fire({
-          title: 'fill in the time input please',
-          icon: 'warning',
-        });
+        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), this.endTime.nativeElement.value);
       }
     }
-    catch (err) {
-      console.log(err);
-      await Swal.fire({
-        title: 'server error',
-        icon: 'error',
-        text: "couldn't load recordings, try again later"
-      });
+    else {
+      return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), new Date());
     }
   }
 
-  private async updateStreams(filter?: FilterDTO): Promise<void> {
+  public async updateStreams(): Promise<void> {
     try {
+      const filter: FilterDTO = this.filterRecordings();
       this.roomRecordings = await this.requestService.getRecordings(filter);
     }
     catch (err) {
@@ -110,8 +107,7 @@ export class ArchiveComponent implements OnInit {
           await this.filterRecordings();
         }
         else {
-          const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
-          await this.updateStreams(filter);
+          await this.updateStreams();
         }
       }
     }
@@ -127,13 +123,7 @@ export class ArchiveComponent implements OnInit {
     try {
       this.formUpload = !this.formUpload;
       if (uploaded) {
-        if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-          await this.filterRecordings();
-        }
-        else {
-          const filter: FilterDTO = { startAt: new Date(0), endAt: new Date() };
-          await this.updateStreams(filter);
-        }
+        await this.updateStreams();
       }
     }
     catch (err) {
