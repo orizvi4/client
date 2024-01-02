@@ -21,6 +21,7 @@ import { UploadFormComponent } from './components/archive/components/upload-form
 import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
 import { JwtService } from 'src/common/services/jwt.service';
 import { RecordingBoxComponent } from './components/archive/components/recording-box/recording-box.component';
+import { WebSocketService } from 'src/common/services/web-socket.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { RecordingBoxComponent } from './components/archive/components/recording
     AppRoutingModule,
     FormsModule
   ],
-  providers: [RequestService, Constants, JwtService],
+  providers: [RequestService, Constants, JwtService, WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

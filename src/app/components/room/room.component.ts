@@ -1,10 +1,13 @@
 import { state } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observer, Subject } from 'rxjs';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
+import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
+import { ChannelComponent } from './components/channel/channel.component';
 
 @Component({
   selector: 'app-room',
@@ -12,8 +15,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  constructor(private router: Router, private requestService: RequestService) { }
-  room: RoomDTO = {_id: "", channels: [], isRecording: false, name: ""};
+  constructor(private router: Router,
+    private requestService: RequestService
+  ) {
+
+  }
+
+  room: RoomDTO = { _id: "", channels: [], isRecording: false, name: "" };
   channels: ChannelDTO[] = [];
 
   async ngOnInit() {
@@ -46,7 +54,7 @@ export class RoomComponent implements OnInit {
       }
       this.room.isRecording = !this.room.isRecording;
       for (const channel of this.channels) {
-        channel.isRecording = this.room.isRecording; 
+        channel.isRecording = this.room.isRecording;
       }
     }
     catch (err) {

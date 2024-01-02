@@ -5,7 +5,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 90vw;
+    width: calc(100vw - $nav-width);
 
     app-room-box {
         padding: 5vh 1vw 5vh 2vw;

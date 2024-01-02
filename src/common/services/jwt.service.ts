@@ -4,7 +4,7 @@ import { Subject, timer } from "rxjs";
 
 export class JwtService {
 
-    timer$ = new Subject();
+    // timer$ = new Subject();
 
     constructor() {
         this.refreshAccessToken();

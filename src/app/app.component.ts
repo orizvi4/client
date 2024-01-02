@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import Cookies from 'js-cookie';
 import { Subject, takeUntil, timer } from 'rxjs';
 import { Constants } from 'src/common/constants';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { JwtService } from 'src/common/services/jwt.service';
+import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,12 +13,12 @@ import Swal from 'sweetalert2';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router, private jwtService: JwtService) { 
+  constructor(private router: Router, private jwtService: JwtService, private websocket: WebSocketService) {
     this.user = {
       givenName: "ori",
       isEdit: false,
       sn: 'zvi',
-      group: 'commanders',
+      group: 'managers',
       userPrincipalName: 'ori@orizvi.test',
       whenCreated: '02032004'
     };
@@ -26,7 +26,7 @@ export class AppComponent {
 
   sideNavStatus: boolean = false;
   user: UserDTO | null = null;
-  timer$ = new Subject<void>();
+  timer$: Subject<void> = new Subject<void>();
 
   timerReset() {
     this.timer$.next();
