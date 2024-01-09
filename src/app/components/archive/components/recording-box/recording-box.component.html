@@ -1,6 +1,6 @@
 <label class="time">{{startDate}}</label>
 <label class="time" id="endDate">{{endDate}}</label>
 <div class="box-wrapper">
-    <a class="delete-button" (click)="delete()"></a>
+    <a class="delete-button" *ngIf="group == 'editors'" (click)="delete()"></a>
     <video [id]='recording._id' class="video-js"></video>
 </div>

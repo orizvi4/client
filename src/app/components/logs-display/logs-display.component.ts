@@ -7,5 +7,5 @@ import { Constants } from 'src/common/constants';
   styleUrls: ['./logs-display.component.scss']
 })
 export class LogsDisplayComponent {
-  kibana: string = Constants.KIBANA;
+  public kibana: string = Constants.KIBANA;
 }

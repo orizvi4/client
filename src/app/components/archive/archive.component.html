@@ -36,7 +36,7 @@
     </div>
 
     <div class="overlay" *ngIf="formUpload"></div>
-    <div class="upload-container" *ngIf="group == 'commanders'">
+    <div class="upload-container" *ngIf="group == 'editors'">
         <label for="upload" class="upload-label"><b>+</b> upload recording</label>
         <input id="upload" class="upload-button" type="button" (click)="toggleUpload()" />
         <div class="uploadForm" *ngIf="formUpload">
@@ -49,7 +49,7 @@
             <div id="room-recording-container">
                 <label class="room-name">{{roomRecording.room}}</label>
                 <div class="room-recording" *ngFor="let recording of roomRecording.recordings">
-                    <app-recording-box [recording]="recording"
+                    <app-recording-box [recording]="recording" [group]="group"
                         (deleteRecording)="deleteRecording($event)"></app-recording-box>
                 </div>
             </div>

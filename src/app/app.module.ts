@@ -16,7 +16,7 @@ import { ChannelComponent } from './components/room/components/channel/channel.c
 import { ArchiveComponent } from './components/archive/archive.component';
 import { UserManagerComponent } from './components/user-manager/user-manager.component';
 import { LoginComponent } from './components/login/login.component';
-import { UserCardComponent } from './components/user-card/user-card.component';
+import { UserCardComponent } from './components/nav-bar/components/user-card/user-card.component';
 import { UploadFormComponent } from './components/archive/components/upload-form/upload-form.component';
 import { LogsDisplayComponent } from './components/logs-display/logs-display.component';
 import { JwtService } from 'src/common/services/jwt.service';

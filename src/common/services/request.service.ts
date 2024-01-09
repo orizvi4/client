@@ -11,42 +11,42 @@ import { UserDTO } from "../models/userDTO.interface";
 @Injectable()
 export class RequestService {
     async getAllChannels(): Promise<ChannelDTO[]> {
-        return (await axios.get<ChannelDTO[]>(`${Constants.ROOM_HANDLER}/channel/all`)).data;
+        return (await axios.get<ChannelDTO[]>(`${Constants.ROOM_HANDLER}/channel/all`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     async getChannel(id: string): Promise<ChannelDTO> {
-        return (await axios.get<ChannelDTO>(`${Constants.ROOM_HANDLER}/channel/id`, { params: { id: id } })).data;
+        return (await axios.get<ChannelDTO>(`${Constants.ROOM_HANDLER}/channel/id`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     async getAllRooms(): Promise<RoomDTO[]> {
-        return (await axios.get<RoomDTO[]>(`${Constants.ROOM_HANDLER}/room/all`, { timeout: 2000 })).data;
+        return (await axios.get<RoomDTO[]>(`${Constants.ROOM_HANDLER}/room/all`, { timeout: 2000, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     async recordRoom(id: string, record: boolean): Promise<string> {
         if (record) {
-            return (await axios.get<string>(`${Constants.ROOM_HANDLER}/room/record/start`, { params: { id: id } })).data;
+            return (await axios.get<string>(`${Constants.ROOM_HANDLER}/room/record/start`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
         }
         else {
-            return (await axios.get<string>(`${Constants.ROOM_HANDLER}/room/record/stop`, { params: { id: id } })).data;
+            return (await axios.get<string>(`${Constants.ROOM_HANDLER}/room/record/stop`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
         }
     }
 
     async getRoomById(id: string): Promise<RoomDTO> {
-        return (await axios.get<RoomDTO>(`${Constants.ROOM_HANDLER}/room/id`, { params: { id: id } })).data;
+        return (await axios.get<RoomDTO>(`${Constants.ROOM_HANDLER}/room/id`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     async connectChannel(id: string): Promise<any> {
-        return (await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/connect?id=${id}`)).data;
+        return (await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/connect?id=${id}`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     async getRecordings(filter: FilterDTO): Promise<RoomRecordingsDTO[]> {
-        return (await axios.put<RoomRecordingsDTO[]>(`${Constants.ROOM_HANDLER}/recording`, filter)).data;
+        return (await axios.put<RoomRecordingsDTO[]>(`${Constants.ROOM_HANDLER}/recording`, filter, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
         let suffix;
         try {
-            suffix = (await axios.get<number>(`${Constants.CONTENT_MANAGER}/file/suffix`, { params: { channel: channel } })).data + 1;
+            suffix = (await axios.get<number>(`${Constants.CONTENT_MANAGER}/file/suffix`, { params: { channel: channel }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data + 1;
         }
         catch (err) {
             throw err;
@@ -55,23 +55,23 @@ export class RequestService {
         formData.append('file', file.nativeElement.files[0]);
         formData.append('startAt', start);
         formData.append('endAt', end);
-        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/upload`, formData, { params: { channel: channel, suffix: suffix } })).data;
+        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/upload`, formData, { params: { channel: channel, suffix: suffix }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     async isDateValid(start: string, end: string, channel: string): Promise<boolean> {
-        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/date`, { startAt: start, endAt: end, channel: channel })).data;
+        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/date`, { startAt: start, endAt: end, channel: channel }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     async deleteRecording(id: string): Promise<boolean> {
-        return (await axios.delete<boolean>(`${Constants.CONTENT_MANAGER}/delete`, { params: { file: id } })).data;
+        return (await axios.delete<boolean>(`${Constants.CONTENT_MANAGER}/delete`, { params: { file: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     async stopChannelRecording(id: string): Promise<string> {
-        return (await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/recorders/stop?id=${id}`)).data;
+        return (await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/recorders/stop?id=${id}`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     async startChannelRecording(id: string): Promise<string> {
-        return (await axios.post<string>(`${Constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`)).data;
+        return (await axios.post<string>(`${Constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
 

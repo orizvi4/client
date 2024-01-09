@@ -103,12 +103,7 @@ export class ArchiveComponent implements OnInit {
       if (res.isConfirmed) {
         recording = recording.substring(recording.indexOf("/mp4:") + 5, recording.indexOf('/playlist'));
         await this.requestService.deleteRecording(recording);
-        if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-          await this.filterRecordings();
-        }
-        else {
-          await this.updateStreams();
-        }
+        await this.updateStreams();
       }
     }
     catch (err) {

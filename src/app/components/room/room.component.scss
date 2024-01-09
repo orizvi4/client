@@ -14,7 +14,7 @@
 
 #title-container {
     margin-top: 2vh;
-    margin-left: 40vw;
+    margin-left: 42vw;
     display: flex;
     align-items: center;
     border-radius: 2vh;
@@ -40,4 +40,13 @@
     .recordingStart {
         background-image: url('../../../images/stopRecording.png') !important;
     }
+}
+
+#container.empty {
+    width: 94vw;
+    height: 77vh;
+    background-image: url('../../../images/noStreamsIcon.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
 }

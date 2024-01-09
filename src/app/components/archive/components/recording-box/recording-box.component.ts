@@ -11,6 +11,7 @@ import Player from 'video.js/dist/types/player';
 export class RecordingBoxComponent implements AfterViewInit, OnDestroy, OnInit {
 
   @Input() recording!: RecordingDTO;
+  @Input() group!: string;
   @Output() deleteRecording: EventEmitter<string> = new EventEmitter<string>();
   startDate!: string;
   endDate!: string;
