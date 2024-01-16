@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '../common/common.module';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -44,9 +44,9 @@ import { WebSocketService } from 'src/common/services/web-socket.service';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [RequestService, Constants, JwtService, WebSocketService],
+  providers: [Constants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -39,7 +39,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   zoom: boolean = false;
   deviceName: string = '';
 
-  async ngOnInit(): Promise<void> {
+  public async ngOnInit(): Promise<void> {
     if (this.id == '') {
       this.id = "channelId" + (history.state).id;
       this.zoom = true;
@@ -50,11 +50,11 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     this.deviceName = channel.device.title;
   }
 
-  async back() {
+  public async back() {
     this.location.back();
   }
 
-  async ngAfterViewInit() {
+  public async ngAfterViewInit() {
     try {
       const player = videojs(this.id, {
         autoplay: 'muted',
@@ -95,7 +95,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     }
   }
 
-  async record() {
+  public async record() {
     try {
       this.recording = !this.recording;
       let res: string;

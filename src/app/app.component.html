@@ -1,9 +1,8 @@
 <body>
     <div *ngIf="!user">
-        <app-login (userUpdate)="updateUser($event)"></app-login>
+        <app-login (signOut)="signOut()" (userUpdate)="updateUser($event)"></app-login>
     </div>
     <div *ngIf="user" (mousemove)="timerReset()" (keydown)="timerReset()">
-
         <div class="userPopupOverlay" *ngIf="sideNavStatus" (click)="sideNavStatus = false"></div>
         
             <app-header [sideNavStatus]="sideNavStatus"></app-header>

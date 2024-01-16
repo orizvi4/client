@@ -15,12 +15,12 @@ import Swal from 'sweetalert2';
 export class AppComponent {
   constructor(private router: Router, private jwtService: JwtService, private websocket: WebSocketService) {
     // this.user = {
-      // givenName: "ori",
-      // isEdit: false,
-      // sn: 'zvi',
-      // group: 'managers',
-      // userPrincipalName: 'ori@orizvi.test',
-      // whenCreated: '02032004'
+    // givenName: "ori",
+    // isEdit: false,
+    // sn: 'zvi',
+    // group: 'managers',
+    // userPrincipalName: 'ori@orizvi.test',
+    // whenCreated: '02032004'
     // };
   }
 
@@ -32,11 +32,11 @@ export class AppComponent {
     this.timer$.next();
     timer(Constants.SESSION_TIMEOUT).pipe(takeUntil(this.timer$)).subscribe(async () => {
       await Swal.fire({
-        icon:'warning',
+        icon: 'warning',
         title: 'logging out',
         text: 'you have been inactive for a while, please log in again'
       })
-      this.signOut();
+      this.router.navigate(['/login']);
     });
   }
 
@@ -51,11 +51,11 @@ export class AppComponent {
     }
   }
 
-  async signOut() {
+  public async signOut() {
     await this.jwtService.blackListToken();
     localStorage.clear();
     this.timer$.next();
     this.user = null;
-    this.router.navigate(['/login']);
+    this.sideNavStatus = false;
   }
 }

@@ -57,6 +57,7 @@ export class UploadFormComponent implements OnInit {
       });
     }
   }
+  
   async cancel() {
     const res = await Swal.fire({
       icon: 'warning',

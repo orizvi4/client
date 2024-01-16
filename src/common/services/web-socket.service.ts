@@ -2,7 +2,9 @@ import { io } from "socket.io-client";
 import { ChannelDTO } from "../models/channelDTO.interface";
 import { WebsocketTitles } from "../enums.model";
 import { Observable, Subject } from "rxjs";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class WebSocketService {
     constructor() {
         const socket = io("http://192.168.1.5:8080");
@@ -16,7 +18,7 @@ export class WebSocketService {
         // });
 
         socket.on(WebsocketTitles.CHANNEL_LIVE, (channel: ChannelDTO) => {
-            console.log('Incoming message:', channel);
+            // console.log('Incoming message:', channel);
             this.channelUpdate$.next(channel);
         });
     }

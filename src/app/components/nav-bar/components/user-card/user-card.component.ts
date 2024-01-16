@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 import { UserDTO } from 'src/common/models/userDTO.interface';
+import { JwtService } from 'src/common/services/jwt.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-card.component.scss']
 })
 export class UserCardComponent {
+  constructor(private router: Router, private jwtService: JwtService) {}
   @Input() user!: UserDTO;
   @Output() signOut = new EventEmitter<void>();
 
@@ -21,6 +25,7 @@ export class UserCardComponent {
     });
     if (res.isConfirmed) {
       this.signOut.emit();
+      this.router.navigate(['/login']);
     }
   }
 }
