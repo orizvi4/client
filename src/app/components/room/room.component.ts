@@ -44,10 +44,11 @@ export class RoomComponent implements OnInit {
   navigateToChannel(id: string) {
     this.router.navigate(['/live/room/channel'], { state: { id: id } });
   }
-  async record() {
+
+  public async record() {
     try {
       if (this.room.isRecording == false) {
-        await this.requestService.recordRoom((history.state).roomId, true);
+        await this.requestService.recordRoom((history.state).roomId, true);//אפשר ליפייף
       }
       else {
         await this.requestService.recordRoom((history.state).roomId, false);

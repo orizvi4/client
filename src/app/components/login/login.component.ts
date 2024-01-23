@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
   }
 
 
-  async authenticateUser() {
+  public async authenticateUser() {
     try {
       if (this.username.nativeElement.value.length > 0 && this.password.nativeElement.value.length > 0) {
         const res: UserDTO = await this.requestService.authenticateUser(this.username.nativeElement.value, this.password.nativeElement.value);
-        
+
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom-end",

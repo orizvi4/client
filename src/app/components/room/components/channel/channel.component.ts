@@ -38,6 +38,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   live: boolean = false;
   zoom: boolean = false;
   deviceName: string = '';
+  waitingHandler: boolean = true;
 
   public async ngOnInit(): Promise<void> {
     if (this.id == '') {
@@ -65,18 +66,17 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         src: url,
         type: 'application/x-mpegURL'
       });
-      // player.on('waiting', async () => {
-      //   console.log("grwgwrg");
-      //   setTimeout(() => {
-      //     // const url: string = (await this.requestService.connectChannel(this.id.substring(9))).url;
-      //     // player.src({
-      //     //   src: url,
-      //     //   type: 'application/x-mpegURL'
-      //     // });
-      //     player.load();
-
-      //   }, 5000);
-      // });
+      player.on('waiting', async () => {
+        if (this.waitingHandler) {
+          this.waitingHandler = false;
+          player.load();
+          // await this.requestService.connectChannel(this.id.substring(9));
+          console.log("grfgrbrb");
+          setTimeout(() => {
+            this.waitingHandler = true;
+          }, 4000);
+        }
+      });
     }
     catch (err) {
       console.log(err);

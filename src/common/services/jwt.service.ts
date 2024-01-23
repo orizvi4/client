@@ -25,7 +25,7 @@ export class JwtService {
     refreshAccessToken(): void {
         try {
             setInterval(async () => {
-                localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { username: localStorage.getItem('givenName') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
+                localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
             }, 50000);
         }
         catch (err) {

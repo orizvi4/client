@@ -17,7 +17,7 @@ export class UserManagerComponent implements OnInit {
   users!: UserDTO[];
   tempUser: UserDTO | null = null;
 
-  formatDate(date: string) {
+  public formatDate(date: string) {
     return `${date.substring(6, 8)}-${date.substring(4, 6)}-${date.substring(0, 4)}`;
   }
 
@@ -25,7 +25,7 @@ export class UserManagerComponent implements OnInit {
     await this.updateAllUsers();
   }
 
-  async updateAllUsers() {
+  public async updateAllUsers() {
     try {
       this.users = await this.requestService.getUsers();
       for (const user of this.users) {
@@ -51,7 +51,7 @@ export class UserManagerComponent implements OnInit {
     }
   }
 
-  async deleteUser(user: UserDTO): Promise<void> {
+  public async deleteUser(user: UserDTO): Promise<void> {
     try {
       const del = await swal({
         title: "Are you sure?",
@@ -91,7 +91,7 @@ export class UserManagerComponent implements OnInit {
     }
   }
 
-  cancelEdit(user: UserDTO) {
+  public cancelEdit(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.whenCreated != '') {
       user.isEdit = false;
       user.givenName = this.tempUser.givenName;
@@ -104,7 +104,7 @@ export class UserManagerComponent implements OnInit {
     this.tempUser = null;
   }
   
-  async updateUser(user: UserDTO) {
+  public async updateUser(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
         if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user
@@ -127,7 +127,7 @@ export class UserManagerComponent implements OnInit {
         if (err.response.status == 403) {
           await swal({
             title: "couldn't create a new user",
-            text: "the name of the user isn't correct or already exist",
+            text: "the name of the user containing unauthorized characters",
             icon: "error",
           });
         }
@@ -162,7 +162,7 @@ export class UserManagerComponent implements OnInit {
     }
   }
 
-  async createUser() {
+  public async createUser() {
     try {
       if (this.tempUser === null) {
         for (const user of this.users) {
