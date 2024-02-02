@@ -1,4 +1,4 @@
-import { NgModule, forwardRef } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { JwtService } from "./services/jwt.service";
 import { RequestService } from "./services/request.service";
 import { WebSocketService } from "./services/web-socket.service";

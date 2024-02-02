@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-card.component.scss']
 })
 export class UserCardComponent {
-  constructor(private router: Router, private jwtService: JwtService) {}
+  constructor() {}
   @Input() user!: UserDTO;
   @Output() signOut = new EventEmitter<void>();
 
@@ -25,7 +25,6 @@ export class UserCardComponent {
     });
     if (res.isConfirmed) {
       this.signOut.emit();
-      this.router.navigate(['/login']);
     }
   }
 }

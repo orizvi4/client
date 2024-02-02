@@ -1,3 +1,4 @@
 export enum WebsocketTitles {
-    CHANNEL_LIVE = "channel_live"
+    CHANNEL_LIVE = "channel_live",
+    SIGNOUT = "signout"
 }

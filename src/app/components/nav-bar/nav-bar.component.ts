@@ -27,12 +27,15 @@ export class NavBarComponent {
       this.sideNavToggled.emit(this.sideNavStatus);
     }
   }
+  
   navigate(place: string) {
-    this.router.navigate([`/${place}`], {state: {group: this.user.group}});
+    this.router.navigate([{ outlets: { mainOutlet: [`${place}`] } }], {state: {group: this.user.group}});
   }
+
   openUserMenu() {
     this.userPopUp = !this.userPopUp;
   }
+
   signOutFunc() {
     this.userPopUp = false;
     this.sideNavToggle();

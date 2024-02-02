@@ -9,10 +9,8 @@ import { RequestService } from "./request.service";
 export class JwtService {
 
     localStorageChange$: Subject<void> = new Subject<void>();
-    localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {
-        await this.requestService.localStorageStrike();
-    });
     tempLocalStorage: UserDTO = this.getLocalStorage();
+    localStorageSubscribe!: Subscription;
 
     constructor(private requestService: RequestService) {
         this.localStorageCheck();
@@ -44,7 +42,7 @@ export class JwtService {
         };
     }
 
-    public localStorageCheck() {
+    public localStorageCheck(): void {
         setInterval(() => {
             if (JSON.stringify(this.getLocalStorage()) != JSON.stringify(this.tempLocalStorage)) {
                 this.localStorageChange$.next();
@@ -53,16 +51,29 @@ export class JwtService {
         }, 3000);
     }
 
+    public stopLocalStorageCheck() {
+        if (this.localStorageSubscribe != undefined) {
+            this.localStorageSubscribe.unsubscribe();
+        }
+    }
+
+    public startLocalStorageCheck() {
+        this.tempLocalStorage = this.getLocalStorage();
+        this.localStorageSubscribe = this.localStorageChange$.subscribe(async () => {
+            await this.requestService.localStorageStrike();
+        });
+    }
+
     public refreshAccessToken(): void {
         try {
             setInterval(async () => {
-                this.localStorageSubscribe.unsubscribe();
-                localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
-                this.tempLocalStorage = this.getLocalStorage();
-                this.localStorageSubscribe = this.localStorageChange$.subscribe(async () => {
-                    await this.requestService.localStorageStrike();
-                });
-            }, 6000);
+                if (localStorage.getItem("refreshToken") != null) {
+                    this.stopLocalStorageCheck();
+                    localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
+                    this.tempLocalStorage = this.getLocalStorage();
+                    this.startLocalStorageCheck();
+                }
+            }, 100000);
         }
         catch (err) {
             console.log(err);

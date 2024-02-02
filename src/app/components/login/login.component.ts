@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AxiosError } from 'axios';
+import { AppComponent } from 'src/app/app.component';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { JwtService } from 'src/common/services/jwt.service';
 import { RequestService } from 'src/common/services/request.service';
@@ -11,25 +12,11 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  constructor(private requestService: RequestService, private router: Router, private jwtService: JwtService) { }
+export class LoginComponent {
+  constructor(private requestService: RequestService, private router: Router, private jwtService: JwtService, private appComponent: AppComponent) { }
   @ViewChild('username') username!: ElementRef;
   @ViewChild('password') password!: ElementRef;
-  @Output() userUpdate = new EventEmitter<string>();
-  @Output() signOut = new EventEmitter<void>();
 
-  async ngOnInit(): Promise<void> {
-    if (localStorage.length > 0 && await this.jwtService.verifyToken()) {
-      try {
-        this.userUpdate.emit(await this.requestService.getUserGroup(localStorage.getItem('givenName') as string));
-        this.router.navigate(['/live']);
-      }
-      catch (err) {
-        console.log(err);
-        localStorage.clear();
-      }
-    }
-  }
 
 
   public async authenticateUser() {
@@ -57,8 +44,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userPrincipalName', res.userPrincipalName);
         localStorage.setItem('givenName', res.givenName);
         localStorage.setItem('sn', res.sn);
-        this.userUpdate.emit(res.group);
-        this.router.navigate(['/live']);
+        this.appComponent.updateUser(res.group);
+        this.router.navigate([{ outlets: { mainOutlet: ['live'] } }]);
+        this.jwtService.startLocalStorageCheck();
       }
       else {
         await Swal.fire({
@@ -73,6 +61,13 @@ export class LoginComponent implements OnInit {
         await Swal.fire({
           icon: 'error',
           title: 'server error'
+        });
+      }
+      else if (err.response == null || err.response.status == 401) {
+        await Swal.fire({
+          title: "login error",
+          text: "unauthorized login, user is blocked. please talk to a system manager",
+          icon: "error",
         });
       }
       else {

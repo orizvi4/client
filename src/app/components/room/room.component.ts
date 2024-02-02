@@ -42,7 +42,7 @@ export class RoomComponent implements OnInit {
     }
   }
   navigateToChannel(id: string) {
-    this.router.navigate(['/live/room/channel'], { state: { id: id } });
+    this.router.navigate([{ outlets: { mainOutlet: ['live/room/channel'] } }], { state: { id: id } });
   }
 
   public async record() {

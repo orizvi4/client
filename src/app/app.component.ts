@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, timer } from 'rxjs';
 import { Constants } from 'src/common/constants';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { JwtService } from 'src/common/services/jwt.service';
+import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
 
@@ -12,14 +13,27 @@ import Swal from 'sweetalert2';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor(private router: Router, private jwtService: JwtService, private websocket: WebSocketService) {
-
+export class AppComponent implements OnInit {
+  constructor(
+    private requestService: RequestService,
+    private router: Router,
+    private jwtService: JwtService,
+    private websocket: WebSocketService) {
   }
 
   sideNavStatus: boolean = false;
   user: UserDTO | null = null;
   timer$: Subject<void> = new Subject<void>();
+
+  async ngOnInit(): Promise<void> {
+    if (localStorage.length == 0 || !(await this.jwtService.verifyToken())) {
+      this.user = null
+      this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
+    }
+    else {
+      this.updateUser(await this.requestService.getUserGroup(localStorage.getItem('givenName')as string));
+    }
+  }
 
   timerReset() {
     this.timer$.next();
@@ -29,7 +43,7 @@ export class AppComponent {
         title: 'logging out',
         text: 'you have been inactive for a while, please log in again'
       })
-      this.router.navigate(['/login']);
+      this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
     });
   }
 
@@ -45,10 +59,12 @@ export class AppComponent {
   }
 
   public async signOut() {
+    this.jwtService.stopLocalStorageCheck();
     await this.jwtService.blackListToken();
     localStorage.clear();
     this.timer$.next();
     this.user = null;
     this.sideNavStatus = false;
+    this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
   }
 }
