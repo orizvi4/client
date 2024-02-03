@@ -29,14 +29,14 @@ export class WebSocketService {
 
         socket.on(WebsocketTitles.SIGNOUT, async () => {
             // console.log('Incoming message: sign out');
-            this.jwtService.stopLocalStorageCheck();
-            localStorage.clear();
+            // this.jwtService.stopLocalStorageCheck();
+            // localStorage.clear();
             await Swal.fire({
                 title: "session error",
                 text: "unauthorized activities detected, please talk to a system manager or login again",
                 icon: "error",
               });
-              window.location.reload();
+            //   window.location.reload();
         });
     }
 

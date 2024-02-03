@@ -10,7 +10,10 @@ export class JwtService {
 
     localStorageChange$: Subject<void> = new Subject<void>();
     tempLocalStorage: UserDTO = this.getLocalStorage();
-    localStorageSubscribe!: Subscription;
+    localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {
+        await this.requestService.localStorageStrike();
+    });
+    localStorageToken: boolean = false;
 
     constructor(private requestService: RequestService) {
         this.localStorageCheck();
@@ -42,36 +45,29 @@ export class JwtService {
         };
     }
 
+    public setLocalStorageToken(token: boolean) : void {
+        this.localStorageToken = token;
+    }
+
     public localStorageCheck(): void {
         setInterval(() => {
             if (JSON.stringify(this.getLocalStorage()) != JSON.stringify(this.tempLocalStorage)) {
-                this.localStorageChange$.next();
+                if (this.localStorageToken == true) {
+                    this.localStorageChange$.next();
+                }
                 this.tempLocalStorage = this.getLocalStorage();
             }
         }, 3000);
-    }
-
-    public stopLocalStorageCheck() {
-        if (this.localStorageSubscribe != undefined) {
-            this.localStorageSubscribe.unsubscribe();
-        }
-    }
-
-    public startLocalStorageCheck() {
-        this.tempLocalStorage = this.getLocalStorage();
-        this.localStorageSubscribe = this.localStorageChange$.subscribe(async () => {
-            await this.requestService.localStorageStrike();
-        });
     }
 
     public refreshAccessToken(): void {
         try {
             setInterval(async () => {
                 if (localStorage.getItem("refreshToken") != null) {
-                    this.stopLocalStorageCheck();
+                    this.localStorageToken = false;
                     localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
                     this.tempLocalStorage = this.getLocalStorage();
-                    this.startLocalStorageCheck();
+                    this.localStorageToken = true;
                 }
             }, 100000);
         }

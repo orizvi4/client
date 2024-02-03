@@ -46,7 +46,6 @@ export class LoginComponent {
         localStorage.setItem('sn', res.sn);
         this.appComponent.updateUser(res.group);
         this.router.navigate([{ outlets: { mainOutlet: ['live'] } }]);
-        this.jwtService.startLocalStorageCheck();
       }
       else {
         await Swal.fire({

@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
     }
     else {
       this.updateUser(await this.requestService.getUserGroup(localStorage.getItem('givenName')as string));
+      this.jwtService.setLocalStorageToken(true);
     }
   }
 
@@ -59,7 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   public async signOut() {
-    this.jwtService.stopLocalStorageCheck();
+    this.jwtService.setLocalStorageToken(false);
     await this.jwtService.blackListToken();
     localStorage.clear();
     this.timer$.next();
