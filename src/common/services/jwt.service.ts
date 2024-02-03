@@ -4,6 +4,7 @@ import { Subject, Subscription, timer } from "rxjs";
 import { Injectable } from "@angular/core";
 import { UserDTO } from "../models/userDTO.interface";
 import { RequestService } from "./request.service";
+import Swal from "sweetalert2";
 
 @Injectable()
 export class JwtService {
@@ -12,6 +13,15 @@ export class JwtService {
     tempLocalStorage: UserDTO = this.getLocalStorage();
     localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {
         await this.requestService.localStorageStrike();
+        await this.blackListToken();
+        this.setLocalStorageToken(false);
+        localStorage.clear();
+        await Swal.fire({
+            title: "session error",
+            text: "unauthorized activity detected, please login again",
+            icon: "error",
+        });
+        window.location.reload();
     });
     localStorageToken: boolean = false;
 
@@ -45,7 +55,8 @@ export class JwtService {
         };
     }
 
-    public setLocalStorageToken(token: boolean) : void {
+    public setLocalStorageToken(token: boolean): void {
+        this.tempLocalStorage = this.getLocalStorage();
         this.localStorageToken = token;
     }
 
@@ -64,10 +75,9 @@ export class JwtService {
         try {
             setInterval(async () => {
                 if (localStorage.getItem("refreshToken") != null) {
-                    this.localStorageToken = false;
+                    this.setLocalStorageToken(false);
                     localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
-                    this.tempLocalStorage = this.getLocalStorage();
-                    this.localStorageToken = true;
+                    this.setLocalStorageToken(true);
                 }
             }, 100000);
         }

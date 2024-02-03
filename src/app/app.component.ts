@@ -64,8 +64,6 @@ export class AppComponent implements OnInit {
     await this.jwtService.blackListToken();
     localStorage.clear();
     this.timer$.next();
-    this.user = null;
-    this.sideNavStatus = false;
-    this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
+    window.location.reload();
   }
 }
