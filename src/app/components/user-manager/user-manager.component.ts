@@ -16,6 +16,7 @@ export class UserManagerComponent implements OnInit {
   constructor(private requestService: RequestService, private jwtService: JwtService) { }
   users!: UserDTO[];
   tempUser: UserDTO | null = null;
+  userStrikeToggle: boolean = false;
 
   public formatDate(date: string) {
     return `${date.substring(6, 8)}-${date.substring(4, 6)}-${date.substring(0, 4)}`;
@@ -25,12 +26,27 @@ export class UserManagerComponent implements OnInit {
     await this.updateAllUsers();
   }
 
+  public openUserStrike() {
+    this.userStrikeToggle = true;
+  }
+
+  public async setUserBlock(username: string, isBlocked: boolean): Promise<void> {
+    try {
+      this.requestService.setUserBlock(username, isBlocked);
+      await this.updateAllUsers();
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
   public async updateAllUsers() {
     try {
       this.users = await this.requestService.getUsers();
       for (const user of this.users) {
         user.whenCreated = this.formatDate(user.whenCreated);
         user.group = await this.requestService.getUserGroup(user.givenName);
+        user.isBlocked = await this.requestService.isUserBlocked(user.givenName);
       }
     }
     catch (err: any) {

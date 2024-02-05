@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FilterDTO } from 'src/common/models/filterDTO.class';
 import { RoomRecordingsDTO } from 'src/common/models/roomRecordingsDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
@@ -11,7 +11,7 @@ import { RoomDTO } from 'src/common/models/roomDTO.interface';
 @Component({
   selector: 'app-archive',
   templateUrl: './archive.component.html',
-  styleUrls: ['./archive.component.scss']
+  styleUrls: ['./archive.component.scss'],
 })
 export class ArchiveComponent implements OnInit {
   constructor(private requestService: RequestService) { }

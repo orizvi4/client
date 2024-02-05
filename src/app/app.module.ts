@@ -22,8 +22,11 @@ import { LogsDisplayComponent } from './components/logs-display/logs-display.com
 import { JwtService } from 'src/common/services/jwt.service';
 import { RecordingBoxComponent } from './components/archive/components/recording-box/recording-box.component';
 import { WebSocketService } from 'src/common/services/web-socket.service';
+import { UserStrikeComponent } from './components/user-manager/components/user-strike/user-strike.component';
+import { CheckboxComponent } from 'src/common/components/checkbox/checkbox.component';
 
 @NgModule({
+
   declarations: [
     AppComponent,
     RoomsListComponent,
@@ -38,7 +41,8 @@ import { WebSocketService } from 'src/common/services/web-socket.service';
     UserCardComponent,
     UploadFormComponent,
     LogsDisplayComponent,
-    RecordingBoxComponent
+    RecordingBoxComponent,
+    UserStrikeComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +51,6 @@ import { WebSocketService } from 'src/common/services/web-socket.service';
     FormsModule,
   ],
   providers: [Constants],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, CheckboxComponent]
 })
 export class AppModule { }

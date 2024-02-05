@@ -9,13 +9,21 @@
     width: 80%;
     border-radius: 1rem;
 
+    tr.table-body.blocked {
+        background-color: $red;
+
+        &:hover:not(#table-head, #table-foot) {
+            opacity: 0.9;
+            background: $red;
+        }
+    }
 
     tr {
         box-sizing: border-box;
         height: 6vh;
 
         th {
-            padding-right: 2rem;
+            padding: 0 0.6rem;
             box-sizing: border-box;
         }
 
@@ -39,7 +47,7 @@
             }
         }
 
-        #user-id {
+        #user-block {
             text-align: center;
             padding-right: 0;
         }

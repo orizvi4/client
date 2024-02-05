@@ -5,6 +5,7 @@ export interface UserDTO {
     whenCreated: string;
     isEdit: boolean;
     group: string;
+    isBlocked?: boolean;
     accessToken?: string;
     refreshToken?: string;
 }

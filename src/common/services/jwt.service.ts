@@ -9,9 +9,10 @@ import Swal from "sweetalert2";
 @Injectable()
 export class JwtService {
 
-    localStorageChange$: Subject<void> = new Subject<void>();
+    localStorageChange$: Subject<void> = new Subject<void>();//emits the event
     tempLocalStorage: UserDTO = this.getLocalStorage();
-    localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {
+    localStorageToken: boolean = false;//to check or not to check localstorage
+    localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {//handle the event
         await this.requestService.localStorageStrike();
         await this.blackListToken();
         this.setLocalStorageToken(false);
@@ -23,7 +24,6 @@ export class JwtService {
         });
         window.location.reload();
     });
-    localStorageToken: boolean = false;
 
     constructor(private requestService: RequestService) {
         this.localStorageCheck();

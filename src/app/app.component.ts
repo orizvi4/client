@@ -26,13 +26,20 @@ export class AppComponent implements OnInit {
   timer$: Subject<void> = new Subject<void>();
 
   async ngOnInit(): Promise<void> {
-    if (localStorage.length == 0 || !(await this.jwtService.verifyToken())) {
-      this.user = null
-      this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
+    try {
+      if (localStorage.length == 0 || !(await this.jwtService.verifyToken())) {
+        this.user = null
+        this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
+      }
+      else {
+        this.updateUser(await this.requestService.getUserGroup(localStorage.getItem('givenName')as string));
+        this.jwtService.setLocalStorageToken(true);
+      }
     }
-    else {
-      this.updateUser(await this.requestService.getUserGroup(localStorage.getItem('givenName')as string));
-      this.jwtService.setLocalStorageToken(true);
+    catch (err) {
+      this.user = null
+      localStorage.clear();
+      this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
     }
   }
 
@@ -44,7 +51,7 @@ export class AppComponent implements OnInit {
         title: 'logging out',
         text: 'you have been inactive for a while, please log in again'
       })
-      this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
+      this.signOut();
     });
   }
 

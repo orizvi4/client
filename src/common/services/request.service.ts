@@ -75,9 +75,16 @@ export class RequestService {
     }
 
 
+    public async setUserBlock(username: string, block: boolean): Promise<void> {
+        await axios.post<void>(`${Constants.AUTH_SERVICE}/users/block`, {username: username, block: block}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
+    }
 
     public async getUsers(): Promise<UserDTO[]> {
         return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+    }
+
+    public async isUserBlocked(username: string): Promise<boolean> {
+        return (await axios.get<boolean>(`${Constants.AUTH_SERVICE}/users/isBlocked?username=${username}`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public async deleteUser(name: string): Promise<string> {

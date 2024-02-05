@@ -1,6 +1,7 @@
+<app-user-strike *ngIf="userStrikeToggle"></app-user-strike>
 <table class="grid">
     <tr id="table-head">
-        <th></th>
+        <th>blocked</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>User Login Name</th>
@@ -8,8 +9,10 @@
         <th>Authority Group</th>
         <th>Actions</th>
     </tr>
-    <tr id="table-body" *ngFor="let user of users; let i = index">
-        <td id="user-id">{{i+1}}</td>
+    <tr class="table-body" *ngFor="let user of users" [ngClass]="{'blocked': user.isBlocked}">
+        <td id="user-block">
+            <input type="checkbox" (click)="setUserBlock(user.givenName, !user.isBlocked)" [checked]="user.isBlocked" />
+        </td>
 
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.givenName" />
