@@ -7,6 +7,7 @@ import { FilterDTO } from "../models/filterDTO.class";
 import { RecordingDTO } from "../models/recordingDTO.interface";
 import { RoomRecordingsDTO } from "../models/roomRecordingsDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
+import { StrikeDTO } from "src/app/components/user-manager/components/user-strike/models/strikeDTO.interface";
 
 @Injectable()
 export class RequestService {
@@ -77,6 +78,18 @@ export class RequestService {
 
     public async setUserBlock(username: string, block: boolean): Promise<void> {
         await axios.post<void>(`${Constants.AUTH_SERVICE}/users/block`, {username: username, block: block}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
+    }
+
+    public async getUserStrikes(username: string): Promise<StrikeDTO[]> {
+        return (await axios.get<StrikeDTO[]>(`${Constants.AUTH_SERVICE}/users/strikes?username=${username}`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
+    public async getUserPanelty(username: string): Promise<number> {
+        return (await axios.get<number>(`${Constants.AUTH_SERVICE}/users/panelty?username=${username}`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
+    public async resetPanelty(username: string): Promise<void> {
+        await axios.put<void>(`${Constants.AUTH_SERVICE}/users/resetPanelty`, {username: username}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
     public async getUsers(): Promise<UserDTO[]> {

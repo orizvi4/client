@@ -16,7 +16,7 @@ export class UserManagerComponent implements OnInit {
   constructor(private requestService: RequestService, private jwtService: JwtService) { }
   users!: UserDTO[];
   tempUser: UserDTO | null = null;
-  userStrikeToggle: boolean = false;
+  strikesUsername: string = "";
 
   public formatDate(date: string) {
     return `${date.substring(6, 8)}-${date.substring(4, 6)}-${date.substring(0, 4)}`;
@@ -26,8 +26,8 @@ export class UserManagerComponent implements OnInit {
     await this.updateAllUsers();
   }
 
-  public openUserStrike() {
-    this.userStrikeToggle = true;
+  public openUserStrike(username: string) {
+    this.strikesUsername = username;
   }
 
   public async setUserBlock(username: string, isBlocked: boolean): Promise<void> {

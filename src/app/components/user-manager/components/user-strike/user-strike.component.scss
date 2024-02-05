@@ -15,4 +15,31 @@ $border-radius: 0.4rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    #reset-button {
+        margin-top: 1.5vh;
+        margin-bottom: 3vh;
+        border-radius: 0.5em;
+        border: none;
+        font-size: 1vw;
+        background-color: $black;
+        color: $background;
+        padding: 1vh 2vw;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover {
+            background-color: $light-black;
+        }
+    }
+    table {
+        border-collapse: collapse;
+        th {
+            text-align: center;
+            border: 0.15rem solid $black;
+        }
+        td {
+            border: 0.15rem solid $black;
+        }
+    }
 }

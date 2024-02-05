@@ -1,4 +1,5 @@
-<app-user-strike *ngIf="userStrikeToggle"></app-user-strike>
+<div class="overlay" *ngIf="strikesUsername" (click)="strikesUsername = ''"></div>
+<app-user-strike [username]="strikesUsername" *ngIf="strikesUsername"></app-user-strike>
 <table class="grid">
     <tr id="table-head">
         <th>blocked</th>
@@ -13,32 +14,31 @@
         <td id="user-block">
             <input type="checkbox" (click)="setUserBlock(user.givenName, !user.isBlocked)" [checked]="user.isBlocked" />
         </td>
-
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.givenName" />
         </td>
-        <td *ngIf="!user.isEdit">
+        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.givenName}}
         </td>
 
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.sn" />
         </td>
-        <td *ngIf="!user.isEdit">
+        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.sn}}
         </td>
 
-        <td>{{user.userPrincipalName}}</td>
-        <td>{{user.whenCreated}}</td>
+        <td (click)="openUserStrike(user.givenName)">{{user.userPrincipalName}}</td>
+        <td (click)="openUserStrike(user.givenName)">{{user.whenCreated}}</td>
 
         <td *ngIf="user.isEdit">
             <select id="groups-list" [(ngModel)]="user.group">
                 <option value="users">users</option>
                 <option value="managers">managers</option>
                 <option value="editors">editor</option>
-              </select>
+            </select>
         </td>
-        <td *ngIf="!user.isEdit">
+        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.group}}
         </td>
         <td>
