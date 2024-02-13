@@ -41,12 +41,12 @@ export class LoginComponent {
         });
         localStorage.setItem('accessToken', res.accessToken as string);
         localStorage.setItem('refreshToken', res.refreshToken as string);
-        localStorage.setItem('userPrincipalName', res.userPrincipalName);
+        localStorage.setItem('mail', res.mail);
         localStorage.setItem('givenName', res.givenName);
         localStorage.setItem('sn', res.sn);
         this.appComponent.updateUser(res.group);
         this.jwtService.setLocalStorageToken(true);
-        this.router.navigate([{ outlets: { mainOutlet: ['live'] } }]);
+        this.router.navigate(['live']);
       }
       else {
         await Swal.fire({

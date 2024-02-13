@@ -29,7 +29,7 @@ export class NavBarComponent {
   }
   
   navigate(place: string) {
-    this.router.navigate([{ outlets: { mainOutlet: [`${place}`] } }], {state: {group: this.user.group}});
+    this.router.navigate([`${place}`], {state: {group: this.user.group}});
   }
 
   openUserMenu() {

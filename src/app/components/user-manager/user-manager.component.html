@@ -5,8 +5,8 @@
         <th>blocked</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>User Login Name</th>
-        <th>Date of Creation</th>
+        <th>Phone</th>
+        <th>Mail</th>
         <th>Authority Group</th>
         <th>Actions</th>
     </tr>
@@ -28,8 +28,19 @@
             {{user.sn}}
         </td>
 
-        <td (click)="openUserStrike(user.givenName)">{{user.userPrincipalName}}</td>
-        <td (click)="openUserStrike(user.givenName)">{{user.whenCreated}}</td>
+        <td *ngIf="user.isEdit">
+            <input type="text" class="editInput" [(ngModel)]="user.telephoneNumber" />
+        </td>
+        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+            {{user.telephoneNumber}}
+        </td>
+
+        <td *ngIf="user.isEdit">
+            <input type="text" class="editInput" [(ngModel)]="user.mail" />
+        </td>
+        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+            {{user.mail}}
+        </td>
 
         <td *ngIf="user.isEdit">
             <select id="groups-list" [(ngModel)]="user.group">

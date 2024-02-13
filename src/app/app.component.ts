@@ -59,10 +59,10 @@ export class AppComponent implements OnInit {
     this.user = {
       group: group,
       givenName: localStorage.getItem('givenName') as string,
-      userPrincipalName: localStorage.getItem('userPrincipalName') as string,
+      mail: localStorage.getItem('mail') as string,
       sn: localStorage.getItem('sn') as string,
       isEdit: false,
-      whenCreated: ''
+      telephoneNumber: "",
     }
   }
 

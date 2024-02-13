@@ -2,14 +2,23 @@
 
 $border-radius: 0.4rem;
 
-#my-form {
+
+#my-form {    
+    h2 {
+        top: -1.7vh;
+        position: absolute;
+    }
+
+    #panelty {
+        margin-top: 1.5vh;
+    }
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
     background-color: $light-blue;
     border-radius: $border-radius;
-    border: 0.2vw solid $black;
+    border: 0.1vw solid $black;
     padding: 1.4vw;
     z-index: 3;
     top: 50%;
@@ -17,8 +26,8 @@ $border-radius: 0.4rem;
     transform: translate(-50%, -50%);
 
     #reset-button {
-        margin-top: 1.5vh;
-        margin-bottom: 3vh;
+        margin-top: 1vh;
+        margin-bottom: 2.5vh;
         border-radius: 0.5em;
         border: none;
         font-size: 1vw;
@@ -32,12 +41,15 @@ $border-radius: 0.4rem;
             background-color: $light-black;
         }
     }
+
     table {
         border-collapse: collapse;
+
         th {
             text-align: center;
             border: 0.15rem solid $black;
         }
+
         td {
             border: 0.15rem solid $black;
         }

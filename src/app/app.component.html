@@ -7,7 +7,7 @@
 
         <app-header [sideNavStatus]="sideNavStatus"></app-header>
         <div class="main" [ngClass]="{'mainShrink': sideNavStatus}">
-            <router-outlet name="mainOutlet"></router-outlet>
+            <router-outlet></router-outlet>
         </div>
         <app-nav-bar [user]="user" (signOut)="signOut()" (sideNavToggled)="sideNavStatus = $event;"
             [sideNavStatus]="sideNavStatus"></app-nav-bar>

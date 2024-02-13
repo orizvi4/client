@@ -23,7 +23,6 @@ import { JwtService } from 'src/common/services/jwt.service';
 import { RecordingBoxComponent } from './components/archive/components/recording-box/recording-box.component';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import { UserStrikeComponent } from './components/user-manager/components/user-strike/user-strike.component';
-import { CheckboxComponent } from 'src/common/components/checkbox/checkbox.component';
 
 @NgModule({
 
@@ -51,6 +50,6 @@ import { CheckboxComponent } from 'src/common/components/checkbox/checkbox.compo
     FormsModule,
   ],
   providers: [Constants],
-  bootstrap: [AppComponent, CheckboxComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

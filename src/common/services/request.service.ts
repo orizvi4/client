@@ -105,7 +105,7 @@ export class RequestService {
     }
 
     public async addUser(user: UserDTO): Promise<UserDTO> {
-        return (await axios.post(`${Constants.AUTH_SERVICE}/users/add`, { username: user.givenName, sn: user.sn, group: user.group }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+        return (await axios.post(`${Constants.AUTH_SERVICE}/users/add`, { username: user.givenName, sn: user.sn, group: user.group, mail: user.mail, telephoneNumber: user.telephoneNumber }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public async modifyUser(oldUsername: string, user: UserDTO): Promise<UserDTO> {
@@ -116,7 +116,9 @@ export class RequestService {
             {
                 username: user.givenName,
                 sn: user.sn,
-                group: user.group
+                group: user.group,
+                mail: user.mail,
+                telephoneNumber: user.telephoneNumber
             }
         ];
         return (await axios.put(`${Constants.AUTH_SERVICE}/users/modify`, body, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
@@ -130,7 +132,7 @@ export class RequestService {
         return (await axios.post(`${Constants.AUTH_SERVICE}/users/authenticate`, { username: username, password: password })).data;
     }
 
-    public async localStorageStrike() {
-        await axios.post(`${Constants.AUTH_SERVICE}/strike/localstorage`, { token: localStorage.getItem("accessToken") });
+    public async localStorageStrike(token: string) {
+        await axios.post(`${Constants.AUTH_SERVICE}/strike/localstorage`, { token: token});
     }
 }

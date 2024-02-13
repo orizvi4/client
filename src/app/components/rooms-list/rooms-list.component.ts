@@ -38,6 +38,6 @@ export class RoomsListComponent implements OnInit {
   }
   
   navigateToRoom(id: string, name: string) {
-    this.router.navigate([{ outlets: { mainOutlet: ['live/room'] } }], { state: { roomId: id} });
+    this.router.navigate(['live/room'], { state: { roomId: id} });
   }
 }

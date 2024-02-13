@@ -43,8 +43,7 @@ export class UserManagerComponent implements OnInit {
   public async updateAllUsers() {
     try {
       this.users = await this.requestService.getUsers();
-      for (const user of this.users) {
-        user.whenCreated = this.formatDate(user.whenCreated);
+      for (const user of this.users) {;
         user.group = await this.requestService.getUserGroup(user.givenName);
         user.isBlocked = await this.requestService.isUserBlocked(user.givenName);
       }
@@ -108,7 +107,7 @@ export class UserManagerComponent implements OnInit {
   }
 
   public cancelEdit(user: UserDTO) {
-    if (this.tempUser != null && this.tempUser.whenCreated != '') {
+    if (this.tempUser != null && this.tempUser.isNew == false) {
       user.isEdit = false;
       user.givenName = this.tempUser.givenName;
       user.sn = this.tempUser.sn;
@@ -123,16 +122,14 @@ export class UserManagerComponent implements OnInit {
   public async updateUser(user: UserDTO) {
     if (this.tempUser != null && this.tempUser.givenName != '' && this.tempUser.sn != '') {
       try {
-        if (this.tempUser != null && this.tempUser.whenCreated == '') { //new user
+        if (this.tempUser != null && this.tempUser.isNew == true) { //new user
           const res: UserDTO = await this.requestService.addUser(user)
           this.tempUser = res as UserDTO;
-          this.tempUser.whenCreated = this.formatDate(this.tempUser.whenCreated);
           this.users.pop();
           this.users.push(this.tempUser);
           this.tempUser = null;
         }
         else { //existing user
-          const whenCreated: string = this.tempUser.whenCreated;
           await this.requestService.modifyUser(this.tempUser.givenName, user);
           this.tempUser = null;
           await this.updateAllUsers();
@@ -183,8 +180,9 @@ export class UserManagerComponent implements OnInit {
       if (this.tempUser === null) {
         for (const user of this.users) {
           user.isEdit = false;
+          user.isNew = false;
         }
-        this.tempUser = { group: "users", userPrincipalName: "", givenName: "", sn: "", whenCreated: "", isEdit: true };
+        this.tempUser = { group: "users", givenName: "", sn: "", mail: "", telephoneNumber: "", isNew: true, isEdit: true };
         this.users.push(this.tempUser);
       }
       else {
@@ -216,9 +214,11 @@ export class UserManagerComponent implements OnInit {
     if (this.tempUser == null) {
       for (const user of this.users) {
         user.isEdit = false;
+        user.isNew = false//check
       }
       this.tempUser = { ...user };
       user.isEdit = true;
+      user.isNew = false;
     }
     else {
       await swal({

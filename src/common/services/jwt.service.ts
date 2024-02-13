@@ -13,7 +13,7 @@ export class JwtService {
     tempLocalStorage: UserDTO = this.getLocalStorage();
     localStorageToken: boolean = false;//to check or not to check localstorage
     localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {//handle the event
-        await this.requestService.localStorageStrike();
+        await this.requestService.localStorageStrike(this.tempLocalStorage.accessToken as string);
         await this.blackListToken();
         this.setLocalStorageToken(false);
         localStorage.clear();
@@ -46,11 +46,12 @@ export class JwtService {
         return {
             accessToken: localStorage.getItem('accessToken') as string,
             refreshToken: localStorage.getItem('refreshToken') as string,
-            userPrincipalName: localStorage.getItem('userPrincipalName') as string,
+            mail: localStorage.getItem('mail') as string,
             givenName: localStorage.getItem('givenName') as string,
             sn: localStorage.getItem('sn') as string,
-            whenCreated: "",
+            telephoneNumber: "",
             group: "",
+            isNew: false,
             isEdit: false
         };
     }
@@ -66,7 +67,9 @@ export class JwtService {
                 if (this.localStorageToken == true) {
                     this.localStorageChange$.next();
                 }
-                this.tempLocalStorage = this.getLocalStorage();
+                else {
+                    this.tempLocalStorage = this.getLocalStorage();
+                }
             }
         }, 3000);
     }
@@ -87,6 +90,6 @@ export class JwtService {
     }
 
     public async blackListToken(): Promise<void> {
-        await axios.post(`${Constants.AUTH_SERVICE}/users/logout`, { accessToken: localStorage.getItem('accessToken'), refreshToken: localStorage.getItem('refreshToken') });
+        await axios.post(`${Constants.AUTH_SERVICE}/users/logout`, { accessToken: this.tempLocalStorage.accessToken, refreshToken: this.tempLocalStorage.refreshToken });
     }
 }
