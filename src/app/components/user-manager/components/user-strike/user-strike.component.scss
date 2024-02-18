@@ -3,15 +3,36 @@
 $border-radius: 0.4rem;
 
 
-#my-form {    
-    h2 {
-        top: -1.7vh;
-        position: absolute;
+#my-form {
+    #info-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border-bottom: 1px solid $black;
+    }
+    
+    .user-info {
+        padding: 0.8vw;
+        background-color: $light-blue;
+        font-weight: bolder;
+    }
+    
+    #tab-name {
+        border-top-left-radius: $border-radius;
+    }
+    
+    #tab-mail {
+        border-top-right-radius: $border-radius;
+    }
+    
+    #tab-phone {
+        border-top-right-radius: $border-radius;
     }
 
     #panelty {
         margin-top: 1.5vh;
     }
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,15 +64,29 @@ $border-radius: 0.4rem;
     }
 
     table {
+        width: 100%;
         border-collapse: collapse;
-
-        th {
-            text-align: center;
-            border: 0.15rem solid $black;
-        }
-
-        td {
-            border: 0.15rem solid $black;
-        }
+        border: 1px solid #ddd;
+    }
+    #strikes {
+        overflow-y: auto;
+        max-height: 50vh;
+    }
+    #strikes-wrapper {
+        padding: 0;
+    }
+    th, td {
+        padding: 0.8vw;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: $blue;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    tr:hover {
+        background-color: #ddd;
     }
 }

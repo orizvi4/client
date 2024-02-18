@@ -82,7 +82,7 @@ export class JwtService {
                     localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
                     this.setLocalStorageToken(true);
                 }
-            }, 100000);
+            }, 288000);
         }
         catch (err) {
             console.log(err);

@@ -1,17 +1,26 @@
 <div id="my-form">
-    <h2>{{username}}</h2>
+    <div id="info-container">
+        <div class="user-info" id="tab-name">{{user.givenName}}</div>
+        <div class="user-info" id="tab-mail">{{user.mail}}</div>
+        <div class="user-info" id="tab-phone">{{user.telephoneNumber}}</div>
+    </div>
     <label id="panelty">panelty: {{panelty}}</label>
     <input id="reset-button" type="button" (click)="resetPanelty()" value="reset panelty" />
+
 
     <table>
         <tr>
             <th>strike</th>
             <th>date</th>
         </tr>
-        <tr *ngFor="let strike of strikes">
-            <td>{{strike.strike}}</td>
-            <td>{{strike.time}}</td>
-        </tr>
+        <td id="strikes-wrapper" colspan="2">
+            <div id="strikes">
+                <tr *ngFor="let strike of strikes">
+                    <td>{{strike.strike}}</td>
+                    <td>{{strike.time}}</td>
+                </tr>
+            </div>
+        </td>
     </table>
 
 </div>

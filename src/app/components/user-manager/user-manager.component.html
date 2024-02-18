@@ -1,5 +1,5 @@
-<div class="overlay" *ngIf="strikesUsername" (click)="strikesUsername = ''"></div>
-<app-user-strike [username]="strikesUsername" *ngIf="strikesUsername"></app-user-strike>
+<div class="overlay" *ngIf="childUser" (click)="childUser = null"></div>
+<app-user-strike [user]="childUser" *ngIf="childUser"></app-user-strike>
 <table class="grid">
     <tr id="table-head">
         <th>blocked</th>

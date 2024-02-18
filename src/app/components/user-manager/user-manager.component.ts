@@ -16,7 +16,7 @@ export class UserManagerComponent implements OnInit {
   constructor(private requestService: RequestService, private jwtService: JwtService) { }
   users!: UserDTO[];
   tempUser: UserDTO | null = null;
-  strikesUsername: string = "";
+  childUser: UserDTO | null = null;
 
   public formatDate(date: string) {
     return `${date.substring(6, 8)}-${date.substring(4, 6)}-${date.substring(0, 4)}`;
@@ -27,7 +27,11 @@ export class UserManagerComponent implements OnInit {
   }
 
   public openUserStrike(username: string) {
-    this.strikesUsername = username;
+    for (const user of this.users) {
+      if (user.givenName == username) {
+        this.childUser = user;
+      }
+    }
   }
 
   public async setUserBlock(username: string, isBlocked: boolean): Promise<void> {

@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 @Injectable()
 export class WebSocketService {
     constructor(private router: Router, private jwtService: JwtService) {
-        const socket = io("http://192.168.1.5:8080");
+        const socket = io("http://localhost:8080");
 
         socket.on("connect", () => {
             console.log('connected to websocket');
@@ -29,9 +29,9 @@ export class WebSocketService {
 
         socket.on(WebsocketTitles.SIGNOUT, async () => {
             console.log('Incoming message: sign out');
-            // await this.jwtService.blackListToken();
-            // this.jwtService.setLocalStorageToken(false);
-            // localStorage.clear();
+            this.jwtService.setLocalStorageToken(false);
+            await this.jwtService.blackListToken();
+            localStorage.clear();
             await Swal.fire({
                 title: "session error",
                 text: "unauthorized activities detected, please talk to a system manager or login again",
