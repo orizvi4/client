@@ -46,7 +46,7 @@ export class UserManagerComponent implements OnInit {
 
   public async updateAllUsers() {
     try {
-      this.users = await this.requestService.getUsers();
+      this.users = await this.requestService.getUsers(history.state.givenName);
       for (const user of this.users) {;
         user.group = await this.requestService.getUserGroup(user.givenName);
         user.isBlocked = await this.requestService.isUserBlocked(user.givenName);

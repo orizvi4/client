@@ -47,7 +47,7 @@ export class RequestService {
     public async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
         let suffix;
         try {
-            suffix = (await axios.get<number>(`${Constants.CONTENT_MANAGER}/file/suffix`, { params: { channel: channel }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data + 1;
+            suffix = (await axios.get<number>(`${Constants.CONTENT_MANAGER}/file/suffix`, { params: { channel: channel }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
         }
         catch (err) {
             throw err;
@@ -92,8 +92,8 @@ export class RequestService {
         await axios.put<void>(`${Constants.AUTH_SERVICE}/users/resetPanelty`, {username: username}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
-    public async getUsers(): Promise<UserDTO[]> {
-        return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+    public async getUsers(username: string): Promise<UserDTO[]> {
+        return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users?username=${username}`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public async isUserBlocked(username: string): Promise<boolean> {
@@ -134,5 +134,9 @@ export class RequestService {
 
     public async localStorageStrike(token: string) {
         await axios.post(`${Constants.AUTH_SERVICE}/strike/localstorage`, { token: token});
+    }
+
+    public async getTokenUser(): Promise<UserDTO> {
+        return (await axios.post(`${Constants.AUTH_SERVICE}/users/user`, { token: localStorage.getItem('accessToken')}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 }

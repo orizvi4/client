@@ -32,11 +32,13 @@ export class AppComponent implements OnInit {
         this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
       }
       else {
-        this.updateUser(await this.requestService.getUserGroup(localStorage.getItem('givenName')as string));
+        await this.updateUser(await this.requestService.getTokenUser());
+        await this.jwtService.refreshAccessToken();
         this.jwtService.setLocalStorageToken(true);
       }
     }
     catch (err) {
+      console.log("grgtr " + err);
       this.user = null
       localStorage.clear();
       this.router.navigate([{ outlets: { loginOutlet: ['login'] } }]);
@@ -46,31 +48,36 @@ export class AppComponent implements OnInit {
   timerReset() {
     this.timer$.next();
     timer(Constants.SESSION_TIMEOUT).pipe(takeUntil(this.timer$)).subscribe(async () => {
+      await this.signOut();
       await Swal.fire({
         icon: 'warning',
         title: 'logging out',
         text: 'you have been inactive for a while, please log in again'
-      })
-      this.signOut();
+      });
+      window.location.reload();
     });
   }
 
-  updateUser(group: string) {
+  public async updateUser(user: UserDTO) {
     this.user = {
-      group: group,
-      givenName: localStorage.getItem('givenName') as string,
-      mail: localStorage.getItem('mail') as string,
-      sn: localStorage.getItem('sn') as string,
+      group: await this.requestService.getUserGroup(user.givenName),
+      givenName: user.givenName,
+      mail: user.mail,
+      sn: user.sn,
       isEdit: false,
-      telephoneNumber: "",
+      telephoneNumber: user.telephoneNumber,
     }
   }
 
-  public async signOut() {
+  public async signOutEvent() {
+    await this.signOut();
+    window.location.reload();
+  }
+
+  public async signOut(): Promise<void> {
     this.jwtService.setLocalStorageToken(false);
     await this.jwtService.blackListToken();
     localStorage.clear();
     this.timer$.next();
-    window.location.reload();
   }
 }

@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 @Injectable()
 export class WebSocketService {
     constructor(private router: Router, private jwtService: JwtService) {
-        const socket = io("http://localhost:8080");
+        const socket = io("http://192.168.1.5:8080");
 
         socket.on("connect", () => {
             console.log('connected to websocket');

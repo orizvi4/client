@@ -9,7 +9,7 @@
         <div class="main" [ngClass]="{'mainShrink': sideNavStatus}">
             <router-outlet></router-outlet>
         </div>
-        <app-nav-bar [user]="user" (signOut)="signOut()" (sideNavToggled)="sideNavStatus = $event;"
+        <app-nav-bar [user]="user" (signOut)="signOutEvent()" (sideNavToggled)="sideNavStatus = $event;"
             [sideNavStatus]="sideNavStatus"></app-nav-bar>
     </div>
 </body>

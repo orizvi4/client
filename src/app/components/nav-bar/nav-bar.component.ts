@@ -29,7 +29,7 @@ export class NavBarComponent {
   }
   
   navigate(place: string) {
-    this.router.navigate([`${place}`], {state: {group: this.user.group}});
+    this.router.navigate([`${place}`], {state: {group: this.user.group, givenName: this.user.givenName, sn: this.user.sn, mail: this.user.mail}});
   }
 
   openUserMenu() {

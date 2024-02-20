@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 export class JwtService {
 
     localStorageChange$: Subject<void> = new Subject<void>();//emits the event
-    tempLocalStorage: UserDTO = this.getLocalStorage();
+    tempLocalStorage: {accessToken: string, refreshToken: string} = this.getLocalStorage();
     localStorageToken: boolean = false;//to check or not to check localstorage
     localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {//handle the event
         await this.requestService.localStorageStrike(this.tempLocalStorage.accessToken as string);
@@ -27,7 +27,7 @@ export class JwtService {
 
     constructor(private requestService: RequestService) {
         this.localStorageCheck();
-        this.refreshAccessToken();
+        this.refreshTokenInterval();
     }
 
     public async verifyToken(): Promise<boolean> {
@@ -42,17 +42,10 @@ export class JwtService {
         return (await axios.get(`${Constants.AUTH_SERVICE}/tokens/verify/editor`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
-    public getLocalStorage(): UserDTO {
+    public getLocalStorage() {
         return {
             accessToken: localStorage.getItem('accessToken') as string,
             refreshToken: localStorage.getItem('refreshToken') as string,
-            mail: localStorage.getItem('mail') as string,
-            givenName: localStorage.getItem('givenName') as string,
-            sn: localStorage.getItem('sn') as string,
-            telephoneNumber: "",
-            group: "",
-            isNew: false,
-            isEdit: false
         };
     }
 
@@ -74,12 +67,16 @@ export class JwtService {
         }, 3000);
     }
 
-    public refreshAccessToken(): void {
+    public async refreshAccessToken(): Promise<void> {
+        localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
+    }
+
+    public refreshTokenInterval(): void {
         try {
             setInterval(async () => {
                 if (localStorage.getItem("refreshToken") != null) {
                     this.setLocalStorageToken(false);
-                    localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
+                    await this.refreshAccessToken();
                     this.setLocalStorageToken(true);
                 }
             }, 288000);

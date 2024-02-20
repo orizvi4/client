@@ -66,17 +66,17 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         src: url,
         type: 'application/x-mpegURL'
       });
-      player.on('waiting', async () => {
-        if (this.waitingHandler) {
-          this.waitingHandler = false;
-          player.load();
-          // await this.requestService.connectChannel(this.id.substring(9));
-          console.log("grfgrbrb");
-          setTimeout(() => {
-            this.waitingHandler = true;
-          }, 4000);
-        }
-      });
+      // player.on('waiting', async () => {
+      //   if (this.waitingHandler) {
+      //     this.waitingHandler = false;
+      //     player.load();
+      //     // await this.requestService.connectChannel(this.id.substring(9));
+      //     console.log("grfgrbrb");
+      //     setTimeout(() => {
+      //       this.waitingHandler = true;
+      //     }, 4000);
+      //   }
+      // });
     }
     catch (err) {
       console.log(err);

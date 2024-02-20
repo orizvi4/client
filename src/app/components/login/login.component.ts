@@ -41,10 +41,7 @@ export class LoginComponent {
         });
         localStorage.setItem('accessToken', res.accessToken as string);
         localStorage.setItem('refreshToken', res.refreshToken as string);
-        localStorage.setItem('mail', res.mail);
-        localStorage.setItem('givenName', res.givenName);
-        localStorage.setItem('sn', res.sn);
-        this.appComponent.updateUser(res.group);
+        this.appComponent.updateUser(res);
         this.jwtService.setLocalStorageToken(true);
         this.router.navigate(['live']);
       }
