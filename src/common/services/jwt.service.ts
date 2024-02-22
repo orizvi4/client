@@ -10,11 +10,13 @@ import { Router } from "@angular/router";
 @Injectable()
 export class JwtService {
 
+    refreshToken: string = '';
+
     localStorageChange$: Subject<void> = new Subject<void>();//emits the event
-    tempLocalStorage: {accessToken: string, refreshToken: string} = this.getLocalStorage();
+    tempAccessToken: string = localStorage.getItem('accessToken') as string;
     localStorageToken: boolean = false;//to check or not to check localstorage
     localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {//handle the event
-        await this.requestService.localStorageStrike(this.tempLocalStorage.accessToken as string);
+        await this.requestService.localStorageStrike(this.tempAccessToken as string);
         await this.blackListToken();
         this.setLocalStorageToken(false);
         localStorage.clear();
@@ -43,39 +45,41 @@ export class JwtService {
         return (await axios.get(`${Constants.AUTH_SERVICE}/tokens/verify/editor`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
-    public getLocalStorage() {
-        return {
-            accessToken: localStorage.getItem('accessToken') as string,
-            refreshToken: localStorage.getItem('refreshToken') as string,
-        };
-    }
 
     public setLocalStorageToken(token: boolean): void {
-        this.tempLocalStorage = this.getLocalStorage();
+        this.tempAccessToken = localStorage.getItem('accessToken') as string;
         this.localStorageToken = token;
     }
 
     public localStorageCheck(): void {
         setInterval(() => {
-            if (JSON.stringify(this.getLocalStorage()) != JSON.stringify(this.tempLocalStorage)) {
+            if (localStorage.getItem('accessToken') as string != this.tempAccessToken) {
                 if (this.localStorageToken == true) {
                     this.localStorageChange$.next();
                 }
                 else {
-                    this.tempLocalStorage = this.getLocalStorage();
+                    this.tempAccessToken = localStorage.getItem('accessToken') as string;
                 }
             }
         }, 3000);
     }
 
+    public setRefreshToken(refresh: string) {
+        this.refreshToken = refresh;
+    }
+
     public async refreshAccessToken(): Promise<void> {
-        localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh`, { token: localStorage.getItem('refreshToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('refreshToken')}` } })).data);
+        localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh/access`, { token: this.refreshToken }, { headers: { Authorization: `Bearer ${this.refreshToken}` } })).data);
+    }
+
+    public async getRefreshToken(): Promise<string> {
+        return (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh/get`, {token: localStorage.getItem('accessToken')}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public refreshTokenInterval(): void {
         try {
             setInterval(async () => {
-                if (localStorage.getItem("refreshToken") != null) {
+                if (this.refreshToken != '') {
                     this.setLocalStorageToken(false);
                     await this.refreshAccessToken();
                     this.setLocalStorageToken(true);
@@ -88,6 +92,6 @@ export class JwtService {
     }
 
     public async blackListToken(): Promise<void> {
-        await axios.post(`${Constants.AUTH_SERVICE}/users/logout`, { accessToken: this.tempLocalStorage.accessToken, refreshToken: this.tempLocalStorage.refreshToken });
+        await axios.post(`${Constants.AUTH_SERVICE}/users/logout`, { accessToken: localStorage.getItem('accessToken') as string, refreshToken: this.refreshToken });
     }
 }

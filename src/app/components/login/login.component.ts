@@ -44,9 +44,6 @@ export class LoginComponent {
           text: "Signed in successfully"
         });
         localStorage.setItem('accessToken', res.accessToken as string);
-        localStorage.setItem('refreshToken', res.refreshToken as string);
-        this.mainComponent.updateUser(res);
-        this.jwtService.setLocalStorageToken(true);
         this.router.navigate(['main']);
       }
       else {

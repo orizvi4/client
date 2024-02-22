@@ -33,6 +33,7 @@ export class MainComponent implements OnInit {
       }
       else {
         await this.updateUser(await this.requestService.getTokenUser());
+        this.jwtService.setRefreshToken(await this.jwtService.getRefreshToken());
         await this.jwtService.refreshAccessToken();
         this.jwtService.setLocalStorageToken(true);
       }
