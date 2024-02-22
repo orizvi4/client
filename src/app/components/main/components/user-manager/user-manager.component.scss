@@ -1,0 +1,128 @@
+@import '../../../../../styles.scss';
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    background-color: gray;
+    opacity: 0.4;
+}
+
+.grid {
+    color: $black;
+    background: $light-blue;
+    border-collapse: collapse;
+    margin-left: 18vw;
+    margin-top: 7vh;
+    width: 80%;
+    border-radius: 1rem;
+
+    tr.table-body.blocked {
+        background-color: $red;
+
+        &:hover:not(#table-head, #table-foot) {
+            opacity: 0.9;
+            background: $red;
+        }
+    }
+
+    tr {
+        box-sizing: border-box;
+        height: 6vh;
+
+        th {
+            padding: 0 0.6rem;
+            box-sizing: border-box;
+        }
+
+        td {
+            border: 0.15rem solid $background;
+
+            .editInput {
+                height: 4vh;
+                background-color: $background;
+                border-radius: 0.6vh;
+                border: 0.1rem solid $black;
+            }
+
+            select {
+                border: 0.1rem solid $black;
+                height: 5vh;
+                border-radius: 0.6vh;
+                color: $black;
+                background-color: $background;
+            }
+        }
+
+        #user-block {
+            text-align: center;
+            padding-right: 0;
+        }
+
+        .icon {
+            background-repeat: no-repeat;
+            background-size: contain;
+            display: inline-block;
+            width: 1.3rem;
+            height: 1.3rem;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+        }
+
+        #editIcon {
+            background-image: url('../../../../../images/editIcon.png');
+            margin-left: 1vw;
+        }
+
+        #trashIcon {
+            background-image: url('../../../../../images/trashIcon.png');
+            margin-left: 1.5vw;
+        }
+
+        #cancelIcon {
+            background-image: url('../../../../../images/XButton.png');
+            margin-left: 1.5vw;
+        }
+
+        #updateIcon {
+            margin-left: 1vw;
+            background-image: url('../../../../../images/VButton.png');
+        }
+
+        &:hover:not(#table-head, #table-foot) {
+            background: $blue;
+        }
+    }
+
+    #table-foot {
+        line-height: 2.4rem;
+
+        td {
+            border: none;
+            border-radius: 1rem;
+        }
+
+        #create-user-button {
+            border: none;
+            font-family: "Open Sans";
+            font-size: inherit;
+            background: none;
+            padding: 0 1.6vh;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        &:hover {
+            background: darken($light-blue, 2%);
+        }
+    }
+}

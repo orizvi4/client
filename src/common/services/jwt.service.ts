@@ -5,6 +5,7 @@ import { Injectable } from "@angular/core";
 import { UserDTO } from "../models/userDTO.interface";
 import { RequestService } from "./request.service";
 import Swal from "sweetalert2";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class JwtService {
@@ -22,10 +23,10 @@ export class JwtService {
             text: "unauthorized activity detected, please login again",
             icon: "error",
         });
-        window.location.reload();
+        this.router.navigate(['login']);
     });
 
-    constructor(private requestService: RequestService) {
+    constructor(private requestService: RequestService, private router: Router) {
         this.localStorageCheck();
         this.refreshTokenInterval();
     }

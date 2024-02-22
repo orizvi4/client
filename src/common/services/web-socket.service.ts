@@ -3,7 +3,7 @@ import { ChannelDTO } from "../models/channelDTO.interface";
 import { WebsocketTitles } from "../enums.model";
 import { Observable, Subject } from "rxjs";
 import { Injectable } from "@angular/core";
-import { NavBarComponent } from "src/app/components/nav-bar/nav-bar.component";
+import { NavBarComponent } from "src/app/components/main/components//nav-bar/nav-bar.component";
 import { AppRoutingModule } from "src/app/app-routing.module";
 import { Router } from "@angular/router";
 import { JwtService } from "./jwt.service";
@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 @Injectable()
 export class WebSocketService {
     constructor(private router: Router, private jwtService: JwtService) {
-        const socket = io("http://192.168.1.5:8080");
+        const socket = io("http://localhost:8080");
 
         socket.on("connect", () => {
             console.log('connected to websocket');
@@ -37,7 +37,7 @@ export class WebSocketService {
                 text: "unauthorized activities detected, please talk to a system manager or login again",
                 icon: "error",
             });
-            //   window.location.reload();
+            this.router.navigate(['login']);
         });
     }
 

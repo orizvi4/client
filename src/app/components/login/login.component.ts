@@ -6,6 +6,7 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
 import { JwtService } from 'src/common/services/jwt.service';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
+import { MainComponent } from '../main/main.component';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private requestService: RequestService, private router: Router, private jwtService: JwtService, private appComponent: AppComponent) { }
+  constructor(private requestService: RequestService,
+    private router: Router,
+    private jwtService: JwtService,
+    private mainComponent: MainComponent) { }
   @ViewChild('username') username!: ElementRef;
   @ViewChild('password') password!: ElementRef;
 
@@ -41,9 +45,9 @@ export class LoginComponent {
         });
         localStorage.setItem('accessToken', res.accessToken as string);
         localStorage.setItem('refreshToken', res.refreshToken as string);
-        this.appComponent.updateUser(res);
+        this.mainComponent.updateUser(res);
         this.jwtService.setLocalStorageToken(true);
-        this.router.navigate(['live']);
+        this.router.navigate(['main']);
       }
       else {
         await Swal.fire({

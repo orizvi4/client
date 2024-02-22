@@ -21,6 +21,7 @@ export class ManagerGuard implements CanActivate {
         title: 'page unauthorized',
         text: 'you are not allowed on this page'
       });
+      this.router.navigate(['/login']);
       return false
     }
   }

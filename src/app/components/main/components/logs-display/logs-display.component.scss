@@ -1,0 +1,12 @@
+@import "../../../../../styles.scss";
+
+#main {
+    height: 100%;
+    overflow: hidden;
+    margin: 0 0;
+    iframe {
+        border-width: 0;
+        width: calc(100vw - $nav-width);
+        height: 100%;
+    }
+}

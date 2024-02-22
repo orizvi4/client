@@ -1,15 +1,1 @@
-<body>
-    <div *ngIf="!user">
-        <router-outlet name="loginOutlet"></router-outlet>
-    </div>
-    <div *ngIf="user" (mousemove)="timerReset()" (keydown)="timerReset()">
-        <div class="userPopupOverlay" *ngIf="sideNavStatus" (click)="sideNavStatus = false"></div>
-
-        <app-header [sideNavStatus]="sideNavStatus"></app-header>
-        <div class="main" [ngClass]="{'mainShrink': sideNavStatus}">
-            <router-outlet></router-outlet>
-        </div>
-        <app-nav-bar [user]="user" (signOut)="signOutEvent()" (sideNavToggled)="sideNavStatus = $event;"
-            [sideNavStatus]="sideNavStatus"></app-nav-bar>
-    </div>
-</body>
+<router-outlet></router-outlet>

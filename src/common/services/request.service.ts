@@ -7,7 +7,7 @@ import { FilterDTO } from "../models/filterDTO.class";
 import { RecordingDTO } from "../models/recordingDTO.interface";
 import { RoomRecordingsDTO } from "../models/roomRecordingsDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
-import { StrikeDTO } from "src/app/components/user-manager/components/user-strike/models/strikeDTO.interface";
+import { StrikeDTO } from "src/app/components/main/components//user-manager/components/user-strike/models/strikeDTO.interface";
 
 @Injectable()
 export class RequestService {

@@ -22,8 +22,7 @@ export class UserGuard implements CanActivate {
                 title: 'page unauthorized',
                 text: 'you are not allowed on this page'
             });
-            // await this.appComponent.signOut();
-            // this.router.navigate(['/login']);
+            this.router.navigate(['/login']);
             return false
         }
     }
