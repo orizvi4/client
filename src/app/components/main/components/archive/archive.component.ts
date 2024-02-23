@@ -26,6 +26,7 @@ export class ArchiveComponent implements OnInit {
   group: string = '';
   channels: ChannelDTO[] = [];
   rooms: RoomDTO[] = [];
+  deleteId: string = '';
   timeFilter: boolean = false;//filter by time or not
 
   async ngOnInit(): Promise<void> {
@@ -91,6 +92,18 @@ export class ArchiveComponent implements OnInit {
     }
   }
 
+  public deleteRecordingFromArray(name: string): void {
+    for (let i: number = 0; i < this.roomRecordings.length; i++) {
+      for (let j: number = 0; j < this.roomRecordings[i].recordings.length; j++) {
+        const tempRecording: string = this.roomRecordings[i].recordings[j].link.substring(this.roomRecordings[i].recordings[j].link.indexOf("/mp4:") + 5, this.roomRecordings[i].recordings[j].link.indexOf('/playlist'));
+        if (tempRecording == name) {
+          this.deleteId = this.roomRecordings[i].recordings[j]._id;
+          this.roomRecordings[i].recordings.splice(j, 1);
+        }
+      }
+    }
+  }
+
   async deleteRecording(recording: string) {
     try {
       const res = await Swal.fire({
@@ -103,14 +116,21 @@ export class ArchiveComponent implements OnInit {
       if (res.isConfirmed) {
         recording = recording.substring(recording.indexOf("/mp4:") + 5, recording.indexOf('/playlist'));
         await this.requestService.deleteRecording(recording);
-        await this.updateStreams();
+        this.deleteRecordingFromArray(recording);
       }
     }
-    catch (err) {
+    catch (err: any) {
+      if (err.response.status == 400) {
+        Swal.fire({
+          title: 'request error',
+          icon: 'error',
+          text: "couldn't delete recording because the app uploads videos, try again in a few seconds"
+        });
+      }
       Swal.fire({
         title: 'server error',
         icon: 'error',
-        text: "couldn't delete, try again later"
+        text: "couldn't delete because of server error, try again later"
       });
     }
   }

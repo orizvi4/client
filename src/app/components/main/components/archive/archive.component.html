@@ -50,7 +50,7 @@
             <div id="room-recording-container">
                 <label class="room-name">{{roomRecording.room}}</label>
                 <div class="room-recording" *ngFor="let recording of roomRecording.recordings">
-                    <app-recording-box [recording]="recording" [group]="group"
+                    <app-recording-box [deleteId]="deleteId" [recording]="recording" [group]="group"
                         (deleteRecording)="deleteRecording($event)"></app-recording-box>
                 </div>
             </div>

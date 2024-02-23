@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
@@ -8,10 +8,11 @@ import Player from 'video.js/dist/types/player';
   templateUrl: './recording-box.component.html',
   styleUrls: ['./recording-box.component.scss']
 })
-export class RecordingBoxComponent implements AfterViewInit, OnDestroy, OnInit {
+export class RecordingBoxComponent implements AfterViewInit, OnDestroy, OnInit, OnChanges {
 
   @Input() recording!: RecordingDTO;
   @Input() group!: string;
+  @Input() deleteId: string = '';// if item needs to be deleted his id will be here
   @Output() deleteRecording: EventEmitter<string> = new EventEmitter<string>();
   startDate!: string;
   endDate!: string;
@@ -38,7 +39,24 @@ export class RecordingBoxComponent implements AfterViewInit, OnDestroy, OnInit {
     player.dispose();
   }
 
-  delete() {
+  ngOnChanges(changes: SimpleChanges): void {
+    this.deleteId = changes['deleteId'].currentValue;
+  }
+
+  public async delete() {
     this.deleteRecording.emit(this.recording.link);
+    while (this.deleteId == '') {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          resolve
+        }, 1000);
+      });
+    }
+    if (this.deleteId == this.recording._id) {
+      this.ngOnDestroy();
+    }
+    else {
+      this.deleteId = '';
+    }
   }
 }

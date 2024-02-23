@@ -63,8 +63,8 @@ export class RequestService {
         return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/date`, { startAt: start, endAt: end, channel: channel }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
-    public async deleteRecording(id: string): Promise<boolean> {
-        return (await axios.delete<boolean>(`${Constants.CONTENT_MANAGER}/delete`, { params: { file: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+    public async deleteRecording(name: string): Promise<boolean> {
+        return (await axios.delete<boolean>(`${Constants.CONTENT_MANAGER}/delete`, { params: { file: name }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public async stopChannelRecording(id: string): Promise<string> {

@@ -34,6 +34,7 @@ export class UserStrikeComponent implements OnInit {
     try {
       await this.requestService.resetPanelty(this.user.givenName);
       this.panelty = 0;
+      this.strikes = [];
     }
     catch (err) {
       console.log(err);

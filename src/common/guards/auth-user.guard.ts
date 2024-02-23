@@ -3,11 +3,12 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateFn, Router, Can
 import { JwtService } from "../services/jwt.service";
 import Swal from "sweetalert2";
 import { AppComponent } from "src/app/app.component";
+import { Location } from "@angular/common";
 
 
 @Injectable({ providedIn: "root" })
 export class UserGuard implements CanActivate {
-    constructor(private jwtService: JwtService, private router: Router) { }
+    constructor(private jwtService: JwtService, private router: Router, private location: Location) { }
 
     public async canActivate(
         next: ActivatedRouteSnapshot,
@@ -22,7 +23,7 @@ export class UserGuard implements CanActivate {
                 title: 'page unauthorized',
                 text: 'you are not allowed on this page'
             });
-            this.router.navigate(['/login']);
+            this.location.back();
             return false
         }
     }
