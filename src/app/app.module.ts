@@ -24,6 +24,11 @@ import { RecordingBoxComponent } from './components/main/components//archive/com
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import { UserStrikeComponent } from './components/main/components//user-manager/components/user-strike/user-strike.component';
 import { MainComponent } from './components/main/main.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
 
@@ -50,6 +55,11 @@ import { MainComponent } from './components/main/main.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [Constants, MainComponent, NavBarComponent],
   bootstrap: [AppComponent]

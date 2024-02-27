@@ -7,20 +7,17 @@
     <label id="panelty">panelty: {{panelty}}</label>
     <input id="reset-button" type="button" (click)="resetPanelty()" value="reset panelty" />
 
-
-    <table>
-        <tr>
-            <th>strike</th>
-            <th>date</th>
-        </tr>
-        <td id="strikes-wrapper" colspan="2">
-            <div id="strikes">
-                <tr *ngFor="let strike of strikes">
-                    <td>{{strike.strike}}</td>
-                    <td>{{strike.time}}</td>
-                </tr>
-            </div>
-        </td>
+    <table mat-table [dataSource]="strikes">
+        <ng-container matColumnDef="strike">
+            <th mat-header-cell *matHeaderCellDef> strike </th>
+            <td mat-cell *matCellDef="let strike"> {{strike.strike}} </td>
+        </ng-container>
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> time </th>
+            <td mat-cell *matCellDef="let strike"> {{strike.time}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     </table>
 
 </div>

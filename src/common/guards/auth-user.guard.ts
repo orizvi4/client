@@ -23,7 +23,7 @@ export class UserGuard implements CanActivate {
                 title: 'page unauthorized',
                 text: 'you are not allowed on this page'
             });
-            this.location.back();
+            this.router.navigate(['/login']);
             return false
         }
     }

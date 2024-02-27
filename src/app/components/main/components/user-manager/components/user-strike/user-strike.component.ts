@@ -15,6 +15,7 @@ export class UserStrikeComponent implements OnInit {
   @Input() user!: UserDTO;
   panelty: number = 0;
   strikes: StrikeDTO[] = [];
+  columnsToDisplay = ['strike', 'time'];
 
   public async ngOnInit(): Promise<void> {
     try {

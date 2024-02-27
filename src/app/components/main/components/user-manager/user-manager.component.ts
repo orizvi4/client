@@ -36,8 +36,12 @@ export class UserManagerComponent implements OnInit {
 
   public async setUserBlock(username: string, isBlocked: boolean): Promise<void> {
     try {
-      this.requestService.setUserBlock(username, isBlocked);
-      await this.updateAllUsers();
+      await this.requestService.setUserBlock(username, isBlocked);
+      for (let i: number = 0; i < this.users.length; i++) {
+        if (this.users[i].givenName == username) {
+          this.users[i].isBlocked = isBlocked;
+        }
+      }
     }
     catch (err) {
       console.log(err);
@@ -134,9 +138,13 @@ export class UserManagerComponent implements OnInit {
           this.tempUser = null;
         }
         else { //existing user
-          await this.requestService.modifyUser(this.tempUser.givenName, user);
+          const newUser: UserDTO = await this.requestService.modifyUser(this.tempUser.givenName, user);
           this.tempUser = null;
-          await this.updateAllUsers();
+          for (let i: number = 0; i < this.users.length; i++) {
+            if (this.users[i].givenName == user.givenName) {
+              this.users[i] = newUser;
+            }
+          }
         }
       }
       catch (err: any) {

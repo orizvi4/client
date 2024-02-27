@@ -12,7 +12,7 @@
     </tr>
     <tr class="table-body" *ngFor="let user of users" [ngClass]="{'blocked': user.isBlocked}">
         <td id="user-block">
-            <input type="checkbox" (click)="setUserBlock(user.givenName, !user.isBlocked)" [checked]="user.isBlocked" />
+            <mat-checkbox [checked]="user.isBlocked" (change)="setUserBlock(user.givenName, !user.isBlocked)" ></mat-checkbox>
         </td>
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.givenName" />

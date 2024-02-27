@@ -55,24 +55,30 @@ export class LoginComponent {
       }
     }
     catch (err: any) {
-      if (err.response == null || err.response.status == 500) {
+      if (err.response != null && err.response.status == 500) {
         await Swal.fire({
           icon: 'error',
           title: 'server error'
         });
       }
-      else if (err.response == null || err.response.status == 401) {
+      else if (err.response != null && err.response.status == 401) {
         await Swal.fire({
           title: "login error",
           text: "unauthorized login, user is blocked. please talk to a system manager",
           icon: "error",
         });
       }
-      else {
+      else if (err.response != null && err.response.status == 400) {
         await Swal.fire({
           title: "login error",
           text: 'username or password incorrect',
           icon: "error",
+        });
+      }
+      else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'server error'
         });
       }
     }

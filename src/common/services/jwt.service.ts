@@ -93,5 +93,6 @@ export class JwtService {
 
     public async blackListToken(): Promise<void> {
         await axios.post(`${Constants.AUTH_SERVICE}/users/logout`, { accessToken: localStorage.getItem('accessToken') as string, refreshToken: this.refreshToken });
+        this.refreshToken = '';
     }
 }

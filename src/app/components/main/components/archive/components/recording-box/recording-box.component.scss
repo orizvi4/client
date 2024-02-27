@@ -6,6 +6,15 @@
     float: right;
 }
 
+#recording-title {
+    display: block;
+    text-align: center;
+    position: relative;
+    font-weight: bolder;
+    font-size: x-large;
+    
+}
+
 .video-js, video {
     border-radius: 0.5rem;
     display: flex;

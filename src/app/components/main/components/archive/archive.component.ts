@@ -34,9 +34,14 @@ export class ArchiveComponent implements OnInit {
       this.group = history.state.group;
       this.channels = await this.requestService.getAllChannels();
       this.rooms = await this.requestService.getAllRooms();
-      await this.updateStreams();
+      try {
+        await this.updateStreams();
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
-    catch (err) {
+    catch (err: any) {
       console.log(err);
       const Toast = Swal.mixin({
         toast: true,
@@ -88,6 +93,21 @@ export class ArchiveComponent implements OnInit {
     }
     catch (err) {
       this.roomRecordings = [];
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: 'error',
+        title: "couldn't load recordings, try again later"
+      });
       throw err;
     }
   }
@@ -143,11 +163,6 @@ export class ArchiveComponent implements OnInit {
     }
     catch (err) {
       console.log(err);
-      await Swal.fire({
-        title: 'server error',
-        icon: 'error',
-        text: "couldn't load recordings, try again later"
-      });
     }
   }
 
