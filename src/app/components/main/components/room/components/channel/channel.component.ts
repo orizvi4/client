@@ -35,8 +35,9 @@ export class ChannelComponent implements AfterViewInit, OnInit {
 
   @Input() id: string = '';
   @Input() recording: boolean = false;
-  live: boolean = false;
-  zoom: boolean = false;
+  live!: boolean;
+  zoom!: boolean;
+  isBlocked!: boolean;
   deviceName: string = '';
   waitingHandler: boolean = true;
 
@@ -48,6 +49,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     const channel: ChannelDTO = await this.requestService.getChannel(this.id.substring(9));
     this.recording = channel.isRecording;
     this.live = channel.isLive;
+    this.isBlocked = channel.isBlocked;
     this.deviceName = channel.device.title;
   }
 
@@ -61,7 +63,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         autoplay: 'muted',
         loop: true
       });
-      const url: string = (await this.requestService.connectChannel(this.id.substring(9))).url;
+      const url: string = await this.requestService.connectChannel(this.id.substring(9));
       player.src({
         src: url,
         type: 'application/x-mpegURL'
@@ -92,6 +94,23 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     const player: Player = videojs.getPlayer(this.id);
     if (player) {
       player.dispose();
+    }
+  }
+
+  public async setBlockStream(id: string, event: MouseEvent): Promise<void> {
+    try {
+      event.stopPropagation();
+      if (this.isBlocked == true) {
+        await this.requestService.unblockChannel(id.substring(9));
+        this.isBlocked = false;
+      }
+      else {
+        await this.requestService.blockChannel(id.substring(9));
+        this.isBlocked = true;
+      }
+    }
+    catch (err) {
+      console.log(err);
     }
   }
 

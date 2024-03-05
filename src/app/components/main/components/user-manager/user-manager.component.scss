@@ -35,20 +35,27 @@
         height: 6vh;
 
         th {
-            padding: 0 0.6rem;
             box-sizing: border-box;
         }
 
         td {
+            box-sizing: border-box;
             border: 0.15rem solid $background;
+            &:not(#user-block, #actions-cell) {
+                width: 10vw;
+            }
+            #actions-cell {
+                width: 3vw;
+            }
 
             .editInput {
-                height: 4vh;
+                box-sizing: border-box;
+                height: 5vh;
+                width: inherit;
                 background-color: $background;
                 border-radius: 0.6vh;
                 border: 0.1rem solid $black;
             }
-
             select {
                 border: 0.1rem solid $black;
                 height: 5vh;
@@ -56,6 +63,7 @@
                 color: $black;
                 background-color: $background;
             }
+
         }
 
         #user-block {

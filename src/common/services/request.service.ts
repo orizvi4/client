@@ -36,8 +36,16 @@ export class RequestService {
         return (await axios.get<RoomDTO>(`${Constants.ROOM_HANDLER}/room/id`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
-    public async connectChannel(id: string): Promise<any> {
+    public async connectChannel(id: string): Promise<string> {
         return (await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/connect?id=${id}`,{}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
+    public async blockChannel(id: string): Promise<void> {
+        await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/block?id=${id}`,{}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
+    }
+
+    public async unblockChannel(id: string): Promise<void> {
+        await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/unblock?id=${id}`,{}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
     public async getRecordings(filter: FilterDTO): Promise<RoomRecordingsDTO[]> {

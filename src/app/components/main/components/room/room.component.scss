@@ -7,7 +7,14 @@
     justify-content: center;
 
     .video-item {
-        padding: 0.5rem;
+        padding: 1vw;
+
+        #live-icon-block {
+            width: 4.92vw;
+            height: 7vh;
+            position: absolute;
+            margin-top: 15vh;
+        }
     }
 
 }
@@ -19,12 +26,13 @@
     align-items: center;
     border-radius: 2vh;
     height: 8vh;
-    
+
     #title {
         font-size: 7vh;
         color: $black;
         padding-left: 1vw;
     }
+
     #recordingButton {
         background-color: $red;
         background-image: url('../../../../../images/recordingButton.png');
@@ -37,6 +45,7 @@
         border-radius: 20rem;
         margin-left: 1vw;
     }
+
     .recordingStart {
         background-image: url('../../../../../images/stopRecording.png') !important;
     }
