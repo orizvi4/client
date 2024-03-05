@@ -11,9 +11,11 @@ import { ManagerGuard } from 'src/common/guards/auth-manager.guard';
 import { UserGuard } from 'src/common/guards/auth-user.guard';
 import { MainComponent } from './components/main/main.component';
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'pageNotFound', component: PageNotFoundComponent},
   {
     path: 'main', canActivate: [UserGuard], component: MainComponent, children: [
       { path: 'live/room/channel', component: ChannelComponent, canActivate: [UserGuard] },
@@ -25,7 +27,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'live', pathMatch: "full" },
     ]
   },
-  { path: '**', redirectTo: 'login', pathMatch: "full" },
+  { path: '', redirectTo: 'login', pathMatch: "full" },
+  { path: '**', redirectTo: 'pageNotFound'}
 ];
 
 @NgModule({

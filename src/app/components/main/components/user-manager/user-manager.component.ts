@@ -152,7 +152,7 @@ export class UserManagerComponent implements OnInit {
         if (err.response.status == 403) {
           await swal({
             title: "couldn't create a new user",
-            text: "the name of the user containing unauthorized characters",
+            text: "unauthorized characters have been detected",
             icon: "error",
           });
         }

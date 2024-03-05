@@ -29,6 +29,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
 
@@ -49,6 +50,7 @@ import {MatIconModule} from '@angular/material/icon';
     RecordingBoxComponent,
     UserStrikeComponent,
     MainComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,

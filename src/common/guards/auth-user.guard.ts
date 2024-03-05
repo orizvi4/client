@@ -18,12 +18,7 @@ export class UserGuard implements CanActivate {
             return await this.jwtService.verifyToken();
         }
         catch (err) {
-            await Swal.fire({
-                icon: 'error',
-                title: 'page unauthorized',
-                text: 'you are not allowed on this page'
-            });
-            this.router.navigate(['/login']);
+            this.router.navigate(['/**']);
             return false
         }
     }

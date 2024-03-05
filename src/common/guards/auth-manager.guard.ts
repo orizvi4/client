@@ -17,12 +17,7 @@ export class ManagerGuard implements CanActivate {
       return await this.jwtService.verifyManagerToken();
     }
     catch (err) {
-      await Swal.fire({
-        icon: 'error',
-        title: 'page unauthorized',
-        text: 'you are not allowed on this page'
-      });
-      this.router.navigate(['/login']);
+      this.router.navigate(['/**']);
       return false
     }
   }
