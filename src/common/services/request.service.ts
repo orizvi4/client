@@ -5,14 +5,18 @@ import { Constants } from "../constants";
 import { ChannelDTO } from "../models/channelDTO.interface";
 import { FilterDTO } from "../models/filterDTO.class";
 import { RecordingDTO } from "../models/recordingDTO.interface";
-import { RoomRecordingsDTO } from "../models/roomRecordingsDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
 import { StrikeDTO } from "src/app/components/main/components//user-manager/components/user-strike/models/strikeDTO.interface";
+import { DeviceDTO } from "../models/deviceDTO.interface";
 
 @Injectable()
 export class RequestService {
     public async getAllChannels(): Promise<ChannelDTO[]> {
         return (await axios.get<ChannelDTO[]>(`${Constants.ROOM_HANDLER}/channel/all`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
+    public async getAllDevices(): Promise<DeviceDTO[]> {
+        return (await axios.get<DeviceDTO[]>(`${Constants.ROOM_HANDLER}/device/all`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     public async getChannel(id: string): Promise<ChannelDTO> {
@@ -48,8 +52,8 @@ export class RequestService {
         await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/unblock?id=${id}`,{}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
-    public async getRecordings(filter: FilterDTO): Promise<RoomRecordingsDTO[]> {
-        return (await axios.put<RoomRecordingsDTO[]>(`${Constants.ROOM_HANDLER}/recording`, filter, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    public async getRecordings(filter: FilterDTO): Promise<RecordingDTO[]> {
+        return (await axios.put<RecordingDTO[]>(`${Constants.ROOM_HANDLER}/recordings`, filter, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     public async saveRecording(file: ElementRef, start: string, end: string, channel: string) {

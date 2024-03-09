@@ -1,14 +1,14 @@
 export class FilterDTO {
 
-    constructor(room: string, channel: string, startAt: Date, endAt: Date) {
+    constructor(room: string, deviceName: string, startAt: Date, endAt: Date) {
         this.room = room;
-        this.channel = channel;
+        this.deviceName = deviceName;
         this.startAt = new Date(startAt + "Z");
         this.endAt = new Date(endAt + "Z");
     }
 
     room: string;
-    channel: string;
+    deviceName: string;
     startAt: Date;
     endAt: Date;
 }

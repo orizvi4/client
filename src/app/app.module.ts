@@ -30,6 +30,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorHarness} from '@angular/material/paginator/testing';
 
 @NgModule({
 
@@ -61,7 +63,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     MatCheckboxModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
   ],
   providers: [Constants, MainComponent, NavBarComponent],
   bootstrap: [AppComponent]

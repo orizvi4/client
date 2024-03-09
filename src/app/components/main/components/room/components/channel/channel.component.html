@@ -2,7 +2,7 @@
     <h1 id="title">{{deviceName}}</h1>
     <div id="video-item">
         <video [id]="id" class="video-js"></video>
-        <a class="icon" id="streamIcon" (click)="setBlockStream(id, $event)" [ngClass]="{blocked: isBlocked}"></a>
+        <a class="icon" id="streamIcon" (click)="setBlockStream(id, $event)" *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>
         <a class="icon" (click)="back()" *ngIf="zoom" id="backIcon"></a>
         <a class="icon" id="recordingIcon" *ngIf="recording"></a>
         <a class="icon" id="recordingButton" *ngIf="zoom" (click)="record()" [ngClass]="{'recordingStart': recording}"></a>

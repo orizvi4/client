@@ -32,6 +32,7 @@ export class MainComponent implements OnInit {
         this.router.navigate(['login']);
       }
       else {
+        this.timerReset();
         await this.updateUser(await this.requestService.getTokenUser());
         this.jwtService.setRefreshToken(await this.jwtService.getRefreshToken());
         await this.jwtService.refreshAccessToken();

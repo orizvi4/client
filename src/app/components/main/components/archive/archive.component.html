@@ -12,12 +12,12 @@
             <label class="title">Channel</label>
             <select #channelSelect>
                 <option value="all" default>all</option>
-                <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel._id}}</option>
+                <option *ngFor="let name of deviceNames" value="{{name}}">{{name}}</option>
             </select>
 
             <span id="checkbox">
                 <label id="time-checkbox-container">
-                    <input id="time-checkbox" type="checkbox" (click)="timeToggle()"/>
+                    <input id="time-checkbox" type="checkbox" (click)="timeToggle()" />
                     <div id="time-checkbox-checkmark"></div>
                 </label>
                 <label for="time-checkbox" id="time-checkbox-text">filter by time</label>
@@ -45,15 +45,14 @@
         </div>
     </div>
 
-    <div class="recordings-container" [ngClass]="{'empty-div': !roomRecordings.length}">
-        <div *ngFor="let roomRecording of roomRecordings">
-            <div id="room-recording-container">
-                <label class="room-name">{{roomRecording.room}}</label>
-                <div class="room-recording" *ngFor="let recording of roomRecording.recordings">
-                    <app-recording-box [deleteId]="deleteId" [recording]="recording" [group]="group"
-                        (deleteRecording)="deleteRecording($event)"></app-recording-box>
-                </div>
-            </div>
+
+    <div class="recordings-container" [ngClass]="{'empty-div': !recordings.length}">
+        <div class="room-recording" *ngFor="let recording of currentRecordings">
+            <app-recording-box [deleteId]="deleteId" [recording]="recording" [group]="group"
+                (deleteRecording)="deleteRecording($event)"></app-recording-box>
+        </div>
+        <div id="paginator">
+            <mat-paginator [length]="recordings.length" [pageIndex]="pageIndex" [pageSize]="4" [pageSizeOptions]="[2, 4, 6, 10]"
+                (page)="onPageChange($event)"></mat-paginator>
         </div>
     </div>
-</div>

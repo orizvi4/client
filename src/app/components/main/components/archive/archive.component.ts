@@ -1,12 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FilterDTO } from 'src/common/models/filterDTO.class';
-import { RoomRecordingsDTO } from 'src/common/models/roomRecordingsDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
 import Swal from 'sweetalert2';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
+import { DeviceDTO } from 'src/common/models/deviceDTO.interface';
+import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
+import { PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-archive',
@@ -14,26 +17,32 @@ import { RoomDTO } from 'src/common/models/roomDTO.interface';
   styleUrls: ['./archive.component.scss'],
 })
 export class ArchiveComponent implements OnInit {
-  constructor(private requestService: RequestService) { }
+  constructor(private requestService: RequestService) {}
 
   @ViewChild('startTime') startTime!: ElementRef;
   @ViewChild('endTime') endTime!: ElementRef;
   @ViewChild('roomSelect') roomSelect!: ElementRef;
   @ViewChild('channelSelect') channelSelect!: ElementRef;
 
-  roomRecordings: RoomRecordingsDTO[] = [];
   formUpload: boolean = false;
   group: string = '';
-  channels: ChannelDTO[] = [];
+  deviceNames: string[] = [];
   rooms: RoomDTO[] = [];
   deleteId: string = '';
   timeFilter: boolean = false;//filter by time or not
+  recordings: RecordingDTO[] = [];
+  currentRecordings: RecordingDTO[] = [];
+  pageSize: number = 4;
+  pageIndex: number = 0;
 
   async ngOnInit(): Promise<void> {
     try {
       this.group = history.state.group;
-      this.channels = await this.requestService.getAllChannels();
       this.rooms = await this.requestService.getAllRooms();
+      const devices: DeviceDTO[] = await this.requestService.getAllDevices();
+      for (const device of devices) {
+        this.deviceNames.push(device.title);
+      }
       try {
         await this.updateStreams();
       }
@@ -61,10 +70,15 @@ export class ArchiveComponent implements OnInit {
     }
   }
 
-  timeToggle() {
+  public timeToggle() {
     this.timeFilter = !this.timeFilter;
   }
 
+  public onPageChange(pageEvent: PageEvent): void {
+    this.pageSize = pageEvent.pageSize;
+    this.pageIndex = pageEvent.pageIndex;
+    this.currentRecordings = this.recordings.slice(pageEvent.pageIndex * pageEvent.pageSize, pageEvent.pageIndex * pageEvent.pageSize + pageEvent.pageSize);
+  }
 
   private filterRecordings(): FilterDTO {
     if (this.timeFilter) {
@@ -89,10 +103,12 @@ export class ArchiveComponent implements OnInit {
   public async updateStreams(): Promise<void> {
     try {
       const filter: FilterDTO = this.filterRecordings();
-      this.roomRecordings = await this.requestService.getRecordings(filter);
+      this.recordings = await this.requestService.getRecordings(filter);
+      this.currentRecordings = this.recordings.slice(0, this.pageSize);
+      this.pageIndex = 0;
     }
-    catch (err) {
-      this.roomRecordings = [];
+    catch (err) {// dont change
+      this.recordings = [];
       const Toast = Swal.mixin({
         toast: true,
         position: "bottom-end",
@@ -113,18 +129,15 @@ export class ArchiveComponent implements OnInit {
   }
 
   public deleteRecordingFromArray(name: string): void {
-    for (let i: number = 0; i < this.roomRecordings.length; i++) {
-      for (let j: number = 0; j < this.roomRecordings[i].recordings.length; j++) {
-        const tempRecording: string = this.roomRecordings[i].recordings[j].link.substring(this.roomRecordings[i].recordings[j].link.indexOf("/mp4:") + 5, this.roomRecordings[i].recordings[j].link.indexOf('/playlist'));
-        if (tempRecording == name) {
-          this.deleteId = this.roomRecordings[i].recordings[j]._id;
-          this.roomRecordings[i].recordings.splice(j, 1);
-        }
+    for (let [index, element] of this.recordings.entries()) {
+      const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
+      if (tempRecording === name) {
+        this.recordings.splice(index, 1);
       }
     }
   }
 
-  async deleteRecording(recording: string) {
+  async deleteRecording(recordingLink: string) {
     try {
       const res = await Swal.fire({
         icon: 'warning',
@@ -134,24 +147,41 @@ export class ArchiveComponent implements OnInit {
         confirmButtonText: 'delete'
       });
       if (res.isConfirmed) {
-        recording = recording.substring(recording.indexOf("/mp4:") + 5, recording.indexOf('/playlist'));
+        const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
         await this.requestService.deleteRecording(recording);
         this.deleteRecordingFromArray(recording);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: 'success',
+          title: "deleted recording successfuly"
+        });
       }
     }
     catch (err: any) {
-      if (err.response.status == 400) {
+      if (err.response !== null && err.response.status == 400) {
         Swal.fire({
           title: 'request error',
           icon: 'error',
           text: "couldn't delete recording because the app uploads videos, try again in a few seconds"
         });
       }
-      Swal.fire({
-        title: 'server error',
-        icon: 'error',
-        text: "couldn't delete because of server error, try again later"
-      });
+      else {// dont change
+        Swal.fire({
+          title: 'server error',
+          icon: 'error',
+          text: "couldn't delete because of server error, try again later"
+        });
+      }
     }
   }
   async toggleUpload(uploaded?: boolean) {
