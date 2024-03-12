@@ -9,6 +9,7 @@ import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { DeviceDTO } from 'src/common/models/deviceDTO.interface';
 import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import { PageEvent } from '@angular/material/paginator';
+import { WebSocketService } from 'src/common/services/web-socket.service';
 
 
 @Component({
@@ -17,7 +18,11 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./archive.component.scss'],
 })
 export class ArchiveComponent implements OnInit {
-  constructor(private requestService: RequestService) {}
+  constructor(private requestService: RequestService, private websocketService: WebSocketService) {
+    this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
+      this.deleteRecordingFromArray(recordingUrl.substring(recordingUrl.indexOf("content/") + 8));
+    });
+  }
 
   @ViewChild('startTime') startTime!: ElementRef;
   @ViewChild('endTime') endTime!: ElementRef;
@@ -28,7 +33,6 @@ export class ArchiveComponent implements OnInit {
   group: string = '';
   deviceNames: string[] = [];
   rooms: RoomDTO[] = [];
-  deleteId: string = '';
   timeFilter: boolean = false;//filter by time or not
   recordings: RecordingDTO[] = [];
   currentRecordings: RecordingDTO[] = [];
@@ -107,7 +111,7 @@ export class ArchiveComponent implements OnInit {
       this.currentRecordings = this.recordings.slice(0, this.pageSize);
       this.pageIndex = 0;
     }
-    catch (err) {// dont change
+    catch (err) {
       this.recordings = [];
       const Toast = Swal.mixin({
         toast: true,
@@ -133,23 +137,10 @@ export class ArchiveComponent implements OnInit {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {
         this.recordings.splice(index, 1);
-      }
-    }
-  }
-
-  async deleteRecording(recordingLink: string) {
-    try {
-      const res = await Swal.fire({
-        icon: 'warning',
-        title: 'delete recording',
-        text: 'are you sure you want to delete the recording?',
-        showCancelButton: true,
-        confirmButtonText: 'delete'
-      });
-      if (res.isConfirmed) {
-        const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
-        await this.requestService.deleteRecording(recording);
-        this.deleteRecordingFromArray(recording);
+        if (this.currentRecordings.length === 1) {
+          this.pageIndex -= 1;
+        }
+        this.currentRecordings = this.recordings.slice(this.pageIndex * this.pageSize, this.pageIndex * this.pageSize + this.pageSize);
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom-end",
@@ -167,15 +158,38 @@ export class ArchiveComponent implements OnInit {
         });
       }
     }
+  }
+
+  public async deleteRecording(recordingLink: string) {
+    try {
+      const res = await Swal.fire({
+        icon: 'warning',
+        title: 'delete recording',
+        text: 'are you sure you want to delete the recording?',
+        showCancelButton: true,
+        confirmButtonText: 'delete'
+      });
+      if (res.isConfirmed) {
+        const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
+        await this.requestService.deleteRecording(recording);
+        this.deleteRecordingFromArray(recording);
+      }
+    }
     catch (err: any) {
       if (err.response !== null && err.response.status == 400) {
-        Swal.fire({
-          title: 'request error',
-          icon: 'error',
-          text: "couldn't delete recording because the app uploads videos, try again in a few seconds"
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+        });
+        Toast.fire({
+          title: "deleting recording",
+          didOpen: () => {
+            Swal.showLoading();
+          }
         });
       }
-      else {// dont change
+      else {
         Swal.fire({
           title: 'server error',
           icon: 'error',

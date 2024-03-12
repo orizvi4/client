@@ -8,6 +8,7 @@ import { AppRoutingModule } from "src/app/app-routing.module";
 import { Router } from "@angular/router";
 import { JwtService } from "./jwt.service";
 import Swal from "sweetalert2";
+import { RecordingDTO } from "../models/recordingDTO.interface";
 
 @Injectable()
 export class WebSocketService {
@@ -17,14 +18,17 @@ export class WebSocketService {
         socket.on("connect", () => {
             console.log('connected to websocket');
         });
-
+        
         // socket.emit('join_room', {
         //     roomName: 'vehicle',
         // });
-
+        
         socket.on(WebsocketTitles.CHANNEL_LIVE, (channel: ChannelDTO) => {
-            // console.log('Incoming message:', channel);
             this.channelUpdate$.next(channel);
+        });
+
+        socket.on(WebsocketTitles.RECORDING_DELETE, (recordingUrl: string) => {
+            this.recordingDelete$.next(recordingUrl);
         });
 
         socket.on(WebsocketTitles.SIGNOUT, async () => {
@@ -40,11 +44,16 @@ export class WebSocketService {
             this.router.navigate(['login']);
         });
     }
-
     channelUpdate$: Subject<ChannelDTO> = new Subject<ChannelDTO>();
+    recordingDelete$: Subject<string> = new Subject<string>();
 
     public getChannelUpdate$(): Observable<ChannelDTO> {
         return this.channelUpdate$.asObservable();
     }
+
+    public getRecordingDelete$(): Observable<string> {
+        return this.recordingDelete$.asObservable();
+    }
+
 
 }

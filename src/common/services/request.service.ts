@@ -53,7 +53,7 @@ export class RequestService {
     }
 
     public async getRecordings(filter: FilterDTO): Promise<RecordingDTO[]> {
-        return (await axios.put<RecordingDTO[]>(`${Constants.ROOM_HANDLER}/recordings`, filter, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+        return (await axios.put<RecordingDTO[]>(`${Constants.ROOM_HANDLER}/recording/filter`, filter, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     public async saveRecording(file: ElementRef, start: string, end: string, channel: string) {

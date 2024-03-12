@@ -48,7 +48,7 @@
 
     <div class="recordings-container" [ngClass]="{'empty-div': !recordings.length}">
         <div class="room-recording" *ngFor="let recording of currentRecordings">
-            <app-recording-box [deleteId]="deleteId" [recording]="recording" [group]="group"
+            <app-recording-box [recording]="recording" [group]="group"
                 (deleteRecording)="deleteRecording($event)"></app-recording-box>
         </div>
         <div id="paginator">
