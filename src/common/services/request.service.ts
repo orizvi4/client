@@ -141,7 +141,7 @@ export class RequestService {
     }
 
     public async authenticateUser(username: string, password: string): Promise<UserDTO> {
-        return (await axios.post(`${Constants.AUTH_SERVICE}/users/authenticate`, { username: username, password: password })).data;
+        return (await axios.post(`${Constants.AUTH_SERVICE}/users/authenticate`, { username: username, password: password }, {timeout: 4000})).data;
     }
 
     public async localStorageStrike(token: string) {

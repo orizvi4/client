@@ -3,11 +3,12 @@
 $border-radius: 0.4rem;
 
 #my-form {
+    color: #f2f2f2;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
-    background-color: $light-blue;
+    background-color: $secondary;
     border-radius: $border-radius;
     padding: 1.4vw;
     z-index: 3;
@@ -22,50 +23,51 @@ $border-radius: 0.4rem;
     margin-bottom: 2.45vh;
     outline: none;
     border-radius: $border-radius;
-    border: 0.2vw solid $background;
-    color: $black;
-    transition: 0.1s;
+    border: 0.2vw solid black;
+    color: #f2f2f2;
+    background-color: $primary;
 
     &:focus {
-        border-color: $light-green;
+        filter: saturate(10%);
     }
 }
 
 
 .file {
+    background-color: $primary;
     width: fit-content;
     padding: 1.5vh;
     margin-bottom: 2.45vh;
-    background-color: $background;
+    background-color: $primary;
     border-radius: $border-radius;
-    color: $black;
+    color: #f2f2f2;
 }
 
 .button {
-    background-color: $black;
-    color: $background;
+    background-color: $highlight;
+    color: #f2f2f2;
     padding: 0.73vw 1.46vw;
     border: none;
     cursor: pointer;
     border-radius: $border-radius;
     margin-right: 0.73vw;
     margin-bottom: 1vh;
-    transition: 0.1s;
 
     &:hover {
-        background-color: $light-black;
+        filter: saturate(10%);
     }
 }
 
 select {
-    color: $black;
+    color: #f2f2f2;
     width: fit-content;
     padding: 1.5vh;
     margin-bottom: 2.45vh;
     border-radius: $border-radius;
-    border: 0.2vw solid $background;
+    border: 0.2vw solid black;
+    background-color: $primary;
 
     &:focus {
-        border-color: $light-green;
+        filter: saturate(10%);
     }
 }

@@ -2,18 +2,19 @@
 
 #header {
     left: $nav-width;
-    width: calc(100% - $nav-width);
+    width: calc(99.9vw - $nav-width);
     transition: 0.3s;
     position: absolute;
-    background-color: $background;
-    border-bottom: 0.3vh solid $light-grey;
+    background-color: $primary;
+    filter: contrast(0.9);
+    border-left: 1px solid #737373;
     z-index: 2;
 
     #title {
         width: fit-content;
         margin-top: 1vh;
         margin-bottom: 1vh;
-        color: $black;
+        color: white;
         font-size: 5vh;
         margin-left: 45vw;
         display: inline-block;
@@ -25,7 +26,7 @@
 .mainShrink {
     transition: 0.3s;
     left: $nav-expanded-width !important;
-    width: calc(100% - $nav-expanded-width) !important;
+    width: calc(99.9vw - $nav-expanded-width) !important;
     #title {
         margin-left: 35vw !important;
     }

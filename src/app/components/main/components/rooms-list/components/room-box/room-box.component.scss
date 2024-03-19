@@ -4,8 +4,8 @@
     width: 14vw;
     height: 16vh;
     border-radius: 0.4rem;
-    background-color: $light-blue;
-    color: $black;
+    background-color: $secondary;
+    color: white;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -17,8 +17,8 @@
     }
 
     &:hover {
-        background-color: $blue;
-        transform: scale(1.05);
-        transition: 0.2s;
+        filter: saturate(1%);
+        transform: scale(1.02);
+        transition: 0.15s;
     }
 }

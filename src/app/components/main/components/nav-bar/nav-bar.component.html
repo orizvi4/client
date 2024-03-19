@@ -1,19 +1,19 @@
 <div class="sidenav" [ngClass]="{'expanded': sideNavStatus}" (mouseleave)="sideNavToggle()" (mouseenter)="sideNavToggle()">
     <a id="cobraIcon"></a>
-    <div class="nav-item" (click)="navigate('live')">
+    <div class="nav-item" [ngClass]="{selected: selectedPage === 'live'}" (click)="navigate('live')">
         <a class="icon" id="liveIcon"></a>
         <a class="text">Live</a>
     </div>
-    <div class="nav-item" (click)="navigate('archive')">
+    <div class="nav-item" [ngClass]="{selected: selectedPage === 'archive'}" (click)="navigate('archive')">
         <a class="icon" id="archiveIcon"></a>
         <a class="text">Archive</a>
     </div>
     <div *ngIf="user.group == 'managers'">
-        <div class="nav-item" (click)="navigate('userManager')">
+        <div class="nav-item" [ngClass]="{selected: selectedPage === 'userManager'}" (click)="navigate('userManager')">
             <a class="icon" id="userManagerIcon"></a>
             <a class="text">manage users</a>
         </div>
-        <div class="nav-item" (click)="navigate('logsDisplay')">
+        <div class="nav-item" [ngClass]="{selected: selectedPage === 'logsDisplay'}" (click)="navigate('logsDisplay')">
             <a class="icon" id="logsIcon"></a>
             <a class="text">logs display</a>
         </div>

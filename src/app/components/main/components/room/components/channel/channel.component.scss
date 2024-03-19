@@ -54,6 +54,7 @@
 
 #title {
     font-size: larger;
+    color: #999fa3;
     top: 2vh;
     display: flex;
     justify-content: center;
@@ -108,13 +109,18 @@
 
         #recordingButton {
             background-image: url('../../../../../../../images/recordingButton.png');
-            background-color: $red;
+            background-color: $highlight;
             margin-top: 48%;
             background-position: center center;
             border-radius: 0 2vh 2vh 0;
             width: 5vw;
             height: 6vh;
             cursor: pointer;
+
+            &:hover {
+                filter: saturate(10%);
+                transition: 0.15s;
+            }
         }
 
         .recordingStart {

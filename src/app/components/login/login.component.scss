@@ -1,84 +1,101 @@
 @import '../../../styles.scss';
 
+
 body {
     width: 100vw;
     height: 100vh;
     margin: 0;
     padding: 0;
     display: flex;
-    background-color: $background;
-
+    background-color: $primary;
+    
     .login-container {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 30vw;
+        width: 42vw;
         padding: 3vw;
         transform: translate(-50%, -50%);
-        background-color: $blue;
+        background-color: $secondary;
         box-sizing: border-box;
         box-shadow: 0 1.1vw 1.9vw black;
         border-radius: 1vw;
-
-        h1 {
-            margin: 0 0 4.6vh;
-            padding: 0;
-            color: $black;
-            text-align: center;
-            font-size: 2.7vw;
+        display: flex;
+        
+        .logo {
+            width: 30vw;
+            height: 28vh;
+            margin-top: 7vh;
+            margin-left: 3vw;
+            background-image: url("../../../images/cobraIcon.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            filter: invert(1);
         }
 
-        .text-input {
-            position: relative;
-        
-            label {
-                position: absolute;
-                top:0;
-                left: 0;
-                padding: 0.7vw 0;
-                font-size: 1.1vw;
-                color: $black;
-                pointer-events: none;
-                transition: .5s;
+        .info {
+            width: 35vw;
+            h1 {
+                margin: 0 0 4.6vh;
+                padding: 0;
+                color: #f2f2f2;
+                text-align: center;
+                font-size: 2.7vw;
             }
-        
-            input {
-                &:focus~label, &:valid~label {
-                    top: -3.2vh;
+    
+            .text-input {
+                position: relative;
+    
+                label {
+                    position: absolute;
+                    top: 0;
                     left: 0;
-                    font-size: 0.9vw;
+                    padding: 0.7vw 0;
+                    font-size: 1.1vw;
+                    color: #f2f2f2;
+                    pointer-events: none;
+                    transition: .5s;
                 }
-        
-                width: 100%;
-                padding: 0.7vw 0;
-                font-size: 1.2vw;
-                color: $background;
-                margin-bottom: 2.2vw;
-                border: none;
-                border-bottom: 0.1vw solid $background;
-                outline: none;
-                background: transparent;
+    
+                input {
+    
+                    &:focus~label,
+                    &:valid~label {
+                        top: -3.2vh;
+                        left: 0;
+                        font-size: 0.9vw;
+                    }
+    
+                    width: 100%;
+                    padding: 0.7vw 0;
+                    font-size: 1.2vw;
+                    color: #f2f2f2;
+                    margin-bottom: 2.2vw;
+                    border: none;
+                    border-bottom: 0.1vw solid $primary;
+                    outline: none;
+                    background: transparent;
+                }
             }
+    
+            #login-button {
+                background-color: $highlight;
+                font-size: 1rem;
+                font-weight: bolder;
+                color: #f2f2f2;
+                border: 0.1rem solid $primary;
+                padding: 0.8vw 2.3vw;
+                border-radius: 0.8rem;
+                cursor: pointer;
+                transition: 0.3s;
+    
+                &:hover {
+                    filter: saturate(10%);
+                    transition: 0.15s;
+                }
+            }
+    
+        }
         }
 
-        #login-button {
-            background-color: $light-grey;
-            font-size: 1rem;
-            font-weight: bolder;
-            color: $black;
-            border: 0.1rem solid $light-grey;
-            padding: 0.8vw 2.3vw;
-            border-radius: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-        
-            &:hover {
-                background-color: $light-blue;
-            }
-        }
-
-    }
 }
-
-
-

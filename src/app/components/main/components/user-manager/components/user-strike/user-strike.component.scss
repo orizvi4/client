@@ -4,13 +4,14 @@ $border-radius: 0.4rem;
 
 
 #my-form {
+    color: #f2f2f2;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: fixed;
-    background-color: $light-blue;
+    background-color: $secondary;
     border-radius: $border-radius;
-    border: 0.1vw solid $black;
+    border: 0.1vw solid black;
     padding: 1.4vw;
     z-index: 3;
     top: 50%;
@@ -18,15 +19,16 @@ $border-radius: 0.4rem;
     transform: translate(-50%, -50%);
 
     #info-container {
+        color: #f2f2f2;
         display: flex;
         justify-content: space-between;
         width: 100%;
-        border-bottom: 1px solid $black;
+        border-bottom: 1px solid black;
     }
     
     .user-info {
         padding: 0.8vw;
-        background-color: $light-blue;
+        background-color: $secondary;
         font-weight: bolder;
     }
     
@@ -43,6 +45,7 @@ $border-radius: 0.4rem;
     }
 
     #panelty {
+        color: #f2f2f2;
         margin-top: 1.5vh;
     }
 
@@ -53,17 +56,17 @@ $border-radius: 0.4rem;
         border-radius: 0.5em;
         border: none;
         font-size: 1vw;
-        background-color: $black;
-        color: $background;
+        background-color: $highlight;
+        color: #f2f2f2;
         padding: 1vh 2vw;
         cursor: pointer;
-        transition: .2s;
 
         &:hover {
-            background-color: $light-black;
+            filter: saturate(10%);
         }
     }
     table {
+        color: #f2f2f2;
         width: 100%;
         border-collapse: collapse;
         border: 1px solid #ddd;
@@ -79,7 +82,7 @@ $border-radius: 0.4rem;
         border-bottom: 1px solid #ddd;
     }
     th {
-        background-color: $blue;
+        background-color: $primary;
     }
     tr:nth-child(even) {
         background-color: #f2f2f2;

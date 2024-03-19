@@ -13,8 +13,8 @@
 }
 
 .grid {
-    color: $black;
-    background: $light-blue;
+    color: #f2f2f2;
+    background: $secondary;
     border-collapse: collapse;
     margin-left: 18vw;
     margin-top: 7vh;
@@ -22,11 +22,11 @@
     border-radius: 1rem;
 
     tr.table-body.blocked {
-        background-color: $red;
+        background-color: red;
 
         &:hover:not(#table-head, #table-foot) {
             opacity: 0.9;
-            background: $red;
+            background: red;
         }
     }
 
@@ -40,7 +40,7 @@
 
         td {
             box-sizing: border-box;
-            border: 0.15rem solid $background;
+            border: 0.15rem solid $primary;
             &:not(#user-block, #actions-cell) {
                 width: 10vw;
             }
@@ -49,19 +49,20 @@
             }
 
             .editInput {
+                color: #f2f2f2;
                 box-sizing: border-box;
                 height: 5vh;
                 width: inherit;
-                background-color: $background;
+                background-color: $primary;
                 border-radius: 0.6vh;
-                border: 0.1rem solid $black;
+                border: 0.1rem solid black;
             }
             select {
-                border: 0.1rem solid $black;
+                border: 0.1rem solid black;
                 height: 5vh;
                 border-radius: 0.6vh;
-                color: $black;
-                background-color: $background;
+                color: #f2f2f2;
+                background-color: $primary;
             }
 
         }
@@ -78,6 +79,7 @@
             width: 1.3rem;
             height: 1.3rem;
             cursor: pointer;
+            filter: contrast(0.1);
 
             &:hover {
                 transform: scale(1.1);
@@ -106,19 +108,20 @@
         }
 
         &:hover:not(#table-head, #table-foot) {
-            background: $blue;
+            background: darken($secondary, 2%);
         }
     }
 
     #table-foot {
         line-height: 2.4rem;
-
+        
         td {
             border: none;
             border-radius: 1rem;
         }
-
+        
         #create-user-button {
+            color: #f2f2f2;
             border: none;
             font-family: "Open Sans";
             font-size: inherit;
@@ -130,7 +133,7 @@
         }
         
         &:hover {
-            background: darken($light-blue, 2%);
+            background: darken($secondary, 2%);
         }
     }
 }

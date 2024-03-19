@@ -5,9 +5,10 @@
     bottom: 1rem;
     width: 13vw;
     height: 36vh;
-    border: 0.1rem solid $black;
+    border: 0.1rem solid black;
     border-radius: 0.4rem;
-    background-color: $light-green;
+    background-color: $secondary;
+    filter: contrast(0.9);
     padding: 1vh 2vw;
     display: flex;
     flex-direction: column;
@@ -17,38 +18,38 @@
     .name {
         font-size: 2vw;
         margin: 4vh 0 0 0;
-        color: $grey;
+        color: grey;
 
     }
     .username {
         font-weight: bolder;
         margin: 0;
         font-size: 1.4vw;
-        color: $light-black;
+        color: #999fa3;
     }
     .authority-title {
         font-size: 1.4vw;
-        color: $grey;
+        color: grey;
         margin-bottom: 0;
     }
     .authority {
-        color: $light-black;
+        color: #999fa3;
         font-size: 1.5vw;
         font-weight: bold;
         margin: 0;
     }
     .sign-out {
         margin-top: 4vh;
-        background-color: $red;
+        background-color: $highlight;
         border-radius: 2rem;
         border: none;
         padding: 2vh 1vw;
-        color: $background;
+        color: white;
         font-weight: bold;
         cursor: pointer;
         &:hover {
-            background-color: lighten($red, 5%);
-            transition: 0.1s;
+            filter: saturate(10%);
+            transition: 0.15s;
         }
     }
 }

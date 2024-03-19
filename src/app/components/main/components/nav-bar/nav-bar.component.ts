@@ -12,8 +12,9 @@ export class NavBarComponent {
   @Output() sideNavToggled = new EventEmitter<boolean>();
   @Output() signOut = new EventEmitter<void>();
   @Input() sideNavStatus: boolean = false;
-  userPopUp: boolean = false;
   @Input() user!: UserDTO;
+  userPopUp: boolean = false;
+  selectedPage: string = "live";
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['sideNavStatus']) {
@@ -29,6 +30,7 @@ export class NavBarComponent {
   }
   
   navigate(place: string) {
+    this.selectedPage = place;
     this.router.navigate([`main/${place}`], {state: {group: this.user.group, givenName: this.user.givenName, sn: this.user.sn, mail: this.user.mail}});
   }
 

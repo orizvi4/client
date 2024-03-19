@@ -7,8 +7,8 @@
 }
 
 #filter-container {
-    background-color: $light-blue;
-    color: $black;
+    background-color: $secondary;
+    color: #f2f2f2;
     padding: 2vh;
     left: 13vw;
     position: absolute;
@@ -24,19 +24,19 @@
         justify-content: center;
 
         select {
-            color: $black;
+            color: #f2f2f2;
             width: min-content;
             padding: 0.8vh 0;
             font-size: 1vw;
             margin-bottom: 1vh;
             border-radius: 0.4em;
-            border: 0.2em solid $background;
+            border: 0.2em solid black;
             text-align: center;
             margin-right: 3vw;
-            background-color: $background;
+            background-color: gray;
 
             &:focus {
-                border-color: $light-green;
+                filter: saturate(10%);
             }
         }
 
@@ -50,7 +50,7 @@
                 width: 1vw;
                 aspect-ratio: 1;
                 user-select: none;
-                border: 0.25vw solid $black;
+                border: 0.25vw solid #f2f2f2;
                 display: inline-block;
                 position: relative;
             }
@@ -69,7 +69,7 @@
                 position: absolute;
                 top: 20%;
                 left: 20%;
-                background-color: $black;
+                background-color: #f2f2f2;
                 width: 60%;
                 height: 60%;
                 transform: scale(0);
@@ -95,14 +95,15 @@
         border-radius: 0.5em;
         border: none;
         font-size: 1vw;
-        background-color: $black;
-        color: $background;
+        background-color: $highlight;
+        color: #f2f2f2;
         padding: 1vh 2vw;
         cursor: pointer;
         transition: .2s;
 
         &:hover {
-            background-color: $light-black;
+            filter: saturate(10%);
+            transition: 0.15s;
         }
     }
 
@@ -115,20 +116,20 @@
 
     .time {
         padding: 2vh;
-        border: 0.2vw solid $background;
+        border: 0.2vw solid black;
         border-radius: 0.5vw;
         width: 13vw;
         height: 2.5vh;
         margin-right: 2.5vw;
-        background-color: $background;
-        color: $black;
+        background-color: gray;
+        color: #f2f2f2;
         transition: border-color 0.2s ease;
         outline: none;
         font-size: 1vw;
         margin-top: 1vh;
 
         &:focus {
-            border-color: $light-grey;
+            filter: saturate(10%);
         }
     }
 
@@ -150,15 +151,15 @@
     .upload-label {
         display: block;
         padding: 2vh 2vw;
-        color: $background;
-        background: $black;
+        color: #f2f2f2;
+        background: $highlight;
         border-radius: 0.4em;
         transition: .2s;
         font-size: 1.2vw;
 
         &:hover {
             cursor: pointer;
-            background: $light-black;
+            filter: saturate(10%);
         }
     }
 
@@ -200,7 +201,7 @@
     justify-content: center;
     align-items: center;
     width: 73vw;
-    background-color: $light-blue;
+    background-color: $secondary;
     border-radius: 0.5em;
     bottom: 5vh;
 
@@ -208,13 +209,32 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        background-color: $background;
-        border: 10px solid $light-blue;
+        background-color: $primary;
+        border: 10px solid $secondary;
 
         mat-paginator {
-            background-color: $background;
+            color: #f2f2f2;
+            background-color: $primary;
+
+            ::ng-deep  mat-form-field {
+                border: 1px solid #f2f2f2 !important;
+            }
+            ::ng-deep .mat-mdc-select-arrow path {
+                fill:  white !important;
+            }
+            ::ng-deep .mat-mdc-select-value-text {
+                color: #f2f2f2 !important;
+            }
+            ::ng-deep .mat-mdc-paginator-icon path {
+                fill:  white !important;
+            }
+            ::ng-deep .mat-mdc-tooltip-disabled .mat-mdc-paginator-icon path {
+                fill:  gray !important;
+            }
         }
+
     }
+
 
     .room-recording {
         padding: 3vh 2vw;
