@@ -31,7 +31,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatPaginatorHarness} from '@angular/material/paginator/testing';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
 
@@ -65,6 +65,7 @@ import {MatPaginatorHarness} from '@angular/material/paginator/testing';
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   providers: [Constants, MainComponent, NavBarComponent],
   bootstrap: [AppComponent]

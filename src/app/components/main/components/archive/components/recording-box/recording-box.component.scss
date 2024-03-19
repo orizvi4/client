@@ -25,6 +25,15 @@
     aspect-ratio: 479 / 270;
 }
 
+.icon {
+    position: absolute;
+    width: 4.3vw !important;
+    height: 5vh !important;
+    margin: 1vh 0.3vw;
+    display: inline-block;
+    z-index: 1;
+}
+
 .delete-button {
     background-repeat: no-repeat;
     background-size: contain;

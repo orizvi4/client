@@ -16,6 +16,8 @@ export class UploadFormComponent implements OnInit {
   @ViewChild('endTime') endTime!: ElementRef;
   @ViewChild('channelSelect') channelSelect!: ElementRef;
   @Output() popup = new EventEmitter<boolean>();
+
+  readonly todayDate: string = new Date().toISOString().split('T')[0] + "T00:00";
   channels: ChannelDTO[] = [];
 
   async ngOnInit(): Promise<void> {

@@ -2,6 +2,7 @@
 <label class="time">{{startDate}}</label>
 <label class="time" id="endDate">{{endDate}}</label>
 <div class="box-wrapper">
-    <a class="delete-button" *ngIf="group == 'editors' || group == 'managers'" (click)="delete()"></a>
+    <a class="delete-button" *ngIf="(group == 'editors' || group == 'managers') && recording.isDeleting == false" (click)="delete()"></a>
+    <mat-spinner class="icon" mode="indeterminate" *ngIf="recording.isDeleting == true"></mat-spinner>
     <video [id]='recording._id' class="video-js"></video>
 </div>

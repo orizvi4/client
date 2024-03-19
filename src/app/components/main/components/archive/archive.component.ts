@@ -160,7 +160,17 @@ export class ArchiveComponent implements OnInit {
     }
   }
 
+  public setRecordingDeleting(name: string): void {
+    for (let [index, element] of this.recordings.entries()) {
+      const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
+      if (tempRecording === name) {
+        this.recordings[index].isDeleting = true;
+      }
+    }
+  }
+
   public async deleteRecording(recordingLink: string) {
+    const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
     try {
       const res = await Swal.fire({
         icon: 'warning',
@@ -170,7 +180,6 @@ export class ArchiveComponent implements OnInit {
         confirmButtonText: 'delete'
       });
       if (res.isConfirmed) {
-        const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
         await this.requestService.deleteRecording(recording);
         this.deleteRecordingFromArray(recording);
       }
@@ -188,6 +197,7 @@ export class ArchiveComponent implements OnInit {
             Swal.showLoading();
           }
         });
+        this.setRecordingDeleting(recording);
       }
       else {
         Swal.fire({

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 
@@ -7,7 +7,7 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   constructor(private router: Router) {}
   @Output() sideNavToggled = new EventEmitter<boolean>();
   @Output() signOut = new EventEmitter<void>();
@@ -16,7 +16,12 @@ export class NavBarComponent {
   userPopUp: boolean = false;
   selectedPage: string = "live";
 
+  ngOnInit(): void {
+    this.selectedPage = this.router.url.substring(6);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
+
     if (changes['sideNavStatus']) {
       this.userPopUp = false;
     }
