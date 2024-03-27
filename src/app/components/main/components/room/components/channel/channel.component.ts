@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AxiosError } from 'axios';
+import { delay, timeout } from 'rxjs';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
@@ -18,17 +19,17 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     private location: Location,
     private websocketService: WebSocketService
   ) {
-    this.websocketService.getChannelUpdate$().subscribe(async (next: ChannelDTO) => {
+    this.websocketService.getChannelUpdate$().subscribe((next: ChannelDTO) => {
       if (this.id == "channelId" + next._id) {
-          this.live = next.isLive;
-          // if (this.live == false) {
-          //   const player = videojs.getPlayer(this.id);
-          //   player.on("progress", () => {
-          //     setTimeout(() => {
-          //       player.load();
-          //     }, 5000);
-          //   });
-          // }
+        this.live = next.isLive;
+      }
+    });
+    this.websocketService.getMotionDetected$().subscribe(async (name: string) => {
+      console.log();
+      if (name == this.deviceName) {
+        this.isMotionDetected = true;
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        this.isMotionDetected = false;
       }
     });
   }
@@ -38,6 +39,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   live!: boolean;
   zoom!: boolean;
   isBlocked!: boolean;
+  isMotionDetected: boolean = false;
   deviceName: string = '';
   waitingHandler: boolean = true;
 
@@ -68,17 +70,6 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         src: url,
         type: 'application/x-mpegURL'
       });
-      // player.on('waiting', async () => {
-      //   if (this.waitingHandler) {
-      //     this.waitingHandler = false;
-      //     player.load();
-      //     // await this.requestService.connectChannel(this.id.substring(9));
-      //     console.log("grfgrbrb");
-      //     setTimeout(() => {
-      //       this.waitingHandler = true;
-      //     }, 4000);
-      //   }
-      // });
     }
     catch (err) {
       console.log(err);

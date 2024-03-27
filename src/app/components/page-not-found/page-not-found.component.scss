@@ -1,15 +1,38 @@
+@import '../../../styles.scss';
+
 body {
+    color: #f2f2f2;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: $primary;
+
+    .button {
+        border-radius: 0.5em;
+        border: none;
+        font-size: 1.5vw;
+        background-color: $highlight;
+        color: #f2f2f2;
+        padding: 2vh 3vw;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover {
+            filter: saturate(10%);
+            transition: 0.15s;
+        }
+    }
     
     #cobra {
+        margin-top: 4vh;
         background-repeat: no-repeat;
         background-size: contain;
         background-image: url('../../../images/cobraIcon.png');
-        width: 40%;
-        height: 100%;
+        width: 33vw;
+        height: 69vh;
+
+        filter: invert(1);
     }
 }

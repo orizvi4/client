@@ -1,6 +1,6 @@
 <div id="container" [ngClass]="{'zoom': zoom}">
     <h1 id="title">{{deviceName}}</h1>
-    <div id="video-item">
+    <div id="video-item" [ngClass]="{'motionDetected': isMotionDetected == true}">
         <video [id]="id" class="video-js"></video>
         <a class="icon" id="streamIcon" (click)="setBlockStream(id, $event)" *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>
         <a class="icon" (click)="back()" *ngIf="zoom" id="backIcon"></a>

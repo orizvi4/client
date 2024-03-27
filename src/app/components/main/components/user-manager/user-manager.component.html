@@ -2,18 +2,16 @@
 <app-user-strike [user]="childUser" *ngIf="childUser"></app-user-strike>
 <table class="grid">
     <tr id="table-head">
-        <th>blocked</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Phone</th>
         <th>Mail</th>
         <th>Authority Group</th>
         <th>Actions</th>
+        <th>blocked</th>
     </tr>
     <tr class="table-body" *ngFor="let user of users" [ngClass]="{'blocked': user.isBlocked}">
-        <td id="user-block">
-            <mat-checkbox [checked]="user.isBlocked" (change)="setUserBlock(user.givenName, !user.isBlocked)" ></mat-checkbox>
-        </td>
+
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.givenName" />
         </td>
@@ -61,6 +59,9 @@
                 <a class="icon" id="editIcon" (click)="editToggle(user)"></a>
                 <a class="icon" id="trashIcon" (click)="deleteUser(user)"></a>
             </div>
+        </td>
+        <td id="user-block">
+            <mat-slide-toggle [checked]="user.isBlocked" (change)="setUserBlock(user.givenName, !user.isBlocked)"></mat-slide-toggle>
         </td>
     </tr>
     <tr id="table-foot">

@@ -1,13 +1,9 @@
-import { state } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observer, Subject } from 'rxjs';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
-import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
-import { ChannelComponent } from './components/channel/channel.component';
 
 @Component({
   selector: 'app-room',

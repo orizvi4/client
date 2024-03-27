@@ -22,11 +22,11 @@
     border-radius: 1rem;
 
     tr.table-body.blocked {
-        background-color: red;
+        background-color: #57383e;
 
         &:hover:not(#table-head, #table-foot) {
             opacity: 0.9;
-            background: red;
+            background: #6f3641;
         }
     }
 
@@ -40,6 +40,7 @@
 
         td {
             box-sizing: border-box;
+            padding-left: 0.5vw;
             border: 0.15rem solid $primary;
             &:not(#user-block, #actions-cell) {
                 width: 10vw;

@@ -59,17 +59,22 @@ export class UploadFormComponent implements OnInit {
       });
     }
   }
-  
+
   async cancel() {
-    const res = await Swal.fire({
-      icon: 'warning',
-      title: 'are you sure you want to cancel?',
-      cancelButtonText: 'No',
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: 'Yes'
-    });
-    if (res.isConfirmed) {
+    if (this.startTime.nativeElement.value !== '' || this.endTime.nativeElement.value !== '' || this.fileInput.nativeElement.value !== '') {
+      const res = await Swal.fire({
+        icon: 'warning',
+        title: 'are you sure you want to cancel?',
+        cancelButtonText: 'No',
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Yes'
+      });
+      if (res.isConfirmed) {
+        this.popup.emit(false);
+      }
+    }
+    else {
       this.popup.emit(false);
     }
   }

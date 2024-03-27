@@ -208,7 +208,8 @@ export class ArchiveComponent implements OnInit {
       }
     }
   }
-  async toggleUpload(uploaded?: boolean) {
+
+  public async toggleUpload(uploaded?: boolean) {
     try {
       this.formUpload = !this.formUpload;
       if (uploaded) {

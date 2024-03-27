@@ -31,6 +31,10 @@ export class WebSocketService {
             this.recordingDelete$.next(recordingUrl);
         });
 
+        socket.on(WebsocketTitles.MOTION_DETECTED, (name: string) => {
+            this.motionDetected$.next(name);
+        });
+
         socket.on(WebsocketTitles.SIGNOUT, async () => {
             console.log('Incoming message: sign out');
             this.jwtService.setLocalStorageToken(false);
@@ -46,9 +50,14 @@ export class WebSocketService {
     }
     channelUpdate$: Subject<ChannelDTO> = new Subject<ChannelDTO>();
     recordingDelete$: Subject<string> = new Subject<string>();
+    motionDetected$: Subject<string> = new Subject<string>();
 
     public getChannelUpdate$(): Observable<ChannelDTO> {
         return this.channelUpdate$.asObservable();
+    }
+
+    public getMotionDetected$(): Observable<string> {
+        return this.motionDetected$.asObservable();
     }
 
     public getRecordingDelete$(): Observable<string> {
