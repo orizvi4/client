@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { FilterDTO } from 'src/common/models/filterDTO.class';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
-import Player from 'video.js/dist/types/player';
 import Swal from 'sweetalert2';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';

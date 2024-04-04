@@ -7,7 +7,6 @@ import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
 import videojs from 'video.js';
-import Player from 'video.js/dist/types/player';
 import { Mutex } from 'async-mutex';
 
 @Component({
@@ -52,6 +51,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   isMotionDetected: boolean = false;
   deviceName: string = '';
   waitingHandler: boolean = true;
+  player: any;
 
   public async ngOnInit(): Promise<void> {
     if (this.id == '') {
@@ -72,7 +72,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   public async ngAfterViewInit() {
     try {
       const url: string = await this.requestService.connectChannel(this.id.substring(9));
-      videojs(this.id, {
+      this.player = videojs(this.id, {
         autoplay: true,
         loop: true,
         fluid: false,
@@ -95,9 +95,8 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   }
 
   ngOnDestroy(): void {
-    const player: Player = videojs.getPlayer(this.id);
-    if (player) {
-      player.dispose();
+    if (this.player) {
+      this.player.dispose();
     }
   }
 
