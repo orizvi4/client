@@ -1,20 +1,25 @@
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AxiosError } from 'axios';
-import { delay, timeout } from 'rxjs';
+import { Subject, delay, timeout } from 'rxjs';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
+import { Mutex } from 'async-mutex';
 
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.scss']
 })
+
 export class ChannelComponent implements AfterViewInit, OnInit {
+
+  private mutex = new Mutex();
+
   constructor(private requestService: RequestService,
     private location: Location,
     private websocketService: WebSocketService
@@ -25,11 +30,16 @@ export class ChannelComponent implements AfterViewInit, OnInit {
       }
     });
     this.websocketService.getMotionDetected$().subscribe(async (name: string) => {
-      console.log();
       if (name == this.deviceName) {
-        this.isMotionDetected = true;
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        this.isMotionDetected = false;
+        const release = await this.mutex.acquire();
+        try {
+          this.isMotionDetected = true;
+          await new Promise(resolve => setTimeout(resolve, 3000));
+          this.isMotionDetected = false;
+        }
+        finally {
+          release();
+        }
       }
     });
   }
@@ -61,14 +71,17 @@ export class ChannelComponent implements AfterViewInit, OnInit {
 
   public async ngAfterViewInit() {
     try {
-      const player = videojs(this.id, {
-        autoplay: 'muted',
-        loop: true
-      });
       const url: string = await this.requestService.connectChannel(this.id.substring(9));
-      player.src({
-        src: url,
-        type: 'application/x-mpegURL'
+      videojs(this.id, {
+        autoplay: true,
+        loop: true,
+        fluid: false,
+        sources: [
+          {
+            src: url,
+            type: 'application/x-mpegURL'
+          }
+        ]
       });
     }
     catch (err) {
