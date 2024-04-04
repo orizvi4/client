@@ -4,6 +4,6 @@
 </div>
 <div id="container" [ngClass]="{'empty': channels.length == 0}">
     <div class="video-item" *ngFor="let channel of channels">
-        <app-channel (click)="navigateToChannel(channel._id)" [id]="'channelId' + channel._id" [recording]="channel.isRecording"></app-channel>
+        <app-channel [id]="'channelId' + channel._id" [recording]="channel.isRecording"></app-channel>
     </div>
 </div>

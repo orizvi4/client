@@ -100,7 +100,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     }
   }
 
-  public async setBlockStream(id: string, event: MouseEvent): Promise<void> {
+  public async setBlockStream(id: string, event: MouseEvent): Promise<void> {//action
     try {
       event.stopPropagation();
       if (this.isBlocked == true) {
@@ -117,7 +117,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     }
   }
 
-  public async record() {
+  public async record() {//action
     try {
       this.recording = !this.recording;
       let res: string;

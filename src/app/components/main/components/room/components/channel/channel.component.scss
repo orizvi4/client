@@ -1,40 +1,35 @@
 @import '../../../../../../../styles.scss';
 
-#container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+#tab-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: $secondary;
+    height: 5.27vh;
+    border-radius: 15px 15px 0 0;
 
-    #video-item {
-        position: relative;
-        cursor: pointer;
+    #title {
+        font-size: 2.3vh;
+        color: #999fa3;
+        justify-self: left;
+        margin-left: 1vw;
+    }
 
-        .video-js {
-            position: relative;
-            display: flex;
-            width: auto;
-            height: 20vw;
-            aspect-ratio: 479 / 269;
-        }
-
+    #icons {
+        display: flex;
+        justify-content: right;
         .icon {
             background-repeat: no-repeat;
             background-size: contain;
-            display: flex;
-            position: absolute;
             text-decoration: none;
-            width: 5vw;
-            height: 7vh;
-            top: 1vh;
         }
-
+    
         #streamIcon {
             background-image: url('../../../../../../../images/streamIcon.png');
-            left: 1vw;
-            width: 4vw;
-            height: 7vh;
-
+            width: 3vw;
+            height: 3vh;
+            margin-top: 1.3vh;
+            margin-right: 0.5vw;
+    
             &.blocked {
                 background-image: url('../../../../../../../images/channelBlockedIcon.png');
                 width: 4vw;
@@ -44,113 +39,30 @@
 
         #recordingIcon {
             background-image: url('../../../../../../../images/recordingIcon.png');
-            right: 1vw;
             animation: blink 2s infinite;
+            margin-top: 0.6vh;
+            width: 3vw;
+            height: 4vh;
         }
-
-        
     }
-    #video-item.motionDetected {
+
+
+}
+
+#video-item {
+    .video-js {
+        position: relative;
+        display: flex;
+        width: auto;
+        height: 20vw;
+        aspect-ratio: 479 / 269;
+    }
+
+    &.motionDetected {
         border: 2px solid #fc0005;
     }
-
 }
 
-#title {
-    font-size: larger;
-    color: #999fa3;
-    top: 2vh;
-    display: flex;
-    justify-content: center;
-    align-self: center;
-}
-
-#container.zoom {
-    width: calc(100vw - $nav-width);
-    height: calc(100vh - $header-height);
-
-    #video-item {
-        cursor: auto;
-
-        .video-js {
-            height: 36vw;
-        }
-
-        #streamIcon {
-            width: 11vw;
-            height: 7vh;
-            cursor: auto;
-            background-repeat: no-repeat;
-            background-size: contain;
-            display: flex;
-
-            #blocked {
-                background-image: url('../../../../../../../images/channelBlockedIcon.png');
-                width: 15vw;
-                height: 17vh;
-                background-repeat: no-repeat;
-                background-size: contain;
-                display: flex;
-            }
-        }
-
-        #backIcon {
-            opacity: 0;
-            background-image: url('../../../../../../../images/backIcon.png');
-            width: 4rem;
-            height: 5rem;
-            cursor: pointer;
-            transition: 0.3s;
-            top: 4vh;
-        }
-
-        #recordingIcon {
-            width: 5vw;
-            height: 6vh;
-            cursor: auto;
-            animation: blink 2s infinite;
-        }
-
-        #motionDetection {
-            width: 5vw;
-            height: 6vh;
-            cursor: auto;
-            top: 52vh;
-        }
-
-        #recordingButton {
-            background-image: url('../../../../../../../images/recordingButton.png');
-            background-color: $highlight;
-            margin-top: 48%;
-            background-position: center center;
-            border-radius: 0 2vh 2vh 0;
-            width: 5vw;
-            height: 6vh;
-            cursor: pointer;
-
-            &:hover {
-                filter: saturate(10%);
-                transition: 0.15s;
-            }
-        }
-
-        .recordingStart {
-            background-image: url('../../../../../../../images/stopRecording.png') !important;
-        }
-
-        &:hover {
-            #backIcon {
-                opacity: 0.7;
-                transition: 0.3s;
-            }
-
-            #backIcon:hover {
-                opacity: 1;
-            }
-        }
-    }
-
-}
 
 
 @keyframes blink {

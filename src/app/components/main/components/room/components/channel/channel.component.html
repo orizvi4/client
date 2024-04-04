@@ -1,10 +1,13 @@
-<div id="container" [ngClass]="{'zoom': zoom}">
-    <h1 id="title">{{deviceName}}</h1>
+<div id="container">
+    <div id="tab-bar">
+        <h1 id="title">{{deviceName}}</h1>
+        <div id="icons">
+            <a class="icon" id="streamIcon" (click)="setBlockStream(id, $event)"
+                *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>
+            <a class="icon" id="recordingIcon" *ngIf="recording"></a>
+        </div>
+    </div>
     <div id="video-item" [ngClass]="{'motionDetected': isMotionDetected == true}">
         <video [id]="id" class="video-js"></video>
-        <a class="icon" id="streamIcon" (click)="setBlockStream(id, $event)" *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>
-        <a class="icon" (click)="back()" *ngIf="zoom" id="backIcon"></a>
-        <a class="icon" id="recordingIcon" *ngIf="recording"></a>
-        <a class="icon" id="recordingButton" *ngIf="zoom" (click)="record()" [ngClass]="{'recordingStart': recording}"></a>
     </div>
 </div>
