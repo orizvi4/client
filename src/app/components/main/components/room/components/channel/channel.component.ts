@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AxiosError } from 'axios';
 import { Subject, delay, timeout } from 'rxjs';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
@@ -43,12 +43,15 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     });
   }
 
+  @Input() group: string = '';
   @Input() id: string = '';
   @Input() recording: boolean = false;
+  @Output() roomRecordCheck: EventEmitter<string> = new EventEmitter<string>();
   live!: boolean;
   zoom!: boolean;
   isBlocked!: boolean;
-  isMotionDetected: boolean = false;
+  isMotionDetected: boolean = false;//has something moved
+  enableMotionDetection: boolean = true;//to check for motion setection
   deviceName: string = '';
   waitingHandler: boolean = true;
   player: any;
@@ -67,6 +70,10 @@ export class ChannelComponent implements AfterViewInit, OnInit {
 
   public async back() {
     this.location.back();
+  }
+
+  public setMotionDetection(): void {
+    this.enableMotionDetection = !this.enableMotionDetection;
   }
 
   public async ngAfterViewInit() {
@@ -100,7 +107,11 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     }
   }
 
-  public async setBlockStream(id: string, event: MouseEvent): Promise<void> {//action
+  public openFullScreen(): void {
+    this.player.requestFullscreen();
+  }
+
+  public async setBlockStream(id: string, event: MouseEvent): Promise<void> {
     try {
       event.stopPropagation();
       if (this.isBlocked == true) {
@@ -117,7 +128,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
     }
   }
 
-  public async record() {//action
+  public async record() {
     try {
       this.recording = !this.recording;
       let res: string;
@@ -133,6 +144,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
           this.recording = false;
         }
       }
+      this.roomRecordCheck.emit(this.id);
     }
     catch (err) {
       await Swal.fire({

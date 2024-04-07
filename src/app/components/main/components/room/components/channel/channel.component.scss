@@ -4,19 +4,39 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: $secondary;
-    height: 5.27vh;
+    height: 6.5vh;
     border-radius: 15px 15px 0 0;
 
-    #title {
-        font-size: 2.3vh;
-        color: #999fa3;
+    #title-menu {
+        height: 6.5vh;
+        display: flex;
         justify-self: left;
-        margin-left: 1vw;
+
+        
+    #actions-menu-icon::ng-deep {
+        color: #999fa3;
     }
+    .mat-mdc-icon-button.mat-mdc-button-base::ng-deep {
+        padding: 1.4vh;
+    }
+
+    #actions-button::ng-deep {
+        height: 100%;
+    }
+
+        #title {
+            font-size: 3vh;
+            color: #999fa3;
+            margin-top: 1.2vh;
+        }
+    }
+
 
     #icons {
         display: flex;
         justify-content: right;
+        height: 6.4vh;
+
         .icon {
             background-repeat: no-repeat;
             background-size: contain;
@@ -40,9 +60,16 @@
         #recordingIcon {
             background-image: url('../../../../../../../images/recordingIcon.png');
             animation: blink 2s infinite;
-            margin-top: 0.6vh;
-            width: 3vw;
-            height: 4vh;
+            margin-top: 0.8vh;
+            width: 2.7vw;
+            height: 5vh;
+        }
+
+        #motionDetectionIcon {
+            background-image: url('../../../../../../../images/motionDetectionIcon.png');
+            margin-top: 0.8vh;
+            width: 2.7vw;
+            height: 5vh;
         }
     }
 
@@ -50,9 +77,8 @@
 }
 
 #video-item {
+
     .video-js {
-        position: relative;
-        display: flex;
         width: auto;
         height: 20vw;
         aspect-ratio: 479 / 269;

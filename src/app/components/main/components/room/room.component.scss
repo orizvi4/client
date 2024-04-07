@@ -34,16 +34,22 @@
     }
 
     #recordingButton {
-        background-color: $highlight;
-        background-image: url('../../../../../images/recordingButton.png');
-        width: 6vw;
-        height: 6vh;
         cursor: pointer;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center center;
-        border-radius: 20rem;
+        background-color: #c94545;
+        border-radius: 20px;
         margin-left: 1vw;
+        padding: 1vh 1vw;
+
+        #recordingButtonIcon {
+            background-color: #c94545;
+            background-image: url('../../../../../images/recordingButtonIcon.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+            display: flex;
+            width: 3vw;
+            height: 6vh;
+        }
 
         &:hover {
             filter: saturate(10%);
@@ -56,11 +62,20 @@
     }
 }
 
-#container.empty {
-    width: 94vw;
-    height: 77vh;
-    background-image: url('../../../../../images/noStreamsIcon.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
+#emptyStreams {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #noStreamsIcon {
+        margin-top: 2vh;
+        width: 100vw;
+        height: 62vh;
+    }
+    
+    #noStreamsText {
+        color: white;
+        font-size: 5vw;
+        margin: 1vh;
+    }
 }

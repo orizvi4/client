@@ -19,9 +19,11 @@ export class RoomComponent implements OnInit {
 
   room: RoomDTO = { _id: "", channels: [], isRecording: false, name: "" };
   channels: ChannelDTO[] = [];
+  group: string = '';
 
   async ngOnInit() {
     try {
+      this.group = (history.state).group;
       this.room = await this.requestService.getRoomById((history.state).roomId);
       this.channels = this.room.channels;
       for (const channel of this.channels) {
@@ -39,6 +41,21 @@ export class RoomComponent implements OnInit {
   }
   navigateToChannel(id: string) {
     this.router.navigate(['main/live/room/channel'], { state: { id: id } });
+  }
+
+  public checkRoomRecord(id: string): void {
+    for (const channel of this.channels) {
+      if (channel._id === id.substring(9)) {
+        channel.isRecording = !channel.isRecording;
+      }
+    }
+    for (const channel of this.channels) {
+      if (channel.isRecording === false) {
+        this.room.isRecording = false;
+        return;
+      }
+    }
+    this.room.isRecording = true;
   }
 
   public async record() {

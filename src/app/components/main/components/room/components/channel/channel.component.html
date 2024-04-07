@@ -1,10 +1,35 @@
 <div id="container">
     <div id="tab-bar">
-        <h1 id="title">{{deviceName}}</h1>
+        <div id="title-menu">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"
+                id="actions-button">
+                <mat-icon id="actions-menu-icon">menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openFullScreen()">
+                    <mat-icon>open_with</mat-icon>
+                    <span>Full screen</span>
+                </button>
+                <button mat-menu-item (click)="record()">
+                    <mat-icon>photo_camera</mat-icon>
+                    <span>Record/Stop recording</span>
+                </button>
+                <button mat-menu-item (click)="setMotionDetection()">
+                    <mat-icon>directions_walk</mat-icon>
+                    <span>Enable/Disabled motion detection</span>
+                </button>
+                <button mat-menu-item *ngIf="group != 'users'" (click)="setBlockStream(id, $event)">
+                    <mat-icon>block</mat-icon>
+                    <span>Block/Unblock live feed</span>
+                </button>
+            </mat-menu>
+            <h1 id="title">{{deviceName}}</h1>
+        </div>
         <div id="icons">
-            <a class="icon" id="streamIcon" (click)="setBlockStream(id, $event)"
-                *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>
+            <a class="icon" id="motionDetectionIcon" *ngIf="enableMotionDetection"></a>
             <a class="icon" id="recordingIcon" *ngIf="recording"></a>
+            <a class="icon" id="streamIcon"
+                *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>
         </div>
     </div>
     <div id="video-item" [ngClass]="{'motionDetected': isMotionDetected == true}">
