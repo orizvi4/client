@@ -45,13 +45,13 @@
     </div>
 
 
-    <div class="recordings-container" [ngClass]="{'empty-div': !recordings.length}">
+    <div class="recordings-container" >
         <div class="room-recording" *ngFor="let recording of currentRecordings">
             <app-recording-box [recording]="recording" [group]="group"
                 (deleteRecording)="deleteRecording($event)"></app-recording-box>
         </div>
-        <div id="paginator" *ngIf="recordings.length">
-            <mat-paginator [length]="recordings.length" [pageIndex]="pageIndex" [pageSize]="4" [pageSizeOptions]="[2, 4, 6, 10]"
+        <div id="paginator">
+            <mat-paginator [length]="recordingsLength" [pageIndex]="pageIndex" [pageSize]="4" [pageSizeOptions]="[2, 4, 6, 10]"
                 (page)="onPageChange($event)"></mat-paginator>
         </div>
     </div>

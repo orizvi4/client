@@ -26,7 +26,7 @@
             <h1 id="title">{{deviceName}}</h1>
         </div>
         <div id="icons">
-            <a class="icon" id="motionDetectionIcon" *ngIf="enableMotionDetection && isBlocked == false"></a>
+            <a class="icon" id="motionDetectionIcon" *ngIf="enableMotionDetection && isBlocked == false && live == true"></a>
             <a class="icon" id="recordingIcon" *ngIf="recording"></a>
             <a class="icon" id="streamIcon"
                 *ngIf="live == true || isBlocked == true" [ngClass]="{blocked: isBlocked}"></a>

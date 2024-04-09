@@ -8,6 +8,7 @@ import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
 import videojs from 'video.js';
 import { Mutex } from 'async-mutex';
+import { Constants } from 'src/common/constants';
 
 @Component({
   selector: 'app-channel',
@@ -56,6 +57,7 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
   waitingHandler: boolean = true;
   player: any;
   url: string = "";
+  readonly POSTER_URL: string = "channelBlockedIcon.png";
 
   public async ngOnInit(): Promise<void> {
     const channel: ChannelDTO = await this.requestService.getChannel(this.id.substring(9));
@@ -67,14 +69,22 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    this.player.options({
-      sources: [
-        {
-          src: this.url,
-          type: 'application/x-mpegURL'
+    try {
+      if (changes["isBlocked"].previousValue != this.isBlocked) {
+        if (this.isBlocked) {
+          this.player.src(this.url);
+          this.player.poster(this.POSTER_URL);
+          this.player.autoplay(false);
+          this.player.load();
         }
-      ]
-    });
+        else {
+          this.player.poster("");
+          this.player.play();
+        }
+      }
+    }
+    catch (err) {
+    }
   }
 
   public async setMotionDetection(): Promise<void> {
@@ -93,15 +103,15 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
       this.url = await this.requestService.connectChannel(this.id.substring(9));
       this.player = videojs(this.id, {
         autoplay: true,
-        loop: true,
         fluid: false,
         sources: [
           {
             src: this.url,
             type: 'application/x-mpegURL'
           }
-        ]
+        ],
       });
+
     }
     catch (err) {
       console.log(err);
@@ -120,6 +130,11 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   public openFullScreen(): void {
+    //this.player.src(src)
+    //this.player.selectSource(sources)
+    //handleSrc_(source, isRetry)
+    //updateSourceCaches_(srcObj)
+
     this.player.requestFullscreen();
   }
 
@@ -128,10 +143,16 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
       if (this.isBlocked == true) {
         await this.requestService.unblockChannel(id.substring(9));
         this.isBlocked = false;
+        this.player.poster("");
+        this.player.play();
       }
       else {
         await this.requestService.blockChannel(id.substring(9));
         this.isBlocked = true;
+        this.player.src(this.url);
+        this.player.autoplay(false);
+        this.player.poster(this.POSTER_URL);
+        this.player.load();
       }
       this.channelBlock.emit();
     }

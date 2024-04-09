@@ -56,9 +56,15 @@ export class RequestService {
         await axios.put<string>(`${Constants.ROOM_HANDLER}/channel/unblock?id=${id}`,{}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
-    public async getRecordings(filter: FilterDTO): Promise<RecordingDTO[]> {
-        return (await axios.put<RecordingDTO[]>(`${Constants.ROOM_HANDLER}/recording/filter`, filter, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    public async getRecordingsLength(filter: FilterDTO): Promise<number> {
+        return (await axios.post<number>(`${Constants.ROOM_HANDLER}/recording/length`, { ...filter }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
+
+    public async getRecordings(filter: FilterDTO, pageIndex: number, pageSize: number): Promise<RecordingDTO[]> {
+        return (await axios.put<RecordingDTO[]>(`${Constants.ROOM_HANDLER}/recording/filter`, {...filter, pageIndex: pageIndex, pageSize: pageSize}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
+    
 
     public async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
         let suffix;

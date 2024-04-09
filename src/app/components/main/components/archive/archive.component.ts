@@ -33,10 +33,11 @@ export class ArchiveComponent implements OnInit {
   deviceNames: string[] = [];
   rooms: RoomDTO[] = [];
   timeFilter: boolean = false;//filter by time or not
-  recordings: RecordingDTO[] = [];
+  recordingsLength: number = 0;
   currentRecordings: RecordingDTO[] = [];
   pageSize: number = 4;
   pageIndex: number = 0;
+  filter!: FilterDTO;
 
   async ngOnInit(): Promise<void> {
     try {
@@ -77,41 +78,43 @@ export class ArchiveComponent implements OnInit {
     this.timeFilter = !this.timeFilter;
   }
 
-  public onPageChange(pageEvent: PageEvent): void {
+  public async onPageChange(pageEvent: PageEvent): Promise<void> {
     this.pageSize = pageEvent.pageSize;
     this.pageIndex = pageEvent.pageIndex;
-    this.currentRecordings = this.recordings.slice(pageEvent.pageIndex * pageEvent.pageSize, pageEvent.pageIndex * pageEvent.pageSize + pageEvent.pageSize);
+    this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
   }
 
-  private filterRecordings(): FilterDTO {
+  private filterRecordings(): void {
     if (this.timeFilter) {
       if (this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, this.startTime.nativeElement.value, this.endTime.nativeElement.value);
+        this.filter = new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, this.startTime.nativeElement.value, this.endTime.nativeElement.value);
       }
       else if (this.startTime.nativeElement.value == '' && this.endTime.nativeElement.value == '') {
-        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), new Date());
+        this.filter = new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), new Date());
       }
       else if (this.startTime.nativeElement.value != '') {
-        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, this.startTime.nativeElement.value, new Date());
+        this.filter = new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, this.startTime.nativeElement.value, new Date());
       }
       else {
-        return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), this.endTime.nativeElement.value);
+        this.filter = new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), this.endTime.nativeElement.value);
       }
     }
     else {
-      return new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), new Date());
+      this.filter = new FilterDTO(this.roomSelect.nativeElement.value, this.channelSelect.nativeElement.value, new Date(0), new Date());
     }
   }
 
   public async updateStreams(): Promise<void> {
     try {
-      const filter: FilterDTO = this.filterRecordings();
-      this.recordings = await this.requestService.getRecordings(filter);
-      this.currentRecordings = this.recordings.slice(0, this.pageSize);
+      this.filterRecordings();
+      console.log(this.filter);
       this.pageIndex = 0;
+      this.recordingsLength = await this.requestService.getRecordingsLength(this.filter);
+      this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
     }
     catch (err) {
-      this.recordings = [];
+      console.log(err);
+      this.recordingsLength = 0;
       const Toast = Swal.mixin({
         toast: true,
         position: "bottom-end",
@@ -131,15 +134,15 @@ export class ArchiveComponent implements OnInit {
     }
   }
 
-  public deleteRecordingFromArray(name: string): void {
-    for (let [index, element] of this.recordings.entries()) {
+  public async deleteRecordingFromArray(name: string): Promise<void> {
+    for (let [index, element] of this.currentRecordings.entries()) {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {
-        this.recordings.splice(index, 1);
+        this.currentRecordings.splice(index, 1);
         if (this.currentRecordings.length === 1) {
           this.pageIndex -= 1;
         }
-        this.currentRecordings = this.recordings.slice(this.pageIndex * this.pageSize, this.pageIndex * this.pageSize + this.pageSize);
+        this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom-end",
@@ -160,10 +163,10 @@ export class ArchiveComponent implements OnInit {
   }
 
   public setRecordingDeleting(name: string): void {
-    for (let [index, element] of this.recordings.entries()) {
+    for (let [index, element] of this.currentRecordings.entries()) {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {
-        this.recordings[index].isDeleting = true;
+        this.currentRecordings[index].isDeleting = true;
       }
     }
   }
