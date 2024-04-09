@@ -47,13 +47,13 @@
             background-image: url('../../../../../../../images/streamIcon.png');
             width: 3vw;
             height: 3vh;
-            margin-top: 1.3vh;
-            margin-right: 0.5vw;
+            margin-top: 1.5vh;
+            margin-right: 0.2vw;
     
             &.blocked {
                 background-image: url('../../../../../../../images/channelBlockedIcon.png');
-                width: 4vw;
-                height: 7vh;
+                width: 2vw;
+                height: 4vh;
             }
         }
 

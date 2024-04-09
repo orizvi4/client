@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 import { ChannelDTO } from "../models/channelDTO.interface";
 import { WebsocketTitles } from "../enums.model";
 import { Observable, Subject } from "rxjs";
-import { Injectable } from "@angular/core";
+import { Injectable, numberAttribute } from "@angular/core";
 import { NavBarComponent } from "src/app/components/main/components//nav-bar/nav-bar.component";
 import { AppRoutingModule } from "src/app/app-routing.module";
 import { Router } from "@angular/router";
@@ -32,7 +32,9 @@ export class WebSocketService {
         });
 
         socket.on(WebsocketTitles.MOTION_DETECTED, (name: string) => {
-            this.motionDetected$.next(name);
+            if (this.enableMotionDetection.indexOf(name) === -1) {
+                this.motionDetected$.next(name);
+            }
         });
 
         socket.on(WebsocketTitles.SIGNOUT, async () => {
@@ -51,6 +53,19 @@ export class WebSocketService {
     channelUpdate$: Subject<ChannelDTO> = new Subject<ChannelDTO>();
     recordingDelete$: Subject<string> = new Subject<string>();
     motionDetected$: Subject<string> = new Subject<string>();
+    enableMotionDetection: string[] = [];
+
+    public setMotionDetection(channel: string, motionDetection: boolean): void {
+        if (motionDetection) {
+            const index: number = this.enableMotionDetection.indexOf(channel);
+            if (index !== -1) {
+                this.enableMotionDetection.splice(index, 1);
+            }
+        }
+        else {
+            this.enableMotionDetection.push(channel);
+        }
+    }
 
     public getChannelUpdate$(): Observable<ChannelDTO> {
         return this.channelUpdate$.asObservable();

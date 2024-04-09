@@ -3,10 +3,14 @@
     <div id="recordingButton">
         <a id="recordingButtonIcon" (click)="record()" [ngClass]="{'recordingStart': room.isRecording}"></a>
     </div>
+    <div id="blockRoom" (click)="setBlockRoom()">
+        <a id="blockRoomIcon"></a>
+        <label id="blockRoomText">{{blockRoomText}}</label>
+    </div>
+
 </div>
 <div id="emptyStreams" *ngIf="channels.length == 0">
-    <svg id="noStreamsIcon" viewBox="0 0 154.000000 145.000000"
-        preserveAspectRatio="xMidYMid meet">
+    <svg id="noStreamsIcon" viewBox="0 0 154.000000 145.000000" preserveAspectRatio="xMidYMid meet">
 
         <g transform="translate(0.000000,145.000000) scale(0.100000,-0.100000)" fill="#FFFFFF" stroke="none">
             <path d="M615 1429 c-269 -66 -492 -281 -549 -532 -29 -124 -16 -346 26 -443
@@ -38,7 +42,7 @@
 </div>
 <div id="container" *ngIf="channels.length != 0">
     <div class="video-item" *ngFor="let channel of channels">
-        <app-channel [id]="'channelId' + channel._id" [group]="group" [recording]="channel.isRecording"
-            (roomRecordCheck)="checkRoomRecord($event)"></app-channel>
+        <app-channel [id]="'channelId' + channel._id" [group]="group" [isBlocked]="channel.isBlocked" [recording]="channel.isRecording"
+            (roomRecordCheck)="checkRoomRecord($event)" (channelBlock)="checkRoomBlock()"></app-channel>
     </div>
 </div>

@@ -15,7 +15,7 @@ import { Mutex } from 'async-mutex';
   styleUrls: ['./channel.component.scss']
 })
 
-export class ChannelComponent implements AfterViewInit, OnInit {
+export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
 
   private mutex = new Mutex();
 
@@ -46,46 +46,58 @@ export class ChannelComponent implements AfterViewInit, OnInit {
   @Input() group: string = '';
   @Input() id: string = '';
   @Input() recording: boolean = false;
+  @Input() isBlocked!: boolean;
   @Output() roomRecordCheck: EventEmitter<string> = new EventEmitter<string>();
+  @Output() channelBlock: EventEmitter<void> = new EventEmitter<void>();
   live!: boolean;
-  zoom!: boolean;
-  isBlocked!: boolean;
   isMotionDetected: boolean = false;//has something moved
   enableMotionDetection: boolean = true;//to check for motion setection
   deviceName: string = '';
   waitingHandler: boolean = true;
   player: any;
+  url: string = "";
 
   public async ngOnInit(): Promise<void> {
-    if (this.id == '') {
-      this.id = "channelId" + (history.state).id;
-      this.zoom = true;
-    }
     const channel: ChannelDTO = await this.requestService.getChannel(this.id.substring(9));
     this.recording = channel.isRecording;
+    this.enableMotionDetection = channel.enableMotionDetection;
     this.live = channel.isLive;
     this.isBlocked = channel.isBlocked;
     this.deviceName = channel.device.title;
   }
 
-  public async back() {
-    this.location.back();
+  public ngOnChanges(changes: SimpleChanges): void {
+    this.player.options({
+      sources: [
+        {
+          src: this.url,
+          type: 'application/x-mpegURL'
+        }
+      ]
+    });
   }
 
-  public setMotionDetection(): void {
-    this.enableMotionDetection = !this.enableMotionDetection;
+  public async setMotionDetection(): Promise<void> {
+    try {
+      this.enableMotionDetection = !this.enableMotionDetection;
+      await this.requestService.setMotionDetection(this.id.substring(9), this.enableMotionDetection);
+      this.websocketService.setMotionDetection(this.deviceName, this.enableMotionDetection);
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
 
   public async ngAfterViewInit() {
     try {
-      const url: string = await this.requestService.connectChannel(this.id.substring(9));
+      this.url = await this.requestService.connectChannel(this.id.substring(9));
       this.player = videojs(this.id, {
         autoplay: true,
         loop: true,
         fluid: false,
         sources: [
           {
-            src: url,
+            src: this.url,
             type: 'application/x-mpegURL'
           }
         ]
@@ -113,7 +125,6 @@ export class ChannelComponent implements AfterViewInit, OnInit {
 
   public async setBlockStream(id: string, event: MouseEvent): Promise<void> {
     try {
-      event.stopPropagation();
       if (this.isBlocked == true) {
         await this.requestService.unblockChannel(id.substring(9));
         this.isBlocked = false;
@@ -122,6 +133,7 @@ export class ChannelComponent implements AfterViewInit, OnInit {
         await this.requestService.blockChannel(id.substring(9));
         this.isBlocked = true;
       }
+      this.channelBlock.emit();
     }
     catch (err) {
       console.log(err);

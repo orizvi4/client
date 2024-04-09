@@ -27,6 +27,10 @@ export class RequestService {
         return (await axios.get<RoomDTO[]>(`${Constants.ROOM_HANDLER}/room/all`, { timeout: 2000, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
+    public async setRoomBlock(room: string, block: boolean) {
+        await axios.post<boolean>(`${Constants.ROOM_HANDLER}/room/block`, { room: room, block: block }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
+    }
+
     public async recordRoom(id: string, record: boolean): Promise<string> {
         if (record) {
             return (await axios.get<string>(`${Constants.ROOM_HANDLER}/room/record/start`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
@@ -85,6 +89,10 @@ export class RequestService {
 
     public async startChannelRecording(id: string): Promise<string> {
         return (await axios.post<string>(`${Constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`, {}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
+    public async setMotionDetection(id: string, motionDetection: boolean): Promise<void> {//check
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/channel/motionDetection`, {id: id, motionDetection: motionDetection}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
 

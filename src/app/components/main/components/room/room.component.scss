@@ -33,6 +33,43 @@
         padding-left: 1vw;
     }
 
+    #blockRoom {
+        margin-left: 1vw;
+        background-color: $highlight;
+        border: none;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 0.1vh 1.3vw;
+        cursor: pointer;
+
+        #blockRoomIcon {
+            margin-top: 0.2vh;
+            background-image: url('../../../../../images/blockRoomIcon.png');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 3vw;
+            height: 5vh;
+        }
+
+        #blockRoomText {
+            color: white;
+            margin-top: 0.1vh;
+            margin-bottom: 0.1vh;
+            width: 6vw;
+            font-size: 0.9vw;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        &:hover {
+            filter: saturate(10%);
+            transition: 0.15s;
+        }
+    }
+
     #recordingButton {
         cursor: pointer;
         background-color: #c94545;
@@ -72,7 +109,7 @@
         width: 100vw;
         height: 62vh;
     }
-    
+
     #noStreamsText {
         color: white;
         font-size: 5vw;

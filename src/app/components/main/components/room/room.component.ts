@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
+import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,7 +13,8 @@ import Swal from 'sweetalert2';
 })
 export class RoomComponent implements OnInit {
   constructor(private router: Router,
-    private requestService: RequestService
+    private requestService: RequestService,
+    private websocketService: WebSocketService
   ) {
 
   }
@@ -20,6 +22,7 @@ export class RoomComponent implements OnInit {
   room: RoomDTO = { _id: "", channels: [], isRecording: false, name: "" };
   channels: ChannelDTO[] = [];
   group: string = '';
+  blockRoomText: string = 'Unblock room';
 
   async ngOnInit() {
     try {
@@ -27,7 +30,11 @@ export class RoomComponent implements OnInit {
       this.room = await this.requestService.getRoomById((history.state).roomId);
       this.channels = this.room.channels;
       for (const channel of this.channels) {
+        if (channel.isBlocked == false) {
+          this.blockRoomText = 'Block room';
+        }
         this.requestService.connectChannel(channel._id);
+        this.websocketService.setMotionDetection(channel.device.title, channel.enableMotionDetection);
       }
     }
     catch (err) {
@@ -39,8 +46,32 @@ export class RoomComponent implements OnInit {
       });
     }
   }
-  navigateToChannel(id: string) {
-    this.router.navigate(['main/live/room/channel'], { state: { id: id } });
+
+  public async setBlockRoom(): Promise<void> {
+    if (this.blockRoomText === "Block room") {
+      this.requestService.setRoomBlock(this.room._id, true);
+      this.blockRoomText = "Unblock room";
+      for (const channel of this.channels) {
+        channel.isBlocked = true;
+      }
+    }
+    else {
+      this.requestService.setRoomBlock(this.room._id, false);
+      this.blockRoomText = "Block room";
+      for (const channel of this.channels) {
+        channel.isBlocked = false;
+      }
+    }
+  }
+
+  public checkRoomBlock(): void {
+    for (const channel of this.channels) {
+      if (channel.isBlocked === false) {
+        this.blockRoomText = "Block room";
+        return;
+      }
+    }
+    this.blockRoomText = "Unblock room"
   }
 
   public checkRoomRecord(id: string): void {
