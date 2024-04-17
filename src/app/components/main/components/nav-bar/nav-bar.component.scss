@@ -15,22 +15,36 @@
     }
 
     .text {
-        display: none;
-        opacity: 0;
-        transition: 1s;
-        text-decoration: none;
         font-size: 1.6vw;
-        margin-left: 0.4vw;
+        display: none;
+        text-decoration: none;
+        margin-left: 0.6vw;
         align-self: center;
     }
 
     .icon {
-        height: 3vw;
-        background-repeat: no-repeat;
-        background-size: contain;
+        height: 6vh;
+        width: 2.5vw;
+        margin-left: 1vw;
+    }
+
+    
+    .selected.nav-item {
+        background-color: #ffffff3a;
+    }
+    
+    .nav-item {
+        padding: 1.5vh 0;
+    
+        display: flex;
+        flex-direction: row;
         cursor: pointer;
-        aspect-ratio: 1;
-        margin-left: 0.8vw;
+        filter: contrast(0.1);
+        
+        &:hover {
+            transition: 0.1s;
+            background-color: #2f2f2f2f;
+        }
     }
 
     #cobraIcon {
@@ -40,77 +54,68 @@
         background-image: url('../../../../../images/cobraIcon.png');
         margin-left: 0.2vw;
         height: 13vh;
-        margin-bottom: 1vh;
+        width: 4.5vw;
+        margin-bottom: 2vh;
         margin-top: 0.8vh;
+        transition: 0.3s;
         filter: contrast(0.1);
     }
-}
 
-.expanded {
-    width: $nav-expanded-width;
-
-    .text {
-        display: inline-block;
-        opacity: 0;
-        white-space: nowrap;
-        animation: fadeInText 0.3s ease-out forwards;
-        display: inline-block;
-        white-space: nowrap;
+    app-user-card {
+        margin: 10vh 10vw;
+        z-index: 3;
+    }
+    
+    #liveIcon {
+        background-image: url('../../../../../images/liveIcon.png');
+    }
+    
+    #archiveIcon {
+        background-image: url('../../../../../images/archiveIcon.png');
+    }
+    
+    #userManagerIcon {
+        background-image: url('../../../../../images/userManagerIcon.png');
+    }
+    
+    #profileIcon {
+        background-image: url('../../../../../images/profileIcon.png');
+    }
+    
+    #logsIcon {
+        background-image: url('../../../../../images/logsIcon.png');
     }
 
-}
+    &.expanded {
+        width: $nav-expanded-width;
 
-app-user-card {
-    margin: 10vh 10vw;
-    z-index: 3;
-}
-
-.selected.nav-item {
-    background-color: #ffffff3a;
-}
-
-.nav-item {
-    padding: 0.75vh 0 0.75vh 0;
-    position: relative;
-
-    display: flex;
-    cursor: pointer;
-    filter: contrast(0.1);
-
-    &:hover {
-        transition: 0.1s;
-        background-color: #2f2f2f2f;
+        #cobraIcon {
+            transition: 0.3;
+            width: 10vw;
+            height: 13vh;
+        }
+    
+        .text {
+            display: block;
+            animation: fadeInText 0.3s ease-out forwards;
+            white-space: nowrap;
+        }
+    
     }
 }
 
-#liveIcon {
-    background-image: url('../../../../../images/liveIcon.png');
-}
 
-#archiveIcon {
-    background-image: url('../../../../../images/archiveIcon.png');
-}
-
-#userManagerIcon {
-    background-image: url('../../../../../images/userManagerIcon.png');
-}
-
-#profileIcon {
-    background-image: url('../../../../../images/profileIcon.png');
-}
-
-#logsIcon {
-    background-image: url('../../../../../images/logsIcon.png');
-}
 
 @keyframes fadeInText {
     from {
         opacity: 0;
         transform: translateX(-10px);
+        width: 0;
     }
 
     to {
         opacity: 1;
         transform: translateX(0);
+        width: 10vw
     }
 }

@@ -107,7 +107,6 @@ export class ArchiveComponent implements OnInit {
   public async updateStreams(): Promise<void> {
     try {
       this.filterRecordings();
-      console.log(this.filter);
       this.pageIndex = 0;
       this.recordingsLength = await this.requestService.getRecordingsLength(this.filter);
       this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
