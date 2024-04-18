@@ -34,6 +34,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
 
@@ -70,6 +72,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatMenuModule,
+    MatExpansionModule,
   ],
   providers: [Constants, MainComponent, NavBarComponent],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { StrikeDTO } from './models/strikeDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import { UserDTO } from 'src/common/models/userDTO.interface';
@@ -6,7 +6,8 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
 @Component({
   selector: 'app-user-strike',
   templateUrl: './user-strike.component.html',
-  styleUrls: ['./user-strike.component.scss']
+  styleUrls: ['./user-strike.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UserStrikeComponent implements OnInit {
 

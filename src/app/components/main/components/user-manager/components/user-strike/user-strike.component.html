@@ -8,12 +8,27 @@
     <input id="reset-button" type="button" (click)="resetPanelty()" value="reset panelty" />
 
     <div id="strikes">
+        <mat-expansion-panel id="strikesHistory">
+            <mat-expansion-panel-header>
+                <mat-panel-title id="strikesHistoryTitle">
+                    Strikes history
+                </mat-panel-title>
+                <mat-icon style="margin-right: 0.5vw;">history</mat-icon>
+            </mat-expansion-panel-header>
+            <tr>
+                <th>strike</th>
+                <th>date</th>
+            </tr>
+            <tr *ngFor="let strike of irrelevantStrikes">
+                <td>{{strike.strike}}</td>
+                <td>{{strike.time}}</td>
+            </tr>
+        </mat-expansion-panel>
         <table>
             <tr>
                 <th>strike</th>
                 <th>date</th>
             </tr>
-
             <tr *ngFor="let strike of relevantStrikes">
                 <td>{{strike.strike}}</td>
                 <td>{{strike.time}}</td>
