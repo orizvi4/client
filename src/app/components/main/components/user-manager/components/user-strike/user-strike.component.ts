@@ -14,16 +14,19 @@ export class UserStrikeComponent implements OnInit {
 
   @Input() user!: UserDTO;
   panelty: number = 0;
-  strikes: StrikeDTO[] = [];
+  relevantStrikes: StrikeDTO[] = [];
+  irrelevantStrikes: StrikeDTO[] = [];
   columnsToDisplay = ['strike', 'time'];
 
   public async ngOnInit(): Promise<void> {
     try {
-      this.strikes = await this.requestService.getUserStrikes(this.user.givenName);
-      for (const strike of this.strikes) {
+      const strikes: StrikeDTO[] = await this.requestService.getUserStrikes(this.user.givenName);
+      for (const strike of strikes) {
         strike.time = strike.time.substring(0, 16);
         strike.time = strike.time.replace('T', ' ');
       }
+      this.relevantStrikes = strikes.filter((strike) => strike.relevant === true);
+      this.irrelevantStrikes = strikes.filter((strike) => strike.relevant === false);
       this.panelty = await this.requestService.getUserPanelty(this.user.givenName);
     }
     catch (err) {
@@ -35,7 +38,8 @@ export class UserStrikeComponent implements OnInit {
     try {
       await this.requestService.resetPanelty(this.user.givenName);
       this.panelty = 0;
-      this.strikes = [];
+      this.irrelevantStrikes = this.irrelevantStrikes.concat(this.relevantStrikes);
+      this.relevantStrikes = [];
     }
     catch (err) {
       console.log(err);

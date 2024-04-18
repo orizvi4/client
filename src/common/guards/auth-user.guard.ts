@@ -15,7 +15,7 @@ export class UserGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Promise<boolean> {
         try {
-            return await this.jwtService.verifyToken();
+            return await this.jwtService.verifyUrl();
         }
         catch (err) {
             this.router.navigate(['/**']);

@@ -14,7 +14,7 @@ export class ManagerGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean> {
     try {
-      return await this.jwtService.verifyManagerToken();
+      return await this.jwtService.verifyManagerUrl();
     }
     catch (err) {
       this.router.navigate(['/**']);

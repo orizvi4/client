@@ -33,6 +33,14 @@ export class JwtService {
         this.refreshTokenInterval();
     }
 
+    public async verifyUrl(): Promise<boolean> {
+        return (await axios.post(`${Constants.AUTH_SERVICE}/tokens/verify/url`, { token: localStorage.getItem('accessToken') })).data;
+    }
+
+    public async verifyManagerUrl(): Promise<boolean> {
+        return (await axios.post(`${Constants.AUTH_SERVICE}/tokens/verify/manager/url`, { token: localStorage.getItem('accessToken')})).data;
+    }
+
     public async verifyToken(): Promise<boolean> {
         return (await axios.get(`${Constants.AUTH_SERVICE}/tokens/verify`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
