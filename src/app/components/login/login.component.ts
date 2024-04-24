@@ -51,6 +51,8 @@ export class LoginComponent {
           title: "login error",
           text: 'please fill the user and password',
           icon: "warning",
+          background: "#101416",
+          color: "white",
         });
       }
     }
@@ -58,7 +60,9 @@ export class LoginComponent {
       if (err.response != null && err.response.status == 500) {
         await Swal.fire({
           icon: 'error',
-          title: 'server error'
+          title: 'server error',
+          background: "#101416",
+          color: "white",
         });
       }
       else if (err.response != null && err.response.status == 401) {
@@ -66,6 +70,8 @@ export class LoginComponent {
           title: "login error",
           text: "unauthorized login, user is blocked. please talk to a system manager",
           icon: "error",
+          background: "#101416",
+          color: "white",
         });
       }
       else if (err.response != null && err.response.status == 400) {
@@ -73,12 +79,16 @@ export class LoginComponent {
           title: "login error",
           text: 'username or password incorrect',
           icon: "error",
+          background: "#101416",
+          color: "white",
         });
       }
       else {
         await Swal.fire({
           icon: 'error',
-          title: 'server error'
+          title: 'server error',
+          background: "#101416",
+          color: "white",
         });
       }
     }

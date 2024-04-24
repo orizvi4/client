@@ -46,6 +46,8 @@ export class WebSocketService {
                 title: "session error",
                 text: "unauthorized activities detected, please talk to a system manager or login again",
                 icon: "error",
+                background: "#101416",
+                color: "white",
             });
             this.router.navigate(['login']);
         });

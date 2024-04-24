@@ -9,6 +9,7 @@ import { DeviceDTO } from 'src/common/models/deviceDTO.interface';
 import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { WebSocketService } from 'src/common/services/web-socket.service';
+import Toastify from 'toastify-js'
 
 
 @Component({
@@ -173,10 +174,19 @@ export class ArchiveComponent implements OnInit {
   public async deleteRecording(recordingLink: string) {
     const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
     try {
+
+      Toastify({
+        text: "This is a toast notification!",
+        duration: 3000, // 3 seconds
+        position: 'right', // bottom-right corner
+      }).showToast();
+
       const res = await Swal.fire({
         icon: 'warning',
         title: 'delete recording',
         text: 'are you sure you want to delete the recording?',
+        background: "#101416",
+        color: "white",
         showCancelButton: true,
         confirmButtonText: 'delete'
       });
@@ -186,7 +196,7 @@ export class ArchiveComponent implements OnInit {
       }
     }
     catch (err: any) {
-      if (err.response !== null && err.response.status == 400) {
+      if (err.response !== undefined && err.response !== null && err.response.status == 400) {
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom-end",
@@ -204,7 +214,9 @@ export class ArchiveComponent implements OnInit {
         Swal.fire({
           title: 'server error',
           icon: 'error',
-          text: "couldn't delete because of server error, try again later"
+          text: "couldn't delete because of server error, try again later",
+          background: "#101416",
+          color: "white",
         });
       }
     }

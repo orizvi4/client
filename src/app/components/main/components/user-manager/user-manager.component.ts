@@ -61,14 +61,18 @@ export class UserManagerComponent implements OnInit {
         await Swal.fire({
           icon: 'error',
           title: 'access denied',
-          text: "session has timed out, please log in again"
+          text: "session has timed out, please log in again",
+          background: "#101416",
+          color: "white",
         });
       }
       else {
         await Swal.fire({
           icon: 'error',
           title: 'server error',
-          text: "couldn't load users, please try again later"
+          text: "couldn't load users, please try again later",
+          background: "#101416",
+          color: "white",
         });
       }
     }
@@ -76,24 +80,21 @@ export class UserManagerComponent implements OnInit {
 
   public async deleteUser(user: UserDTO): Promise<void> {
     try {
-      const del = await swal({
+      const del = await Swal.fire({
         title: "Are you sure?",
         text: "Your will not be able to recover this user",
         icon: "warning",
-        buttons: {
-          cancel: {
-            value: false,
-            visible: true
-          },
-          confirm: {
-            text: "delete"
-          }
-        },
+        background: "#101416",
+        color: "white",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
       });
-      if (del) {
+      if (del.isConfirmed) {
         await this.requestService.deleteUser(user.givenName);
         this.users.splice(this.users.indexOf(user), 1);
       }
+      
     }
     catch (err) {
       console.log(err);
@@ -101,14 +102,18 @@ export class UserManagerComponent implements OnInit {
         await Swal.fire({
           icon: 'error',
           title: 'access denied',
-          text: "session has timed out, please log in again"
+          text: "session has timed out, please log in again",
+          background: "#101416",
+          color: "white",
         });
       }
       else {
         await Swal.fire({
           icon: 'error',
           title: 'delete user error',
-          text: "a server error has occured, please try again later"
+          text: "a server error has occured, please try again later",
+          background: "#101416",
+          color: "white",
         });
       }
     }
@@ -160,21 +165,27 @@ export class UserManagerComponent implements OnInit {
           await Swal.fire({
             icon: 'error',
             title: 'modify user error',
-            text: "user name already exist, please try another name"
+            text: "user name already exist, please try another name",
+            background: "#101416",
+            color: "white",
           });
         }
         else if ((err as AxiosError).response?.status == 401) {
           await Swal.fire({
             icon: 'error',
             title: 'access denied',
-            text: "session has timed out, please log in again"
+            text: "session has timed out, please log in again",
+            background: "#101416",
+            color: "white",
           });
         }
         else {
           await Swal.fire({
             icon: 'error',
             title: 'server error',
-            text: "please try again later"
+            text: "please try again later",
+            background: "#101416",
+            color: "white",
           });
         }
       }
@@ -209,14 +220,18 @@ export class UserManagerComponent implements OnInit {
         await Swal.fire({
           icon: 'error',
           title: 'access denied',
-          text: "session has timed out, please log in again"
+          text: "session has timed out, please log in again",
+          background: "#101416",
+          color: "white",
         });
       }
       else {
         await Swal.fire({
           icon: 'error',
           title: 'server error',
-          text: "please try again later"
+          text: "please try again later",
+          background: "#101416",
+          color: "white",
         });
       }
     }

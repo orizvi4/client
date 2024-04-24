@@ -34,20 +34,26 @@ export class UploadFormComponent implements OnInit {
           await Swal.fire({
             icon: 'warning',
             title: 'date invalid',
-            text: 'date already exist'
+            text: 'date already exist',
+            background: "#101416",
+            color: "white",
           })
           return;
         }
         await Swal.fire({
           icon: 'success',
-          title: 'video added succesfully'
+          title: 'video added succesfully',
+          background: "#101416",
+          color: "white",
         });
         this.popup.emit(true);
       }
       else {
         await Swal.fire({
           icon: 'error',
-          title: 'fill all the data'
+          title: 'fill all the data',
+          background: "#101416",
+          color: "white",
         });
       }
     }
@@ -55,7 +61,9 @@ export class UploadFormComponent implements OnInit {
       await Swal.fire({
         icon: 'error',
         title: 'server error',
-        text: 'please try again later'
+        text: 'please try again later',
+        background: "#101416",
+        color: "white",
       });
     }
   }
@@ -68,7 +76,9 @@ export class UploadFormComponent implements OnInit {
         cancelButtonText: 'No',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: 'Yes'
+        confirmButtonText: 'Yes',
+        background: "#101416",
+        color: "white",
       });
       if (res.isConfirmed) {
         this.popup.emit(false);

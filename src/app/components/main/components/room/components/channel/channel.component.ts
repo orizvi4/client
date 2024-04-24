@@ -118,7 +118,9 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
       await Swal.fire({
         title: 'server error',
         icon: 'error',
-        text: "couldn't load camera, try again later"
+        text: "couldn't load camera, try again later",
+        background: "#101416",
+        color: "white",
       });
     }
   }
@@ -183,7 +185,9 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
       await Swal.fire({
         title: 'server error',
         icon: 'error',
-        text: "couldn't record camera, try again later"
+        text: "couldn't record camera, try again later",
+        background: "#101416",
+        color: "white",
       });
     }
   }

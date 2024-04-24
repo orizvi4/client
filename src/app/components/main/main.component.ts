@@ -54,7 +54,9 @@ export class MainComponent implements OnInit {
       await Swal.fire({
         icon: 'warning',
         title: 'logging out',
-        text: 'you have been inactive for a while, please log in again'
+        text: 'you have been inactive for a while, please log in again',
+        background: "#101416",
+        color: "white",
       });
       this.router.navigate(['login']);
     });

@@ -21,7 +21,9 @@ export class UserCardComponent {
       text: "are you sure you want to log out?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'log out'
+      confirmButtonText: 'log out',
+      background: "#101416",
+      color: "white",
     });
     if (res.isConfirmed) {
       this.signOut.emit();

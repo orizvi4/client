@@ -42,7 +42,9 @@ export class RoomComponent implements OnInit {
       Swal.fire({
         title: 'server error',
         icon: 'error',
-        text: "couldn't load cameras, try again later"
+        text: "couldn't load cameras, try again later",
+        background: "#101416",
+        color: "white",
       });
     }
   }
@@ -107,7 +109,9 @@ export class RoomComponent implements OnInit {
       Swal.fire({
         title: 'server error',
         icon: 'error',
-        text: "couldn't record cameras, try again later"
+        text: "couldn't record cameras, try again later",
+        background: "#101416",
+        color: "white",
       });
     }
   }

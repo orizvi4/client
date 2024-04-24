@@ -24,6 +24,8 @@ export class JwtService {
             title: "session error",
             text: "unauthorized activity detected, please login again",
             icon: "error",
+            background: "#101416",
+            color: "white",
         });
         this.router.navigate(['login']);
     });
