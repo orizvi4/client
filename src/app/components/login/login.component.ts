@@ -7,6 +7,7 @@ import { JwtService } from 'src/common/services/jwt.service';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
 import { MainComponent } from '../main/main.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
   constructor(private requestService: RequestService,
     private router: Router,
     private jwtService: JwtService,
+    private toastr: ToastrService,
     private mainComponent: MainComponent) { }
   @ViewChild('username') username!: ElementRef;
   @ViewChild('password') password!: ElementRef;
@@ -27,22 +29,11 @@ export class LoginComponent {
     try {
       if (this.username.nativeElement.value.length > 0 && this.password.nativeElement.value.length > 0) {
         const res: UserDTO = await this.requestService.authenticateUser(this.username.nativeElement.value, this.password.nativeElement.value);
-
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "bottom-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
+        this.toastr.success("Signed in successfully", "", {
+          positionClass: 'toast-bottom-right',
+          timeOut: 3000,
         });
-        Toast.fire({
-          icon: "success",
-          text: "Signed in successfully"
-        });
+        
         localStorage.setItem('accessToken', res.accessToken as string);
         this.router.navigate(['main']);
       }

@@ -35,6 +35,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 @NgModule({
@@ -73,6 +75,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSlideToggleModule,
     MatMenuModule,
     MatExpansionModule,
+    ToastrModule.forRoot(),
   ],
   providers: [Constants, MainComponent, NavBarComponent],
   bootstrap: [AppComponent]

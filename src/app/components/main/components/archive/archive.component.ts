@@ -9,7 +9,7 @@ import { DeviceDTO } from 'src/common/models/deviceDTO.interface';
 import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { WebSocketService } from 'src/common/services/web-socket.service';
-import Toastify from 'toastify-js'
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,7 +18,7 @@ import Toastify from 'toastify-js'
   styleUrls: ['./archive.component.scss'],
 })
 export class ArchiveComponent implements OnInit {
-  constructor(private requestService: RequestService, private websocketService: WebSocketService) {
+  constructor(private requestService: RequestService, private websocketService: WebSocketService, private toastr: ToastrService) {
     this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
       this.deleteRecordingFromArray(recordingUrl.substring(recordingUrl.indexOf("content/") + 8));
     });
@@ -57,20 +57,9 @@ export class ArchiveComponent implements OnInit {
     }
     catch (err: any) {
       console.log(err);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: 'error',
-        title: "couldn't load recordings, try again later"
+      this.toastr.error("couldn't load recordings, try again later", "", {
+        positionClass: 'toast-bottom-right',
+        timeOut: 4000,
       });
     }
   }
@@ -115,20 +104,9 @@ export class ArchiveComponent implements OnInit {
     catch (err) {
       console.log(err);
       this.recordingsLength = 0;
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: 'error',
-        title: "couldn't load recordings, try again later"
+      this.toastr.error("couldn't load recordings, try again later", "", {
+        positionClass: 'toast-bottom-right',
+        timeOut: 4000,
       });
       throw err;
     }
@@ -143,20 +121,9 @@ export class ArchiveComponent implements OnInit {
           this.pageIndex -= 1;
         }
         this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "bottom-end",
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: 'success',
-          title: "deleted recording successfuly"
+        this.toastr.success("deleted recording successfuly", "", {
+          positionClass: 'toast-bottom-right',
+          timeOut: 3000,
         });
       }
     }
@@ -174,12 +141,6 @@ export class ArchiveComponent implements OnInit {
   public async deleteRecording(recordingLink: string) {
     const recording = recordingLink.substring(recordingLink.indexOf("/mp4:") + 5, recordingLink.indexOf('/playlist'));
     try {
-
-      Toastify({
-        text: "This is a toast notification!",
-        duration: 3000, // 3 seconds
-        position: 'right', // bottom-right corner
-      }).showToast();
 
       const res = await Swal.fire({
         icon: 'warning',

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import Swal from 'sweetalert2';
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./rooms-list.component.scss']
 })
 export class RoomsListComponent implements OnInit {
-  constructor(private requestService: RequestService, private router: Router) {}
+  constructor(private requestService: RequestService, private router: Router, private toastr: ToastrService) {}
   @Input() sideNavStatus:boolean = false;
   rooms: RoomDTO[] = [];
   
@@ -19,20 +20,9 @@ export class RoomsListComponent implements OnInit {
       this.rooms = await this.requestService.getAllRooms();
     }
     catch(err) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "error",
-        title: "couldn't load rooms, try again later"
+      this.toastr.error("couldn't load rooms, try again later", "", {
+        positionClass: 'toast-bottom-right',
+        timeOut: 4000,
       });
     }
   }
