@@ -1,0 +1,26 @@
+@import '../../../../../../../styles.scss';
+
+$width: 25vw;
+
+body {
+    position: absolute;
+    height: calc(100vh - $header-height);
+    width: $width;
+    right: 0;
+    z-index: 2;
+    background-color: $secondary;
+
+    #title {
+        margin-top: 0;
+        padding: 2.5vh;
+        color: white;
+        text-align: center;
+        width: $width;
+        border-bottom: 1px solid gray;
+    }
+
+    #info {
+        color: white;
+        margin-left: 1vw;
+    }
+}

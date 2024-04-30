@@ -1,118 +1,145 @@
 @import '../../../../../styles.scss';
 
-#container {
-    display: flex;
-    flex-wrap: wrap;
-    width: calc(100vw - $nav-width);
-    justify-content: center;
-
-    .video-item {
-        padding: 1vw;
-
-        #live-icon-block {
-            width: 4.92vw;
-            height: 7vh;
-            position: absolute;
-            margin-top: 15vh;
-        }
-    }
-
-}
-
-#title-container {
-    margin-top: 2vh;
-    margin-left: 42vw;
-    display: flex;
-    align-items: center;
-    border-radius: 2vh;
-    height: 8vh;
-
-    #title {
-        font-size: 7vh;
-        color: white;
-        padding-left: 1vw;
-    }
-
-    #blockRoom {
-        margin-left: 1vw;
-        background-color: $highlight;
-        border: none;
+#room {
+    #header {
         display: flex;
-        align-items: center;
-        flex-direction: column;
-        border-radius: 20px;
-        padding: 0.1vh 1.3vw;
-        cursor: pointer;
-
-        #blockRoomIcon {
-            margin-top: 0.2vh;
-            background-image: url('../../../../../images/blockRoomIcon.png');
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: contain;
-            width: 3vw;
-            height: 5vh;
-        }
-
-        #blockRoomText {
-            color: white;
-            margin-top: 0.1vh;
-            margin-bottom: 0.1vh;
-            width: 6vw;
-            font-size: 0.9vw;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        &:hover {
-            filter: saturate(10%);
-            transition: 0.15s;
-        }
-    }
-
-    #recordingButton {
-        cursor: pointer;
-        background-color: #c94545;
-        border-radius: 20px;
-        margin-left: 1vw;
-        padding: 1vh 1vw;
-
-        #recordingButtonIcon {
-            background-color: #c94545;
-            background-image: url('../../../../../images/recordingButtonIcon.png');
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center center;
+    
+        #title-container {
+            margin-top: 2vh;
+            margin-left: 42vw;
             display: flex;
-            width: 3vw;
-            height: 6vh;
-        }
-
-        &:hover {
-            filter: saturate(10%);
-            transition: 0.15s;
+            align-items: center;
+            border-radius: 2vh;
+            height: 8vh;
+        
+            #title {
+                font-size: 7vh;
+                color: white;
+                padding-left: 1vw;
+            }
+        
+            #blockRoom {
+                margin-left: 1vw;
+                background-color: $highlight;
+                border: none;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                border-radius: 20px;
+                padding: 0.1vh 1.3vw;
+                cursor: pointer;
+        
+                #blockRoomIcon {
+                    margin-top: 0.2vh;
+                    background-image: url('../../../../../images/blockRoomIcon.png');
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    width: 3vw;
+                    height: 5vh;
+                }
+        
+                #blockRoomText {
+                    color: white;
+                    margin-top: 0.1vh;
+                    margin-bottom: 0.1vh;
+                    width: 6vw;
+                    font-size: 0.9vw;
+                    text-align: center;
+                    cursor: pointer;
+                }
+        
+                &:hover {
+                    filter: saturate(10%);
+                    transition: 0.15s;
+                }
+            }
+        
+            #recordingButton {
+                cursor: pointer;
+                background-color: #c94545;
+                border-radius: 20px;
+                margin-left: 1vw;
+                padding: 1vh 1vw;
+        
+                #recordingButtonIcon {
+                    background-color: #c94545;
+                    background-image: url('../../../../../images/recordingButtonIcon.png');
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center center;
+                    display: flex;
+                    width: 3vw;
+                    height: 6vh;
+                }
+        
+                &:hover {
+                    filter: saturate(10%);
+                    transition: 0.15s;
+                }
+            }
+        
+            .recordingStart {
+                background-image: url('../../../../../images/stopRecording.png') !important;
+            }
         }
     }
-
-    .recordingStart {
-        background-image: url('../../../../../images/stopRecording.png') !important;
+    
+    #container {
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100vw - $nav-width);
+        justify-content: center;
+    
+    
+        .video-item {
+            padding: 1vw;
+    
+            #live-icon-block {
+                width: 4.92vw;
+                height: 7vh;
+                position: absolute;
+                margin-top: 15vh;
+            }
+        }
+    
+    }
+    
+    
+    #emptyStreams {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        #noStreamsIcon {
+            margin-top: 2vh;
+            width: 100vw;
+            height: 62vh;
+        }
+    
+        #noStreamsText {
+            color: white;
+            font-size: 5vw;
+            margin: 1vh;
+        }
     }
 }
 
-#emptyStreams {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#roomInfoIcon {
+    position: absolute;
+    border: 1px solid white;
+    cursor: pointer;
+    width: 1.2vw;
+    height: 3.2vh;
+    right: 0;
+    border-radius: 6px;
+    background-color: $highlight;
 
-    #noStreamsIcon {
-        margin-top: 2vh;
-        width: 100vw;
-        height: 62vh;
+    &.opened {
+        right: 25.1vw;
     }
+}
 
-    #noStreamsText {
-        color: white;
-        font-size: 5vw;
-        margin: 1vh;
-    }
+#roomInfo {
+    z-index: 2;
 }

@@ -5,6 +5,7 @@ import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
+import { RoomInfoDTO } from './components/room-info/models/roomInfoDTO.interface';
 
 @Component({
   selector: 'app-room',
@@ -19,6 +20,7 @@ export class RoomComponent implements OnInit {
 
   }
 
+  showRoomInfo: boolean = false;
   room: RoomDTO = { _id: "", channels: [], isRecording: false, name: "" };
   channels: ChannelDTO[] = [];
   group: string = '';
@@ -47,6 +49,10 @@ export class RoomComponent implements OnInit {
         color: "white",
       });
     }
+  }
+
+  public async toggleInfo(): Promise<void> {
+    this.showRoomInfo = !this.showRoomInfo;
   }
 
   public async setBlockRoom(): Promise<void> {

@@ -36,6 +36,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { ToastrModule } from 'ngx-toastr';
+import { RoomInfoComponent } from './components/main/components/room/components/room-info/room-info.component';
 
 
 
@@ -59,6 +60,7 @@ import { ToastrModule } from 'ngx-toastr';
     UserStrikeComponent,
     MainComponent,
     PageNotFoundComponent,
+    RoomInfoComponent,
   ],
   imports: [
     CommonModule,

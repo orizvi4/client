@@ -160,7 +160,7 @@ export class ArchiveComponent implements OnInit {
       if (err.response !== undefined && err.response !== null && err.response.status == 400) {
         const Toast = Swal.mixin({
           toast: true,
-          position: "bottom-end",
+          position: "top-end",//bottom
           showConfirmButton: false,
         });
         Toast.fire({
@@ -180,6 +180,22 @@ export class ArchiveComponent implements OnInit {
           color: "white",
         });
       }
+    }
+  }
+
+  public async checkFormCancel() {
+    const res = await Swal.fire({
+      icon: 'warning',
+      title: 'are you sure you want to cancel?',
+      cancelButtonText: 'No',
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: 'Yes',
+      background: "#101416",
+      color: "white",
+    });
+    if (res.isConfirmed) {
+      await this.toggleUpload();
     }
   }
 

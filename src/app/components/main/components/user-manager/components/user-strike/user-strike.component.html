@@ -15,14 +15,17 @@
                 </mat-panel-title>
                 <mat-icon style="margin-right: 0.5vw;">history</mat-icon>
             </mat-expansion-panel-header>
-            <tr>
-                <th>strike</th>
-                <th>date</th>
-            </tr>
-            <tr *ngFor="let strike of irrelevantStrikes">
-                <td>{{strike.strike}}</td>
-                <td>{{strike.time}}</td>
-            </tr>
+            <label id="noHistory" *ngIf="irrelevantStrikes.length < 1">No prior strikes</label>
+            <div id="test" *ngIf="irrelevantStrikes.length > 0">
+                <tr>
+                    <th>strike</th>
+                    <th>date</th>
+                </tr>
+                <tr *ngFor="let strike of irrelevantStrikes">
+                    <td>{{strike.strike}}</td>
+                    <td>{{strike.time}}</td>
+                </tr>
+            </div>
         </mat-expansion-panel>
         <table>
             <tr>

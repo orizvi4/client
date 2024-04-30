@@ -35,7 +35,7 @@
 
     </div>
 
-    <div class="overlay" *ngIf="formUpload"></div>
+    <div class="overlay" (click)="checkFormCancel()" *ngIf="formUpload"></div>
     <div class="upload-container" *ngIf="group == 'editors' || group == 'managers'">
         <label for="upload" class="upload-label"><b>+</b> upload recording</label>
         <input id="upload" class="upload-button" type="button" (click)="toggleUpload()" />

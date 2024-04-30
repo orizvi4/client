@@ -8,6 +8,7 @@ import { RecordingDTO } from "../models/recordingDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
 import { StrikeDTO } from "src/app/components/main/components//user-manager/components/user-strike/models/strikeDTO.interface";
 import { DeviceDTO } from "../models/deviceDTO.interface";
+import { RoomInfoDTO } from "src/app/components/main/components/room/components/room-info/models/roomInfoDTO.interface";
 
 @Injectable()
 export class RequestService {
@@ -58,6 +59,10 @@ export class RequestService {
 
     public async getRecordingsLength(filter: FilterDTO): Promise<number> {
         return (await axios.post<number>(`${Constants.ROOM_HANDLER}/recording/length`, { ...filter }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+    }
+
+    public async getRoomInfo(id: string): Promise<RoomInfoDTO> {
+        return (await axios.get<RoomInfoDTO>(`${Constants.ROOM_HANDLER}/room/info`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public async getRecordings(filter: FilterDTO, pageIndex: number, pageSize: number): Promise<RecordingDTO[]> {

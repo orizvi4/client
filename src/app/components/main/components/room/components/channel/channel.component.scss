@@ -3,7 +3,8 @@
 #tab-bar {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background-color: $secondary;
+    background-color: black;
+    border-bottom: 1px solid white;
     height: 6.5vh;
     border-radius: 15px 15px 0 0;
 
