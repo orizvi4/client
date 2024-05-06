@@ -9,10 +9,12 @@ import { Router } from "@angular/router";
 import { JwtService } from "./jwt.service";
 import Swal from "sweetalert2";
 import { RecordingDTO } from "../models/recordingDTO.interface";
+import { RoomInfoDTO } from "../models/roomInfoDTO.interface";
+import { RequestService } from "./request.service";
 
 @Injectable()
 export class WebSocketService {
-    constructor(private router: Router, private jwtService: JwtService) {
+    constructor(private router: Router, private jwtService: JwtService, private requestService: RequestService) {
         const socket = io("http://192.168.1.5:8080");
 
         socket.on("connect", () => {
@@ -27,6 +29,10 @@ export class WebSocketService {
             this.channelUpdate$.next(channel);
         });
 
+        socket.on(WebsocketTitles.ROOM_INFO, (info: RoomInfoDTO) => {
+            this.roomInfo$.next(info);
+        });
+
         socket.on(WebsocketTitles.RECORDING_DELETE, (recordingUrl: string) => {
             this.recordingDelete$.next(recordingUrl);
         });
@@ -39,6 +45,7 @@ export class WebSocketService {
 
         socket.on(WebsocketTitles.SIGNOUT, async () => {
             console.log('Incoming message: sign out');
+            await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string, this.jwtService.decode().group as string);
             this.jwtService.setLocalStorageToken(false);
             await this.jwtService.blackListToken();
             localStorage.clear();
@@ -55,6 +62,7 @@ export class WebSocketService {
     channelUpdate$: Subject<ChannelDTO> = new Subject<ChannelDTO>();
     recordingDelete$: Subject<string> = new Subject<string>();
     motionDetected$: Subject<string> = new Subject<string>();
+    roomInfo$: Subject<RoomInfoDTO> = new Subject<RoomInfoDTO>();
     enableMotionDetection: string[] = [];
 
     public setMotionDetection(channel: string, motionDetection: boolean): void {
@@ -75,6 +83,10 @@ export class WebSocketService {
 
     public getMotionDetected$(): Observable<string> {
         return this.motionDetected$.asObservable();
+    }
+
+    public getRoomInfo$(): Observable<RoomInfoDTO> {
+        return this.roomInfo$.asObservable();
     }
 
     public getRecordingDelete$(): Observable<string> {

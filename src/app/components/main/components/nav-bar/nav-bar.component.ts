@@ -9,6 +9,7 @@ import { UserDTO } from 'src/common/models/userDTO.interface';
 })
 export class NavBarComponent implements OnInit {
   constructor(private router: Router) {}
+
   @Output() sideNavToggled = new EventEmitter<boolean>();
   @Output() signOut = new EventEmitter<void>();
   @Input() sideNavStatus: boolean = false;
@@ -36,7 +37,7 @@ export class NavBarComponent implements OnInit {
   
   navigate(place: string) {
     this.selectedPage = place;
-    this.router.navigate([`main/${place}`], {state: {group: this.user.group, givenName: this.user.givenName, sn: this.user.sn, mail: this.user.mail}});
+    this.router.navigate([`main/${place}`], {state: {givenName: this.user.givenName, sn: this.user.sn, mail: this.user.mail}});
   }
 
   openUserMenu() {

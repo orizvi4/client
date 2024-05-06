@@ -28,6 +28,6 @@ export class RoomsListComponent implements OnInit {
   }
   
   navigateToRoom(id: string, name: string) {
-    this.router.navigate(['main/live/room'], { state: { roomId: id, group: (history.state).group} });
+    this.router.navigate([`main/live/room`],  { queryParams: { id: id }});
   }
 }

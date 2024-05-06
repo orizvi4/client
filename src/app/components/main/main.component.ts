@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, timer, takeUntil } from 'rxjs';
 import { Constants } from 'src/common/constants';
+import { CustomJwtPayload } from 'src/common/models/customJwtPayload.class';
 import { UserDTO } from 'src/common/models/userDTO.interface';
 import { JwtService } from 'src/common/services/jwt.service';
 import { RequestService } from 'src/common/services/request.service';
@@ -79,9 +80,11 @@ export class MainComponent implements OnInit {
   }
 
   public async signOut(): Promise<void> {
+    await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string, this.jwtService.decode().group as string);
     this.jwtService.setLocalStorageToken(false);
     await this.jwtService.blackListToken();
     localStorage.clear();
     this.timer$.next();
   }
+
 }

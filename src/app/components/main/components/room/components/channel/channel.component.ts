@@ -26,6 +26,10 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
   ) {
     this.websocketService.getChannelUpdate$().subscribe((next: ChannelDTO) => {
       if (this.id == "channelId" + next._id) {
+        if (this.live !== next.isLive) {//check
+          // this.player.src(this.url);
+          // this.player.load();
+        }
         this.live = next.isLive;
       }
     });
@@ -110,7 +114,15 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
             type: 'application/x-mpegURL'
           }
         ],
+
       });
+
+      if (this.isBlocked == true) {
+        this.player.src(this.url);
+        this.player.autoplay(false);
+        this.player.poster(this.POSTER_URL);
+        this.player.load();
+      }
 
     }
     catch (err) {
@@ -132,11 +144,6 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   public openFullScreen(): void {
-    //this.player.src(src)
-    //this.player.selectSource(sources)
-    //handleSrc_(source, isRetry)
-    //updateSourceCaches_(srcObj)
-
     this.player.requestFullscreen();
   }
 

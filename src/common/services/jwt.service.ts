@@ -6,9 +6,16 @@ import { UserDTO } from "../models/userDTO.interface";
 import { RequestService } from "./request.service";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
+import { CustomJwtPayload } from "../models/customJwtPayload.class";
+import { jwtDecode } from "jwt-decode";
 
 @Injectable()
 export class JwtService {
+    constructor(private requestService: RequestService,
+        private router: Router,) {
+        this.localStorageCheck();
+        this.refreshTokenInterval();
+    }
 
     refreshToken: string = '';
 
@@ -16,6 +23,7 @@ export class JwtService {
     tempAccessToken: string = localStorage.getItem('accessToken') as string;
     localStorageToken: boolean = false;//to check or not to check localstorage
     localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {//handle the event
+        await this.requestService.roomRemoveUserAll(this.decode().username as string, this.decode().group as string);
         await this.requestService.localStorageStrike(this.tempAccessToken as string);
         await this.blackListToken();
         this.setLocalStorageToken(false);
@@ -30,10 +38,6 @@ export class JwtService {
         this.router.navigate(['login']);
     });
 
-    constructor(private requestService: RequestService, private router: Router) {
-        this.localStorageCheck();
-        this.refreshTokenInterval();
-    }
 
     public async verifyUrl(): Promise<boolean> {
         return (await axios.post(`${Constants.AUTH_SERVICE}/tokens/verify/url`, { token: localStorage.getItem('accessToken') })).data;
@@ -61,6 +65,8 @@ export class JwtService {
         this.localStorageToken = token;
     }
 
+    
+
     public localStorageCheck(): void {
         setInterval(() => {
             if (localStorage.getItem('accessToken') as string != this.tempAccessToken) {
@@ -72,6 +78,16 @@ export class JwtService {
                 }
             }
         }, 3000);
+    }
+
+    public decode(): CustomJwtPayload {
+        try {
+            return jwtDecode(localStorage.getItem('accessToken') as string);
+        }
+        catch (err) {
+            console.log(err);
+            return { username: null };
+        }
     }
 
     public setRefreshToken(refresh: string) {

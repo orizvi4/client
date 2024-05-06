@@ -10,7 +10,6 @@ import { LogsDisplayComponent } from './components/main/components/logs-display/
 import { ManagerGuard } from 'src/common/guards/auth-manager.guard';
 import { UserGuard } from 'src/common/guards/auth-user.guard';
 import { MainComponent } from './components/main/main.component';
-import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -18,7 +17,6 @@ const routes: Routes = [
   { path: 'pageNotFound', component: PageNotFoundComponent},
   {
     path: 'main', canActivate: [UserGuard], component: MainComponent, children: [
-      { path: 'live/room/channel', component: ChannelComponent, canActivate: [UserGuard] },
       { path: 'live/room', component: RoomComponent, canActivate: [UserGuard] },
       { path: 'live', component: RoomsListComponent, canActivate: [UserGuard] },
       { path: 'archive', component: ArchiveComponent, canActivate: [UserGuard] },

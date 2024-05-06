@@ -8,7 +8,7 @@ import { RecordingDTO } from "../models/recordingDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
 import { StrikeDTO } from "src/app/components/main/components//user-manager/components/user-strike/models/strikeDTO.interface";
 import { DeviceDTO } from "../models/deviceDTO.interface";
-import { RoomInfoDTO } from "src/app/components/main/components/room/components/room-info/models/roomInfoDTO.interface";
+import { RoomInfoDTO } from "../models/roomInfoDTO.interface";
 
 @Injectable()
 export class RequestService {
@@ -63,6 +63,18 @@ export class RequestService {
 
     public async getRoomInfo(id: string): Promise<RoomInfoDTO> {
         return (await axios.get<RoomInfoDTO>(`${Constants.ROOM_HANDLER}/room/info`, { params: { id: id }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+    }
+
+    public async roomAddUser(id: string, username: string, group: string): Promise<void> {
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/add`, { roomId: id, user: {givenName: username, group: group} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+    }
+
+    public async roomRemoveUser(id: string, username: string, group: string): Promise<void> {
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/remove`, { roomId: id, user: {givenName: username, group: group} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+    }
+
+    public async roomRemoveUserAll(username: string, group: string): Promise<void> {
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/remove/all`, { user: {givenName: username, group: group} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
     }
 
     public async getRecordings(filter: FilterDTO, pageIndex: number, pageSize: number): Promise<RecordingDTO[]> {

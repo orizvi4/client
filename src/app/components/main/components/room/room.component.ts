@@ -1,23 +1,27 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
 import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
-import { RoomInfoDTO } from './components/room-info/models/roomInfoDTO.interface';
+import { JwtService } from 'src/common/services/jwt.service';
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss']
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
+    private route: ActivatedRoute,
     private requestService: RequestService,
-    private websocketService: WebSocketService
+    private websocketService: WebSocketService,
+    private jwtService: JwtService
   ) {
-
+    window.onbeforeunload = async (ev) => {
+      await this.requestService.roomRemoveUser(this.room._id, this.jwtService.decode().username as string, this.group);
+    }
   }
 
   showRoomInfo: boolean = false;
@@ -28,8 +32,14 @@ export class RoomComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.group = (history.state).group;
-      this.room = await this.requestService.getRoomById((history.state).roomId);
+      await new Promise<void>((resolve) => {
+        this.route.queryParams.subscribe(async (params: any) => {
+          this.room = await this.requestService.getRoomById(params.id);
+          resolve();
+        });
+      });
+
+      this.group = this.jwtService.decode().group as string;
       this.channels = this.room.channels;
       for (const channel of this.channels) {
         if (channel.isBlocked == false) {
@@ -38,6 +48,7 @@ export class RoomComponent implements OnInit {
         this.requestService.connectChannel(channel._id);
         this.websocketService.setMotionDetection(channel.device.title, channel.enableMotionDetection);
       }
+      await this.requestService.roomAddUser(this.room._id, this.jwtService.decode().username as string, this.group);
     }
     catch (err) {
       console.log(err);
@@ -100,10 +111,10 @@ export class RoomComponent implements OnInit {
   public async record() {
     try {
       if (this.room.isRecording == false) {
-        await this.requestService.recordRoom((history.state).roomId, true);//אפשר ליפייף
+        await this.requestService.recordRoom(this.room._id, true);//אפשר ליפייף
       }
       else {
-        await this.requestService.recordRoom((history.state).roomId, false);
+        await this.requestService.recordRoom(this.room._id, false);
       }
       this.room.isRecording = !this.room.isRecording;
       for (const channel of this.channels) {
@@ -120,5 +131,9 @@ export class RoomComponent implements OnInit {
         color: "white",
       });
     }
+  }
+
+  public async ngOnDestroy(): Promise<void> {
+    await this.requestService.roomRemoveUser(this.room._id, this.jwtService.decode().username as string, this.group);
   }
 }

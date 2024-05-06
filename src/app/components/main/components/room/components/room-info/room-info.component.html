@@ -1,6 +1,6 @@
 <body>
     <h2 id="title">Room Inforamtion</h2>
-    <div id="info">
+    <div *ngIf="roomInfo" id="info">
         <label>Room users amount: {{roomInfo.userCount}}</label>
     </div>
 </body>

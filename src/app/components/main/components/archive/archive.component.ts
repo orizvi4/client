@@ -10,6 +10,7 @@ import { RecordingDTO } from 'src/common/models/recordingDTO.interface';
 import { PageEvent } from '@angular/material/paginator';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import { ToastrService } from 'ngx-toastr';
+import { JwtService } from 'src/common/services/jwt.service';
 
 
 @Component({
@@ -18,7 +19,10 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./archive.component.scss'],
 })
 export class ArchiveComponent implements OnInit {
-  constructor(private requestService: RequestService, private websocketService: WebSocketService, private toastr: ToastrService) {
+  constructor(private requestService: RequestService,
+    private websocketService: WebSocketService,
+    private toastr: ToastrService,
+    private jwtService: JwtService) {
     this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
       this.deleteRecordingFromArray(recordingUrl.substring(recordingUrl.indexOf("content/") + 8));
     });
@@ -42,7 +46,7 @@ export class ArchiveComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.group = history.state.group;
+      this.group = this.jwtService.decode().group as string;
       this.rooms = await this.requestService.getAllRooms();
       const devices: DeviceDTO[] = await this.requestService.getAllDevices();
       for (const device of devices) {
