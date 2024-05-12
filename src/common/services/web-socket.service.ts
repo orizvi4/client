@@ -43,20 +43,22 @@ export class WebSocketService {
             }
         });
 
-        socket.on(WebsocketTitles.SIGNOUT, async () => {
-            console.log('Incoming message: sign out');
-            await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string, this.jwtService.decode().group as string);
-            this.jwtService.setLocalStorageToken(false);
-            await this.jwtService.blackListToken();
-            localStorage.clear();
-            await Swal.fire({
-                title: "session error",
-                text: "unauthorized activities detected, please talk to a system manager or login again",
-                icon: "error",
-                background: "#101416",
-                color: "white",
-            });
-            this.router.navigate(['login']);
+        socket.on(WebsocketTitles.SIGNOUT, async (username) => {
+            console.log('Incoming message: sign out ' + username);
+            if (username === this.jwtService.decode().username as string) {
+                await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string);
+                this.jwtService.setLocalStorageToken(false);
+                await this.jwtService.blackListToken();
+                localStorage.clear();
+                await Swal.fire({
+                    title: "session error",
+                    text: "unauthorized activities detected, please talk to a system manager or login again",
+                    icon: "error",
+                    background: "#101416",
+                    color: "white",
+                });
+                this.router.navigate(['login']);
+            }
         });
     }
     channelUpdate$: Subject<ChannelDTO> = new Subject<ChannelDTO>();

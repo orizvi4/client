@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelDTO } from 'src/common/models/channelDTO.interface';
 import { RoomDTO } from 'src/common/models/roomDTO.interface';
@@ -20,7 +20,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     private jwtService: JwtService
   ) {
     window.onbeforeunload = async (ev) => {
-      await this.requestService.roomRemoveUser(this.room._id, this.jwtService.decode().username as string, this.group);
+      await this.requestService.roomRemoveUser(this.room._id, this.jwtService.decode().username as string);
     }
   }
 
@@ -134,6 +134,6 @@ export class RoomComponent implements OnInit, OnDestroy {
   }
 
   public async ngOnDestroy(): Promise<void> {
-    await this.requestService.roomRemoveUser(this.room._id, this.jwtService.decode().username as string, this.group);
+    await this.requestService.roomRemoveUser(this.room._id, this.jwtService.decode().username as string);
   }
 }

@@ -15,28 +15,28 @@
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.givenName" />
         </td>
-        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+        <td class="openUserStrike" (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.givenName}}
         </td>
 
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.sn" />
         </td>
-        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+        <td class="openUserStrike" (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.sn}}
         </td>
 
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.telephoneNumber" />
         </td>
-        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+        <td class="openUserStrike" (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.telephoneNumber}}
         </td>
 
         <td *ngIf="user.isEdit">
             <input type="text" class="editInput" [(ngModel)]="user.mail" />
         </td>
-        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+        <td class="openUserStrike" (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.mail}}
         </td>
 
@@ -47,7 +47,7 @@
                 <option value="editors">editor</option>
             </select>
         </td>
-        <td (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
+        <td class="openUserStrike" (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.group}}
         </td>
         <td id="actions-cell">
@@ -61,7 +61,8 @@
             </div>
         </td>
         <td id="user-block">
-            <mat-slide-toggle [checked]="user.isBlocked" (change)="setUserBlock(user.givenName, !user.isBlocked)"></mat-slide-toggle>
+            <mat-slide-toggle [checked]="user.isBlocked"
+                (change)="setUserBlock(user.givenName, !user.isBlocked)"></mat-slide-toggle>
         </td>
     </tr>
     <tr id="table-foot">

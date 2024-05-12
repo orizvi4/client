@@ -1,6 +1,6 @@
 <body>
 
-    <app-room-info [roomId]="room._id" *ngIf="showRoomInfo" id="roomInfo"></app-room-info>
+    <app-room-info [isRecording]="room.isRecording" [blockRoomText]="blockRoomText" [roomId]="room._id" *ngIf="showRoomInfo" id="roomInfo"></app-room-info>
     <svg (click)="toggleInfo()" [ngClass]="{'opened': showRoomInfo}" id="roomInfoIcon" viewBox="0 0 225.000000 225.000000"
                 preserveAspectRatio="xMidYMid meet">
 

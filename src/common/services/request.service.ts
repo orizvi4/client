@@ -69,12 +69,12 @@ export class RequestService {
         await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/add`, { roomId: id, user: {givenName: username, group: group} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
     }
 
-    public async roomRemoveUser(id: string, username: string, group: string): Promise<void> {
-        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/remove`, { roomId: id, user: {givenName: username, group: group} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+    public async roomRemoveUser(id: string, username: string): Promise<void> {
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/remove`, { roomId: id, user: {givenName: username} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
     }
 
-    public async roomRemoveUserAll(username: string, group: string): Promise<void> {
-        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/remove/all`, { user: {givenName: username, group: group} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+    public async roomRemoveUserAll(username: string): Promise<void> {
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/user/remove/all`, { user: {givenName: username} }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
     }
 
     public async getRecordings(filter: FilterDTO, pageIndex: number, pageSize: number): Promise<RecordingDTO[]> {
@@ -141,6 +141,10 @@ export class RequestService {
 
     public async isUserBlocked(username: string): Promise<boolean> {
         return (await axios.get<boolean>(`${Constants.AUTH_SERVICE}/users/isBlocked?username=${username}`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
+    }
+
+    public async kickUser(name: string): Promise<void> {
+        return await axios.post(`${Constants.AUTH_SERVICE}/users/kick`, {username: name}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
     public async deleteUser(name: string): Promise<string> {

@@ -23,7 +23,7 @@ export class JwtService {
     tempAccessToken: string = localStorage.getItem('accessToken') as string;
     localStorageToken: boolean = false;//to check or not to check localstorage
     localStorageSubscribe: Subscription = this.localStorageChange$.subscribe(async () => {//handle the event
-        await this.requestService.roomRemoveUserAll(this.decode().username as string, this.decode().group as string);
+        await this.requestService.roomRemoveUserAll(this.decode().username as string);
         await this.requestService.localStorageStrike(this.tempAccessToken as string);
         await this.blackListToken();
         this.setLocalStorageToken(false);

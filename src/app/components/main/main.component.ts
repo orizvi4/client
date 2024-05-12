@@ -80,7 +80,7 @@ export class MainComponent implements OnInit {
   }
 
   public async signOut(): Promise<void> {
-    await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string, this.jwtService.decode().group as string);
+    await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string);
     this.jwtService.setLocalStorageToken(false);
     await this.jwtService.blackListToken();
     localStorage.clear();
