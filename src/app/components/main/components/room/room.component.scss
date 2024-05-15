@@ -77,11 +77,11 @@
                     filter: saturate(10%);
                     transition: 0.15s;
                 }
+                .recordingStart {
+                    background-image: url('../../../../../images/stopRecording.png') !important;
+                }
             }
         
-            .recordingStart {
-                background-image: url('../../../../../images/stopRecording.png') !important;
-            }
         }
     }
     

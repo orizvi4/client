@@ -6,8 +6,8 @@ $width: 25vw;
 ::ng-deep {
     mat-expansion-panel {
         .mat-expansion-panel-body {
-            padding: 0 0.9vw 3vh !important;
-            margin-top: 3vh;
+            padding: 0 0.9vw 1vh !important;
+            margin-top: 1vh;
         }
 
         mat-expansion-panel-header {
@@ -24,15 +24,18 @@ body {
     right: 0;
     z-index: 2;
     background-color: $secondary;
+    overflow-y: auto;
+    overflow-x: hidden;
 
 
     #title {
         margin-top: 0;
-        padding: 2.5vh;
+        padding: 1.5vh;
         color: white;
         text-align: center;
         width: $width;
         border-bottom: 1px solid gray;
+        font-size: 1.5vw;
     }
 
     #info {
@@ -43,27 +46,117 @@ body {
 
 
         .generalInfo {
-            font-size: 1.3vw;
-            padding-bottom: 1.7vh;
+            font-size: 1.1vw;
+            padding-bottom: 1.2vh;
         }
 
+        .chatContainer {
+            width: 23vw;
+            display: block;
+            margin: 2vh 0;
+            border-radius: 4px;
 
+            .chatHeader {
+                text-align: center;
+                background-color: #707c85;
+                color: black;
+                border-radius: 4px 4px 0 0;
 
+                h2 {
+                    margin: 1.8vh;
+                    font-size: 1.3vw;
+                    display: inline-block;
+                }
+            }
+
+            .chatBox {
+                background: #464647;
+                color: #a1a1a1;
+                padding: 0 1vw;
+                border-radius: 0 0 4px 4px;
+
+                .messagesContainer {
+                    max-height: 34vh;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+
+                }
+
+                .messageBox {
+                    padding: 1vh 0;
+
+                    .message {
+                        font-size: 1vw;
+                        background: #d3d3d3;
+                        display: inline-block;
+                        padding: 0.5rem;
+                        width: 20vw;
+                        border-radius: 5px;
+                        position: relative;
+
+                        span {
+                            color: #555;
+                            font-weight: bold;
+                        }
+
+                        p {
+                            margin: 0.6vh 0;
+                            color: black;
+                        }
+
+                    }
+
+                }
+
+                .enterMessage {
+                    background: #464647;
+                    color: #a1a1a1;
+                    display: grid;
+                    grid-template-columns: 4fr 1fr;
+                    padding: 1.4vh 0;
+
+                    input {
+                        border: none;
+                        padding: 1vh 1vw;
+                        background: #d3d3d3;
+                        width: 14vw;
+                        border-radius: 4px;
+                    }
+
+                    .send {
+                        padding: 1vh 1vw;
+                        font-size: 1vw;
+                        border-radius: 2px;
+                        background: #1760ca;
+                        color: white;
+                        text-decoration: none;
+
+                        &:hover {
+                            filter: saturate(10%);
+                            transition: 0.15s;
+                        }
+                    }
+                }
+            }
+        }
 
         #userList {
-            margin-right: 1vw;
+            width: 23vw;
             background-color: #707c85;
+
+            mat-expansion-panel-header {
+                height: 6vh !important;
+            }
 
             .userElement {
                 display: grid;
                 grid-template-columns: 1fr 5fr 0.5fr;
 
                 align-items: center;
-                padding: 1vh 0.5vw;
                 border-radius: 8px;
 
                 .userIcon {
-                    font-size: 2.6vw;
+                    font-size: 2.2vw;
                     height: 6vh;
                     width: 2.8vw;
                 }
@@ -73,7 +166,7 @@ body {
                     flex-direction: column;
 
                     .username {
-                        font-size: 1.6vw;
+                        font-size: 1.5vw;
                     }
 
                     .group {
