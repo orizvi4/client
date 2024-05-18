@@ -26,10 +26,6 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
   ) {
     this.websocketService.getChannelUpdate$().subscribe((next: ChannelDTO) => {
       if (this.id == "channelId" + next._id) {
-        if (this.live !== next.isLive) {//check
-          // this.player.src(this.url);
-          // this.player.load();
-        }
         this.live = next.isLive;
       }
     });

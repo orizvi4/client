@@ -35,15 +35,14 @@
     
     .nav-item {
         padding: 1.5vh 0;
-    
+        color: white;
         display: flex;
         flex-direction: row;
         cursor: pointer;
-        filter: contrast(0.1);
         
         &:hover {
             transition: 0.1s;
-            background-color: #2f2f2f2f;
+            background-color: #4444442f;
         }
     }
 
@@ -60,7 +59,6 @@
         margin-top: 1vh;
         transition: 0.7s;
         animation: fadeInCobra 0.5s ease-out forwards;
-        filter: contrast(0.1);
     }
 
     #cobraIconBig {
@@ -73,32 +71,11 @@
         margin-top: 0.8vh;
         transition: width 0.7s, height 0.65s;
         animation: fadeOutCobra 0.5s ease-out forwards;
-        filter: contrast(0.1);
     }
 
     app-user-card {
         margin: 10vh 10vw;
         z-index: 3;
-    }
-    
-    #liveIcon {
-        background-image: url('../../../../../images/liveIcon.png');
-    }
-    
-    #archiveIcon {
-        background-image: url('../../../../../images/archiveIcon.png');
-    }
-    
-    #userManagerIcon {
-        background-image: url('../../../../../images/userManagerIcon.png');
-    }
-    
-    #profileIcon {
-        background-image: url('../../../../../images/profileIcon.png');
-    }
-    
-    #logsIcon {
-        background-image: url('../../../../../images/logsIcon.png');
     }
 
     &.expanded {

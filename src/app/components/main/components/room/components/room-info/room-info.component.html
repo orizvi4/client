@@ -8,32 +8,21 @@
 
         <div class="chatContainer">
             <div class="chatHeader">
-                <h2>Messages</h2>
+                <h2>Room chat</h2>
             </div>
             <div class="chatBox">
                 <div class="messagesContainer">
-                    <div class="messageBox">
+                    <div class="emptyChat" *ngIf="roomInfo.messages.length === 0">No messages</div>
+                    <div class="messageBox" *ngFor="let roomMessage of roomInfo.messages">
                         <div class="message">
-                            <span>Bobby Giangeruso</span>
-                            <p>Hey Mike, how are you doing?</p>
-                        </div>
-                    </div>
-                    <div class="messageBox">
-                        <div class="message">
-                            <span>Bobby Giangeruso</span>
-                            <p>Hey Mike, how are you doing?</p>
-                        </div>
-                    </div>
-                    <div class="messageBox">
-                        <div class="message">
-                            <span>Mike Moloney</span>
-                            <p>Pretty good, Eating nutella, nommommom</p>
+                            <span>{{roomMessage.username}}</span>
+                            <p>{{roomMessage.message}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="enterMessage">
-                    <input type="text" placeholder="Enter your message.." />
-                    <a href="#" class="send">Send</a>
+                    <input type="text" placeholder="Enter your message.." #messageInput/>
+                    <a (click)="sendMessage()" class="send">Send</a>
                 </div>
 
             </div>

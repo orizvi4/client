@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 import { JwtService } from "./jwt.service";
 import Swal from "sweetalert2";
 import { RecordingDTO } from "../models/recordingDTO.interface";
-import { RoomInfoDTO } from "../models/roomInfoDTO.interface";
+import { RoomInfoDTO } from "../../app/components/main/components/room/components/room-info/models/roomInfoDTO.interface";
 import { RequestService } from "./request.service";
 
 @Injectable()

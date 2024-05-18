@@ -1,20 +1,21 @@
 <body>
 
-    <app-room-info [isRecording]="room.isRecording" [blockRoomText]="blockRoomText" [roomId]="room._id" *ngIf="showRoomInfo" id="roomInfo"></app-room-info>
-    <svg (click)="toggleInfo()" [ngClass]="{'opened': showRoomInfo}" id="roomInfoIcon" viewBox="0 0 225.000000 225.000000"
-                preserveAspectRatio="xMidYMid meet">
+    <app-room-info [isRecording]="room.isRecording" [blockRoomText]="blockRoomText" [roomId]="room._id"
+        *ngIf="showRoomInfo" id="roomInfo"></app-room-info>
+    <svg (click)="toggleInfo()" [ngClass]="{'opened': showRoomInfo}" id="roomInfoIcon"
+        viewBox="0 0 225.000000 225.000000" preserveAspectRatio="xMidYMid meet">
 
-                <g transform="translate(0.000000,225.000000) scale(0.100000,-0.100000)" fill="#FFFFFF" stroke="none">
-                    <path d="M1215 2086 c-88 -40 -137 -118 -137 -216 -1 -138 104 -244 242 -244
+        <g transform="translate(0.000000,225.000000) scale(0.100000,-0.100000)" fill="#FFFFFF" stroke="none">
+            <path d="M1215 2086 c-88 -40 -137 -118 -137 -216 -1 -138 104 -244 242 -244
    138 0 243 106 242 244 0 137 -105 240 -242 240 -37 0 -72 -8 -105 -24z" />
-                    <path d="M1125 1516 c-152 -29 -346 -95 -467 -159 -61 -31 -65 -39 -52 -105
+            <path d="M1125 1516 c-152 -29 -346 -95 -467 -159 -61 -31 -65 -39 -52 -105
    l6 -30 52 24 c28 12 90 31 139 40 103 20 179 10 216 -30 38 -41 30 -92 -90
    -531 -66 -245 -112 -431 -113 -461 -2 -90 50 -124 186 -124 141 1 386 68 561
    154 l82 41 -1 47 c0 26 -3 50 -6 54 -3 3 -20 -2 -38 -11 -48 -25 -177 -55
    -236 -55 -63 0 -124 22 -142 51 -25 39 -13 107 77 444 159 593 146 534 130
    579 -20 57 -62 79 -158 82 -42 2 -107 -3 -146 -10z" />
-                </g>
-            </svg>
+        </g>
+    </svg>
 
     <div id="room">
         <div id="header">
@@ -24,7 +25,23 @@
                     <a id="recordingButtonIcon" (click)="record()" [ngClass]="{'recordingStart': room.isRecording}"></a>
                 </div>
                 <div id="blockRoom" (click)="setBlockRoom()">
-                    <a id="blockRoomIcon"></a>
+                    <svg id="blockRoomIcon" viewBox="0 0 225.000000 225.000000" preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,225.000000) scale(0.100000,-0.100000)" fill="#FFFFFF"
+                            stroke="none">
+                            <path d="M990 2240 c-371 -47 -707 -284 -868 -611 -86 -177 -115 -301 -115
+-504 0 -306 98 -554 303 -769 160 -168 324 -263 557 -322 94 -24 127 -28 253
+-27 243 0 434 57 637 189 74 48 247 221 296 297 82 123 141 263 174 410 22 98
+22 346 0 444 -50 221 -143 397 -295 555 -161 167 -358 275 -589 323 -92 19
+-266 27 -353 15z m298 -231 c232 -36 480 -207 606 -417 135 -226 166 -509 82
+-755 -33 -97 -121 -257 -140 -257 -14 0 -1256 1242 -1256 1255 0 20 160 108
+258 141 143 49 282 59 450 33z m-241 -961 c343 -343 623 -627 623 -633 0 -17
+-130 -93 -212 -125 -114 -44 -208 -62 -333 -62 -248 0 -466 91 -640 267 -168
+170 -256 387 -256 632 0 125 13 200 52 307 31 86 116 236 133 236 6 0 291
+-280 633 -622z" />
+                        </g>
+                    </svg>
+
                     <label id="blockRoomText">{{blockRoomText}}</label>
                 </div>
             </div>

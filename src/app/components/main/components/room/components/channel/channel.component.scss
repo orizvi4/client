@@ -1,5 +1,11 @@
 @import '../../../../../../../styles.scss';
 
+
+.test {
+    background-image: url('../../../../../../../images/channelBlockedIcon.png');
+    
+}
+
 #tab-bar {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -42,35 +48,19 @@
             background-repeat: no-repeat;
             background-size: contain;
             text-decoration: none;
+            height: 5vh;
         }
     
         #streamIcon {
-            background-image: url('../../../../../../../images/streamIcon.png');
             width: 3vw;
-            height: 3vh;
-            margin-top: 1.5vh;
-            margin-right: 0.2vw;
-    
-            &.blocked {
-                background-image: url('../../../../../../../images/channelBlockedIcon.png');
-                width: 2vw;
-                height: 4vh;
-            }
         }
 
         #recordingIcon {
-            background-image: url('../../../../../../../images/recordingIcon.png');
-            animation: blink 2s infinite;
-            margin-top: 0.8vh;
-            width: 2.7vw;
-            height: 5vh;
+            width: 2.4vw;
         }
 
         #motionDetectionIcon {
-            background-image: url('../../../../../../../images/motionDetectionIcon.png');
-            margin-top: 0.8vh;
-            width: 2.7vw;
-            height: 5vh;
+            width: 2.8vw;
         }
     }
 
@@ -91,21 +81,5 @@
 
     &.motionDetected {
         border: 2px solid #fc0005;
-    }
-}
-
-
-
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
     }
 }

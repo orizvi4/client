@@ -80,33 +80,38 @@ body {
                     overflow-y: auto;
                     overflow-x: hidden;
 
-                }
+                    .emptyChat {
+                        font-size: 1.4vw;
+                        padding: 3vh 6vw;
+                    }
 
-                .messageBox {
-                    padding: 1vh 0;
+                    .messageBox {
+                        padding: 1vh 0;
 
-                    .message {
-                        font-size: 1vw;
-                        background: #d3d3d3;
-                        display: inline-block;
-                        padding: 0.5rem;
-                        width: 20vw;
-                        border-radius: 5px;
-                        position: relative;
+                        .message {
+                            font-size: 1vw;
+                            background: #d3d3d3;
+                            display: inline-block;
+                            padding: 0.5rem;
+                            width: 20vw;
+                            border-radius: 5px;
+                            position: relative;
 
-                        span {
-                            color: #555;
-                            font-weight: bold;
-                        }
+                            span {
+                                color: #555;
+                                font-weight: bold;
+                            }
 
-                        p {
-                            margin: 0.6vh 0;
-                            color: black;
+                            p {
+                                margin: 0.6vh 0;
+                                color: black;
+                            }
+
                         }
 
                     }
-
                 }
+
 
                 .enterMessage {
                     background: #464647;
@@ -130,6 +135,7 @@ body {
                         background: #1760ca;
                         color: white;
                         text-decoration: none;
+                        cursor: pointer;
 
                         &:hover {
                             filter: saturate(10%);

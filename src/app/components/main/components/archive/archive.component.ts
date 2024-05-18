@@ -121,6 +121,7 @@ export class ArchiveComponent implements OnInit {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {
         this.currentRecordings.splice(index, 1);
+        this.recordingsLength -= 1;
         if (this.currentRecordings.length === 1) {
           this.pageIndex -= 1;
         }
@@ -162,17 +163,6 @@ export class ArchiveComponent implements OnInit {
     }
     catch (err: any) {
       if (err.response !== undefined && err.response !== null && err.response.status == 400) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",//bottom
-          showConfirmButton: false,
-        });
-        Toast.fire({
-          title: "deleting recording",
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
         this.setRecordingDeleting(recording);
       }
       else {

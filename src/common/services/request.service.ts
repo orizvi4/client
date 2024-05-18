@@ -8,7 +8,8 @@ import { RecordingDTO } from "../models/recordingDTO.interface";
 import { UserDTO } from "../models/userDTO.interface";
 import { StrikeDTO } from "src/app/components/main/components//user-manager/components/user-strike/models/strikeDTO.interface";
 import { DeviceDTO } from "../models/deviceDTO.interface";
-import { RoomInfoDTO } from "../models/roomInfoDTO.interface";
+import { RoomInfoDTO } from "../../app/components/main/components/room/components/room-info/models/roomInfoDTO.interface";
+import { RoomMessageDTO } from "src/app/components/main/components/room/components/room-info/models/roomMessageDTO.model";
 
 @Injectable()
 export class RequestService {
@@ -114,8 +115,16 @@ export class RequestService {
         return (await axios.post<string>(`${Constants.ROOM_HANDLER}/channel/recorders/start?id=${id}`, {}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
-    public async setMotionDetection(id: string, motionDetection: boolean): Promise<void> {//check
+    public async setMotionDetection(id: string, motionDetection: boolean): Promise<void> {
         await axios.post<void>(`${Constants.ROOM_HANDLER}/channel/motionDetection`, {id: id, motionDetection: motionDetection}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
+    }
+
+    public async sendRoomMessage(id: string, message: RoomMessageDTO): Promise<void> {
+        await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/message/add`, {id: id, message: message}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
+    }
+
+    public async getRoomMessages(id: string): Promise<RoomMessageDTO[]> {
+        return (await axios.post<RoomMessageDTO[]>(`${Constants.ROOM_HANDLER}/room/info/message/get`, {id: id}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
 

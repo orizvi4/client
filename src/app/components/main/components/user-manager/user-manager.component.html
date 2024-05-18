@@ -50,6 +50,7 @@
         <td class="openUserStrike" (click)="openUserStrike(user.givenName)" *ngIf="!user.isEdit">
             {{user.group}}
         </td>
+        
         <td id="actions-cell">
             <div *ngIf="user.isEdit">
                 <a class="icon" id="updateIcon" (click)="updateUser(user)"></a>
