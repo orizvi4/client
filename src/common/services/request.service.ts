@@ -123,6 +123,10 @@ export class RequestService {
         await axios.post<void>(`${Constants.ROOM_HANDLER}/room/info/message/add`, {id: id, message: message}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
+    public async getChannelThumbnail(channelId: string): Promise<string> {
+        return (await axios.get<string>(`${Constants.ROOM_HANDLER}/channel/thumbnail?channel=${channelId}-rec`, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
     public async getRoomMessages(id: string): Promise<RoomMessageDTO[]> {
         return (await axios.post<RoomMessageDTO[]>(`${Constants.ROOM_HANDLER}/room/info/message/get`, {id: id}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }

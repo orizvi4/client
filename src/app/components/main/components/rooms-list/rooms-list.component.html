@@ -1,4 +1,3 @@
 <div class="container" [ngClass]="{'empty': !(rooms.length > 0)}">
-    <img [src]="url" alt="">
-    <app-room-box *ngFor="let room of rooms" [name]="room.name" (click)="navigateToRoom(room._id, room.name)"></app-room-box>
+    <app-room-box *ngFor="let room of rooms" [room]="room" (click)="navigateToRoom(room._id, room.name)"></app-room-box>
 </div>

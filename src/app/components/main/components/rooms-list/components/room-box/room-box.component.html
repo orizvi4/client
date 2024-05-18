@@ -1,3 +1,4 @@
 <div class="room">
-    <p class="title">{{name}}</p>
+    <p class="title">{{room.name}}</p>
+    <img class="thumbnail" [src]="url" *ngFor="let url of urls" alt="">
 </div>
