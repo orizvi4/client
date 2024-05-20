@@ -1,20 +1,24 @@
 @import '../../../../../../../styles.scss';
 
 .room {
-    width: 14vw;
-    height: 16vh;
-    border-radius: 0.4rem;
     background-color: $secondary;
+    width: 24.16vw;
     color: white;
     cursor: pointer;
     display: flex;
-    justify-content: center;
-    text-align: center;
+    align-items: center;
+    flex-direction: column;
     transition: 0.2s;
+    border-radius: 15px 15px 0 0;
 
     .title {
         font-size: 4vh;
+        margin: 0;
+        padding: 1.5vh 0;
+        width: inherit;
+        text-align: center;
     }
+
 
     &:hover {
         filter: saturate(1%);
@@ -22,7 +26,30 @@
         transition: 0.15s;
     }
 
-    .thumbnail {
-        
+    .thumbnailContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        .thumbnailElement {
+            width: 11.7vw;
+            height: 16vh;
+            border: 1px solid black;
+            margin: 2px;
+
+            .thumbnail {
+                height: inherit;
+                width: inherit;
+                background-color: black;
+
+            }
+
+            .noThumbnail {
+                background-color: $secondary;
+                height: inherit;
+                width: inherit;
+            }
+        }
     }
+
 }

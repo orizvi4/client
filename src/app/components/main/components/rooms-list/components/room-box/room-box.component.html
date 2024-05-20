@@ -1,4 +1,11 @@
 <div class="room">
     <p class="title">{{room.name}}</p>
-    <img class="thumbnail" [src]="url" *ngFor="let url of urls" alt="">
+    <div class="thumbnailContainer">
+        <div class="thumbnailElement" *ngFor="let thumbnail of thumbnails">
+            <img class="thumbnail" *ngIf="thumbnail.mode === 'live'" [src]="thumbnail.url" alt="">
+            <img class="thumbnail" *ngIf="thumbnail.mode === 'blocked'"
+                src="http://192.168.1.5:4200/channelBlockedIcon.png">
+            <div class="noThumbnail" *ngIf="thumbnail.mode === 'none'"></div>
+        </div>
+    </div>
 </div>

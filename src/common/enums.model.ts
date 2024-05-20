@@ -5,3 +5,9 @@ export enum WebsocketTitles {
     MOTION_DETECTED = "motion_detection",
     ROOM_INFO = "room_info"
 }
+
+export enum thumbnailMode {
+    BLOCKED = 'blocked',
+    NONE = 'none',
+    LIVE = 'live'
+}
