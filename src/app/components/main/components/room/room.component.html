@@ -19,8 +19,9 @@
 
     <div id="room">
         <div id="header">
-            <div id="title-container">
-                <p id="title">{{room.name}}</p>
+            <p id="title">{{room.name}}</p>
+            <div class="filler" style="flex-grow: 1;"></div>
+            <div id="roomActions">
                 <div id="recordingButton">
                     <a id="recordingButtonIcon" (click)="record()" [ngClass]="{'recordingStart': room.isRecording}"></a>
                 </div>
