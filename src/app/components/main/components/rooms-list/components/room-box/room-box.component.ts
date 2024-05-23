@@ -33,13 +33,9 @@ export class RoomBoxComponent implements OnInit {
         }
       }
       this.thumbnails.push({ mode: mode, url: url });
-      if (this.thumbnails.length === 4) {
+      if (this.thumbnails.length === 2) {
         break;
       }
-    }
-    const length: number = this.thumbnails.length;
-    for (let i = 0; i < 4 - length; i++) {
-      this.thumbnails.push({ mode: thumbnailMode.NONE, url: null });
     }
   }
 
