@@ -66,9 +66,9 @@
                 (change)="setUserBlock(user.givenName, !user.isBlocked)"></mat-slide-toggle>
         </td>
     </tr>
-    <tr id="table-foot">
+    <tr (click)="createUser()" id="table-foot">
         <td colspan="7">
-            <input id="create-user-button" type="button" value="create new user" (click)="createUser()" />
+            <input id="create-user-button" type="button" value="create new user" />
         </td>
     </tr>
 </table>

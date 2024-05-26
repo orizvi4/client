@@ -42,7 +42,7 @@
                         <label class="username">{{user.givenName}}</label>
                         <label class="group"> {{user.group}}</label>
                     </div>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"
+                    <button *ngIf="group !== 'users' && username !== user.givenName" mat-icon-button [matMenuTriggerFor]="menu"
                         id="actions-button">
                         <mat-icon id="actions-menu-icon">more_vert</mat-icon>
                     </button>

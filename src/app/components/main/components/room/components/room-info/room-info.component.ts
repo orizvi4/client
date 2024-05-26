@@ -23,6 +23,8 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   @ViewChild('messageInput') messageInput!: ElementRef;
   roomInfo!: RoomInfoDTO;
   isBlocked!: boolean;
+  group!: string;
+  username!: string;
 
   public async ngOnInit(): Promise<void> {
     try {
@@ -32,7 +34,8 @@ export class RoomInfoComponent implements OnInit, OnChanges {
       else {
         this.isBlocked = true
       }
-      
+      this.group = this.jwtService.decode().group as string;
+      this.username = this.jwtService.decode().username as string;
       this.roomInfo = await this.requestService.getRoomInfo(this.roomId);
       this.websocketService.getRoomInfo$().subscribe((info) => {
         this.roomInfo = info;
@@ -57,6 +60,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
 
   public async sendMessage(): Promise<void> {
     try {
+      if (this.messageInput.nativeElement.value !== '')
       await this.requestService.sendRoomMessage(this.roomId, {username: this.jwtService.decode().username as string, message: this.messageInput.nativeElement.value});
       this.messageInput.nativeElement.value = '';
     }

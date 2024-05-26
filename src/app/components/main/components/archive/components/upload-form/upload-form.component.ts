@@ -23,6 +23,7 @@ export class UploadFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.channels = await this.requestService.getAllChannels();
   }
+  
   async save() {
     try {
       if (this.fileInput.nativeElement.value != '' && this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
@@ -57,14 +58,26 @@ export class UploadFormComponent implements OnInit {
         });
       }
     }
-    catch (err) {
-      await Swal.fire({
-        icon: 'error',
-        title: 'server error',
-        text: 'please try again later',
-        background: "#101416",
-        color: "white",
-      });
+    catch (err: any) {
+      console.log(err);
+      if (err.response != null || err.response.status === 400) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Wrong file format',
+          text: 'please enter a video file',
+          background: "#101416",
+          color: "white",
+        });
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'server error',
+          text: 'please try again later',
+          background: "#101416",
+          color: "white",
+        });
+      }
     }
   }
 

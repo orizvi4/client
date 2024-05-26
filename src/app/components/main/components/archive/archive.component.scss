@@ -183,13 +183,16 @@
     opacity: 0.4;
 }
 
-.empty-div {
-    width: 73vw;
-    height: 40vh;
-    background-image: url('../../../../../images/emptyFolderIcon.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
+.emptyFolder {
+    width: 17vw;
+    height: 32vh;
+}
+.emptyFolderText {
+    color: white;
+    width: 16vw;
+    height: 6vh;
+    font-size: 2.5vw;
+    margin-top: 0;
 }
 
 .recordings-container {

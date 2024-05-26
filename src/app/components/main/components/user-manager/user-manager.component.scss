@@ -57,14 +57,17 @@
                 color: #f2f2f2;
                 box-sizing: border-box;
                 height: 5vh;
-                width: inherit;
+                font-size: 0.9vw;
+                width: 9vw;
                 background-color: $primary;
                 border-radius: 0.6vh;
                 border: 0.1rem solid black;
             }
             select {
+                font-size: 0.9vw;
                 border: 0.1rem solid black;
                 height: 5vh;
+                width: 9vw;
                 border-radius: 0.6vh;
                 color: #f2f2f2;
                 background-color: $primary;
@@ -119,6 +122,7 @@
 
     #table-foot {
         line-height: 2.4rem;
+        cursor: pointer;
         
         td {
             border: none;
@@ -128,11 +132,9 @@
         #create-user-button {
             color: #f2f2f2;
             border: none;
-            font-family: "Open Sans";
             font-size: inherit;
             background: none;
             padding: 0 1.6vh;
-            cursor: pointer;
             width: 100%;
             font-weight: bold;
         }

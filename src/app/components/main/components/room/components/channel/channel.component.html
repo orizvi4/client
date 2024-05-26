@@ -15,7 +15,7 @@
                     <mat-icon>photo_camera</mat-icon>
                     <span>Record/Stop recording</span>
                 </button>
-                <button mat-menu-item (click)="setMotionDetection()">
+                <button mat-menu-item (click)="setMotionDetection()" *ngIf="isBlocked === false">
                     <mat-icon>directions_walk</mat-icon>
                     <span>Enable/Disable motion detection</span>
                 </button>
