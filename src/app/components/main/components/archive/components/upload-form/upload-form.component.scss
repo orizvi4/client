@@ -3,10 +3,12 @@
 $border-radius: 0.4rem;
 
 #my-form {
-    color: #f2f2f2;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
     align-items: center;
+    row-gap: 0.7vh;
+    color: #f2f2f2;
     position: fixed;
     background-color: $secondary;
     border-radius: $border-radius;
@@ -16,13 +18,6 @@ $border-radius: 0.4rem;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    .inputRow {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 2.45vh;
-    }
-
     .time {
         width: fit-content;
         padding: 1.5vh;
@@ -31,10 +26,14 @@ $border-radius: 0.4rem;
         border-radius: $border-radius;
         color: #f2f2f2;
         background-color: $primary;
+        width: inherit;
     
         &:focus {
             filter: saturate(10%);
         }
+    }
+    .time::-webkit-calendar-picker-indicator {
+        filter: invert(100%);
     }
     
     
@@ -45,9 +44,31 @@ $border-radius: 0.4rem;
         border-radius: $border-radius;
         color: #f2f2f2;
     }
+
+    select {
+        color: #f2f2f2;
+        padding: 1.5vh;
+        border-radius: $border-radius;
+        border: none;
+        background-color: $primary;
+        width: inherit;
     
+        &:focus {
+            filter: saturate(10%);
+        }
+    }
+}
+.buttons {
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+    height: 8vh;
+    margin-bottom: -5vh;
+
+
     .button {
         background-color: $highlight;
+        width: 7vw;
         color: #f2f2f2;
         padding: 0.73vw 1.46vw;
         border: none;
@@ -55,22 +76,14 @@ $border-radius: 0.4rem;
         border-radius: $border-radius;
         margin-right: 0.73vw;
         margin-bottom: 1vh;
+
+        &.cancel {
+            background-color: #b34444;
+        }
     
         &:hover {
             filter: saturate(10%);
         }
     }
     
-    select {
-        color: #f2f2f2;
-        width: fit-content;
-        padding: 1.5vh;
-        border-radius: $border-radius;
-        border: none;
-        background-color: $primary;
-    
-        &:focus {
-            filter: saturate(10%);
-        }
-    }
 }

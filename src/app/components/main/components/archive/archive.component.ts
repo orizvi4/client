@@ -117,19 +117,19 @@ export class ArchiveComponent implements OnInit {
   }
 
   public async deleteRecordingFromArray(name: string): Promise<void> {
+    this.recordingsLength -= 1;
+    this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
+    this.toastr.success("deleted recording successfuly", "", {
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000,
+    });
     for (let [index, element] of this.currentRecordings.entries()) {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {
         this.currentRecordings.splice(index, 1);
-        this.recordingsLength -= 1;
         if (this.currentRecordings.length === 1) {
           this.pageIndex -= 1;
         }
-        this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
-        this.toastr.success("deleted recording successfuly", "", {
-          positionClass: 'toast-bottom-right',
-          timeOut: 3000,
-        });
       }
     }
   }

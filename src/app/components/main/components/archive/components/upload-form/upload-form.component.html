@@ -1,30 +1,28 @@
 <form id="my-form">
-    <div class="inputRow">
-        <label for="fileInput">Upload the Video:</label>
-        <input type="file" class="file" id="fileInput" #fileInput>
-    </div>
 
-    <div class="inputRow">
-        <label for="startTime">Start Time:</label>
-        <input type="datetime-local" max="{{todayDate}}" step="1" id="startTime" class="time" placeholder="Start Time"
-            #startTime>
-    </div>
+    <label for="fileInput">Upload the Video:</label>
+    <input type="file" class="file" id="fileInput" #fileInput>
 
-    <div class="inputRow">
-        <label for="endTime">End Time:</label>
-        <input type="datetime-local" max="{{todayDate}}" step="1" id="endTime" class="time" placeholder="End Time"
-            #endTime>
-    </div>
 
-    <div class="inputRow">
-        <label for="dropdown">Select a Channel:</label>
-        <select id="channel" #channelSelect>
-            <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel.device.title}}</option>
-        </select>
-    </div>
 
-    <div class="inputRow">
+    <label for="startTime">Start Time:</label>
+    <input type="datetime-local" max="{{todayDate}}" step="1" id="startTime" class="time" placeholder="Start Time"
+        #startTime>
+
+
+
+    <label for="endTime">End Time:</label>
+    <input type="datetime-local" max="{{todayDate}}" step="1" id="endTime" class="time" placeholder="End Time" #endTime>
+
+
+
+    <label for="dropdown">Select a Channel:</label>
+    <select id="channel" #channelSelect>
+        <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel.device.title}}</option>
+    </select>
+
+    <div class="buttons">
         <input type="button" class="button" value="Save" (click)="save()">
-        <input type="button" class="button" value="Cancel" (click)="cancel()">
+        <input type="button" class="button cancel" value="Cancel" (click)="cancel()">
     </div>
 </form>
