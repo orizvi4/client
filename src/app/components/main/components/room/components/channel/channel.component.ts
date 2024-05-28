@@ -168,12 +168,12 @@ export class ChannelComponent implements AfterViewInit, OnInit, OnChanges {
 
   public async record() {
     try {
-      this.recording = !this.recording;
       let res: string;
+      this.recording = !this.recording;
       if (this.recording) {
         res = await this.requestService.startChannelRecording(this.id.substring(9));
-        if (res == "success") {
-          this.recording = true;
+        if (res !== "success") {
+          this.recording = false;
         }
       }
       else {

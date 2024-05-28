@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FilterDTO } from 'src/common/models/filterDTO.class';
 import { RequestService } from 'src/common/services/request.service';
 import videojs from 'video.js';
@@ -11,6 +11,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import { ToastrService } from 'ngx-toastr';
 import { JwtService } from 'src/common/services/jwt.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,12 +19,13 @@ import { JwtService } from 'src/common/services/jwt.service';
   templateUrl: './archive.component.html',
   styleUrls: ['./archive.component.scss'],
 })
-export class ArchiveComponent implements OnInit {
+export class ArchiveComponent implements OnInit, OnDestroy {
   constructor(private requestService: RequestService,
     private websocketService: WebSocketService,
     private toastr: ToastrService,
     private jwtService: JwtService) {
-    this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
+    this.subscription = this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
+    console.log("delete");
       this.deleteRecordingFromArray(recordingUrl.substring(recordingUrl.indexOf("content/") + 8));
     });
   }
@@ -32,6 +34,7 @@ export class ArchiveComponent implements OnInit {
   @ViewChild('endTime') endTime!: ElementRef;
   @ViewChild('roomSelect') roomSelect!: ElementRef;
   @ViewChild('channelSelect') channelSelect!: ElementRef;
+  subscription!: Subscription;
 
   formUpload: boolean = false;
   group: string = '';
@@ -43,6 +46,10 @@ export class ArchiveComponent implements OnInit {
   pageSize: number = 4;
   pageIndex: number = 0;
   filter!: FilterDTO;
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -118,7 +125,6 @@ export class ArchiveComponent implements OnInit {
 
   public async deleteRecordingFromArray(name: string): Promise<void> {
     this.recordingsLength -= 1;
-    this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
     this.toastr.success("deleted recording successfuly", "", {
       positionClass: 'toast-bottom-right',
       timeOut: 3000,
@@ -127,11 +133,12 @@ export class ArchiveComponent implements OnInit {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {
         this.currentRecordings.splice(index, 1);
-        if (this.currentRecordings.length === 1) {
+        if (this.currentRecordings.length < 1) {
           this.pageIndex -= 1;
         }
       }
     }
+    this.currentRecordings = await this.requestService.getRecordings(this.filter, this.pageIndex, this.pageSize);
   }
 
   public setRecordingDeleting(name: string): void {
