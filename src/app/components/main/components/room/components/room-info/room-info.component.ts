@@ -55,7 +55,6 @@ export class RoomInfoComponent implements OnInit, OnChanges {
 
   public async kickUser(username: string): Promise<void> {
     await this.requestService.kickUser(username);
-    await this.requestService.roomRemoveUser(this.roomId, username);
   }
 
   public async sendMessage(): Promise<void> {
