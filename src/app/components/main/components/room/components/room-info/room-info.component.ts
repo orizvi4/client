@@ -59,9 +59,21 @@ export class RoomInfoComponent implements OnInit, OnChanges {
 
   public async sendMessage(): Promise<void> {
     try {
-      if (this.messageInput.nativeElement.value !== '')
-      await this.requestService.sendRoomMessage(this.roomId, {username: this.jwtService.decode().username as string, message: this.messageInput.nativeElement.value});
-      this.messageInput.nativeElement.value = '';
+      if (this.messageInput.nativeElement.value !== '') {
+        if (await this.requestService.checkInput(this.messageInput.nativeElement.value) == false) {
+          await this.requestService.sendRoomMessage(this.roomId, { username: this.jwtService.decode().username as string, message: this.messageInput.nativeElement.value });
+          this.messageInput.nativeElement.value = '';
+        }
+        else {
+          Swal.fire({
+            title: 'input error',
+            icon: 'error',
+            text: "invalid characters detected, message was not saved",
+            background: "#101416",
+            color: "white",
+          });
+        }
+      }
     }
     catch (err) {
       console.log(err);

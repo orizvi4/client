@@ -143,6 +143,10 @@ export class RequestService {
         await axios.put<void>(`${Constants.AUTH_SERVICE}/users/resetPanelty`, {username: username}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }});
     }
 
+    public async checkInput(input: string): Promise<boolean> {
+        return (await axios.post(`${Constants.AUTH_SERVICE}/strike/input`, {token: localStorage.getItem('accessToken'), input: input}, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
+    }
+
     public async getUsers(username: string): Promise<UserDTO[]> {
         return (await axios.get<UserDTO[]>(`${Constants.AUTH_SERVICE}/users?username=${username}`, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }

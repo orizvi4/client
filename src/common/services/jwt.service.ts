@@ -70,18 +70,12 @@ export class JwtService {
         }
     }
 
-    public setRefreshToken(refresh: string) {
-        this.refreshToken = refresh;
-    }
 
     public async refreshAccessToken(): Promise<void> {
         this.setLocalStorageToken(false)
+        this.refreshToken = (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh/get`, { token: localStorage.getItem('accessToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
         localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh/access`, { token: this.refreshToken }, { headers: { Authorization: `Bearer ${this.refreshToken}` } })).data);
         this.setLocalStorageToken(true);
-    }
-
-    public async getRefreshToken(): Promise<string> {
-        return (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh/get`, { token: localStorage.getItem('accessToken') }, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
     }
 
     public refreshTokenInterval(): void {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, timer, takeUntil } from 'rxjs';
+import { Subject, timer, takeUntil, Subscription } from 'rxjs';
 import { Constants } from 'src/common/constants';
 import { CustomJwtPayload } from 'src/common/models/customJwtPayload.class';
 import { UserDTO } from 'src/common/models/userDTO.interface';
@@ -22,21 +22,17 @@ export class MainComponent implements OnInit, OnDestroy {
     private router: Router,
     private jwtService: JwtService,
     private websocketService: WebSocketService,
-     private toastr: ToastrService) {
-    this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
-      this.toastr.success("deleted recording successfuly", "", {
-        positionClass: 'toast-bottom-right',
-        timeOut: 3000,
-      });
-    });
+    private toastr: ToastrService) {
   }
 
   sideNavStatus: boolean = false;
   user: UserDTO | null = null;
   timer$: Subject<void> = new Subject<void>();
+  sub!: Subscription;
 
   public ngOnDestroy(): void {
     this.websocketService.closeSocket();
+    this.sub.unsubscribe();
   }
 
   async ngOnInit(): Promise<void> {
@@ -48,10 +44,15 @@ export class MainComponent implements OnInit, OnDestroy {
       else {
         this.timerReset();
         await this.updateUser(await this.requestService.getTokenUser());
-        this.jwtService.setRefreshToken(await this.jwtService.getRefreshToken());
         await this.jwtService.refreshAccessToken();
         this.jwtService.setLocalStorageToken(true);
         this.websocketService.connectToWebsocket();
+        this.sub = this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
+          this.toastr.success("deleted recording successfuly", "", {
+            positionClass: 'toast-bottom-right',
+            timeOut: 3000,
+          });
+        });
       }
     }
     catch (err) {
@@ -63,6 +64,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   timerReset() {
+    console.log("resett");
     this.timer$.next();
     timer(Constants.SESSION_TIMEOUT).pipe(takeUntil(this.timer$)).subscribe(async () => {
       await this.signOut();
