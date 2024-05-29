@@ -16,7 +16,7 @@ export class JwtService {
         this.refreshTokenInterval();
         addEventListener('storage', async (event) => {
             if (this.localStorageToken == true) {
-                localStorage.setItem('accessToken' ,(event.oldValue as string));
+                localStorage.setItem('accessToken', (event.oldValue as string));
                 await this.requestService.roomRemoveUserAll(this.decode().username as string);
                 await this.requestService.localStorageStrike(event.oldValue as string);
                 await this.blackListToken();
@@ -75,7 +75,9 @@ export class JwtService {
     }
 
     public async refreshAccessToken(): Promise<void> {
+        this.setLocalStorageToken(false)
         localStorage.setItem('accessToken', (await axios.post(`${Constants.AUTH_SERVICE}/tokens/refresh/access`, { token: this.refreshToken }, { headers: { Authorization: `Bearer ${this.refreshToken}` } })).data);
+        this.setLocalStorageToken(true);
     }
 
     public async getRefreshToken(): Promise<string> {
