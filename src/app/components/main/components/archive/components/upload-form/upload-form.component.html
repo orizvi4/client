@@ -10,12 +10,6 @@
         #startTime>
 
 
-
-    <label for="endTime">End Time:</label>
-    <input type="datetime-local" max="{{todayDate}}" step="1" id="endTime" class="time" placeholder="End Time" #endTime>
-
-
-
     <label for="dropdown">Select a Channel:</label>
     <select id="channel" #channelSelect>
         <option *ngFor="let channel of channels" value="{{channel._id}}">{{channel.device.title}}</option>

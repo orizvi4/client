@@ -25,7 +25,6 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private jwtService: JwtService) {
     this.subscription = this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
-    console.log("delete");
       this.deleteRecordingFromArray(recordingUrl.substring(recordingUrl.indexOf("content/") + 8));
     });
   }
@@ -125,10 +124,10 @@ export class ArchiveComponent implements OnInit, OnDestroy {
 
   public async deleteRecordingFromArray(name: string): Promise<void> {
     this.recordingsLength -= 1;
-    this.toastr.success("deleted recording successfuly", "", {
-      positionClass: 'toast-bottom-right',
-      timeOut: 3000,
-    });
+    // this.toastr.success("deleted recording successfuly", "", {
+    //   positionClass: 'toast-bottom-right',
+    //   timeOut: 3000,
+    // });
     for (let [index, element] of this.currentRecordings.entries()) {
       const tempRecording: string = element.link.substring(element.link.indexOf("/mp4:") + 5, element.link.indexOf('/playlist'));
       if (tempRecording === name) {

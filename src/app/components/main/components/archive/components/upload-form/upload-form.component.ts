@@ -13,7 +13,6 @@ export class UploadFormComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('startTime') startTime!: ElementRef;
-  @ViewChild('endTime') endTime!: ElementRef;
   @ViewChild('channelSelect') channelSelect!: ElementRef;
   @Output() popup = new EventEmitter<boolean>();
 
@@ -23,31 +22,28 @@ export class UploadFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.channels = await this.requestService.getAllChannels();
   }
-  
+
   async save() {
     try {
-      if (this.fileInput.nativeElement.value != '' && this.startTime.nativeElement.value != '' && this.endTime.nativeElement.value != '') {
-        let res: boolean = await this.requestService.isDateValid(this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
-        if (res) {
-          res = await this.requestService.saveRecording(this.fileInput, this.startTime.nativeElement.value, this.endTime.nativeElement.value, this.channelSelect.nativeElement.value);
+      if (this.fileInput.nativeElement.value != '' && this.startTime.nativeElement.value != '') {
+        const saved: boolean = await this.requestService.saveRecording(this.fileInput, this.startTime.nativeElement.value, this.channelSelect.nativeElement.value);
+        if (saved == true) {
+          await Swal.fire({
+            icon: 'success',
+            title: 'video added succesfully',
+            background: "#101416",
+            color: "white",
+          });
+          this.popup.emit(true);
         }
         else {
           await Swal.fire({
-            icon: 'warning',
-            title: 'date invalid',
-            text: 'date already exist',
+            icon: 'error',
+            title: 'recording is overlapping with another video',
             background: "#101416",
             color: "white",
-          })
-          return;
+          });
         }
-        await Swal.fire({
-          icon: 'success',
-          title: 'video added succesfully',
-          background: "#101416",
-          color: "white",
-        });
-        this.popup.emit(true);
       }
       else {
         await Swal.fire({
@@ -69,6 +65,16 @@ export class UploadFormComponent implements OnInit {
           color: "white",
         });
       }
+      else if (err.response != null || err.response.status === 409) {
+        await Swal.fire({
+          icon: 'warning',
+          title: 'date invalid',
+          text: 'date already exist',
+          background: "#101416",
+          color: "white",
+        })
+        return;
+      }
       else {
         Swal.fire({
           icon: 'error',
@@ -82,7 +88,7 @@ export class UploadFormComponent implements OnInit {
   }
 
   async cancel() {
-    if (this.startTime.nativeElement.value !== '' || this.endTime.nativeElement.value !== '' || this.fileInput.nativeElement.value !== '') {
+    if (this.startTime.nativeElement.value !== '' || this.fileInput.nativeElement.value !== '') {
       const res = await Swal.fire({
         icon: 'warning',
         title: 'are you sure you want to cancel?',

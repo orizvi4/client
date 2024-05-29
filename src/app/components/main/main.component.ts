@@ -8,6 +8,8 @@ import { JwtService } from 'src/common/services/jwt.service';
 import { RequestService } from 'src/common/services/request.service';
 import { WebSocketService } from 'src/common/services/web-socket.service';
 import Swal from 'sweetalert2';
+import { ArchiveComponent } from './components/archive/archive.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-main',
@@ -19,7 +21,14 @@ export class MainComponent implements OnInit {
     private requestService: RequestService,
     private router: Router,
     private jwtService: JwtService,
-    private websocket: WebSocketService) {
+    private websocketService: WebSocketService,
+     private toastr: ToastrService) {
+    this.websocketService.getRecordingDelete$().subscribe(async (recordingUrl: string) => {
+      this.toastr.success("deleted recording successfuly", "", {
+        positionClass: 'toast-bottom-right',
+        timeOut: 3000,
+      });
+    });
   }
 
   sideNavStatus: boolean = false;

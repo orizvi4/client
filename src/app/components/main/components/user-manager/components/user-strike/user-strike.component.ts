@@ -38,6 +38,7 @@ export class UserStrikeComponent implements OnInit {
   public async resetPanelty() {
     try {
       await this.requestService.resetPanelty(this.user.givenName);
+      await this.requestService.setUserBlock(this.user.givenName, false);
       this.panelty = 0;
       this.irrelevantStrikes = this.irrelevantStrikes.concat(this.relevantStrikes);
       this.relevantStrikes = [];

@@ -84,7 +84,7 @@ export class RequestService {
 
     
 
-    public async saveRecording(file: ElementRef, start: string, end: string, channel: string) {
+    public async saveRecording(file: ElementRef, start: string, channel: string) {
         let suffix;
         try {
             suffix = (await axios.get<number>(`${Constants.CONTENT_MANAGER}/file/suffix`, { params: { channel: channel }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
@@ -95,12 +95,7 @@ export class RequestService {
         const formData = new FormData();
         formData.append('file', file.nativeElement.files[0]);
         formData.append('startAt', start);
-        formData.append('endAt', end);
         return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/upload`, formData, { params: { channel: channel, suffix: suffix }, headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } })).data;
-    }
-
-    public async isDateValid(start: string, end: string, channel: string): Promise<boolean> {
-        return (await axios.post<boolean>(`${Constants.CONTENT_MANAGER}/file/date`, { startAt: start, endAt: end, channel: channel }, {headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }})).data;
     }
 
     public async deleteRecording(name: string): Promise<boolean> {
