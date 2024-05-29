@@ -15,9 +15,19 @@ import { RequestService } from "./request.service";
 @Injectable()
 export class WebSocketService {
     constructor(private router: Router, private jwtService: JwtService, private requestService: RequestService) {
-        const socket = io("http://192.168.1.5:8080");
+    }
 
-        socket.on("connect", () => {
+    socket: any;
+
+    public closeSocket() {
+        this.socket.close();
+        console.log("connection closed");
+    }
+
+    public connectToWebsocket() {
+        this.socket = io("http://192.168.1.5:8080");
+
+        this.socket.on("connect", () => {
             console.log('connected to websocket');
         });
         
@@ -25,25 +35,25 @@ export class WebSocketService {
         //     roomName: 'vehicle',
         // });
         
-        socket.on(WebsocketTitles.CHANNEL_LIVE, (channel: ChannelDTO) => {
+        this.socket.on(WebsocketTitles.CHANNEL_LIVE, (channel: ChannelDTO) => {
             this.channelUpdate$.next(channel);
         });
 
-        socket.on(WebsocketTitles.ROOM_INFO, (info: RoomInfoDTO) => {
+        this.socket.on(WebsocketTitles.ROOM_INFO, (info: RoomInfoDTO) => {
             this.roomInfo$.next(info);
         });
 
-        socket.on(WebsocketTitles.RECORDING_DELETE, (recordingUrl: string) => {
+        this.socket.on(WebsocketTitles.RECORDING_DELETE, (recordingUrl: string) => {
             this.recordingDelete$.next(recordingUrl);
         });
 
-        socket.on(WebsocketTitles.MOTION_DETECTED, (name: string) => {
+        this.socket.on(WebsocketTitles.MOTION_DETECTED, (name: string) => {
             if (this.enableMotionDetection.indexOf(name) === -1) {
                 this.motionDetected$.next(name);
             }
         });
 
-        socket.on(WebsocketTitles.SIGNOUT, async (username) => {
+        this.socket.on(WebsocketTitles.SIGNOUT, async (username: string) => {
             console.log('Incoming message: sign out ' + username);
             if (username === this.jwtService.decode().username as string) {
                 await this.requestService.roomRemoveUserAll(this.jwtService.decode().username as string);
@@ -61,6 +71,7 @@ export class WebSocketService {
             }
         });
     }
+
     channelUpdate$: Subject<ChannelDTO> = new Subject<ChannelDTO>();
     recordingDelete$: Subject<string> = new Subject<string>();
     motionDetected$: Subject<string> = new Subject<string>();

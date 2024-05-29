@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   constructor(
     private requestService: RequestService,
     private router: Router,
@@ -35,6 +35,10 @@ export class MainComponent implements OnInit {
   user: UserDTO | null = null;
   timer$: Subject<void> = new Subject<void>();
 
+  public ngOnDestroy(): void {
+    this.websocketService.closeSocket();
+  }
+
   async ngOnInit(): Promise<void> {
     try {
       if (localStorage.length == 0 || !(await this.jwtService.verifyToken())) {
@@ -47,6 +51,7 @@ export class MainComponent implements OnInit {
         this.jwtService.setRefreshToken(await this.jwtService.getRefreshToken());
         await this.jwtService.refreshAccessToken();
         this.jwtService.setLocalStorageToken(true);
+        this.websocketService.connectToWebsocket();
       }
     }
     catch (err) {
